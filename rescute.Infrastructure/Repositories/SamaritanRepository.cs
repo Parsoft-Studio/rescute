@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using rescute.Domain.Aggregates;
+using rescute.Domain.Repositories;
+
+namespace rescute.Infrastructure.Repositories
+{
+    public class SamaritanRepository : Repository<rescute.Domain.Aggregates.Samaritan>, ISamaritanRepository
+    {
+        public SamaritanRepository(rescuteContext c) : base(c)
+        {
+        }
+    }
+}

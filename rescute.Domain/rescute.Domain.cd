@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="rescute.Domain.Aggregates.Report">
+    <Position X="9.75" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAUACAQECAAAAAUAAAAkAAABAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Aggregates\Report.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Samaritan" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Animals" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="rescute.Domain.Aggregates.Animal" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Aggregates\Animal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="rescute.Domain.Aggregates.Samaritan" Collapsed="true">
+    <Position X="5.5" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAg=</HashCode>
+      <FileName>Aggregates\Samaritan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

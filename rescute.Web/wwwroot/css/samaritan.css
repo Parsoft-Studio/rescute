@@ -1,0 +1,76 @@
+﻿
+.main-sidebar {
+}
+
+.wrapper .main-header {
+    margin-bottom: 50px;
+}
+
+.main-header .dropdown-toggle {
+    display: inline-block;
+    padding: 15px;
+    color: white;
+}
+
+    .main-header .dropdown-toggle:hover {
+        background-color: #367fa9;
+    }
+
+.main-header .sidebar-toggle {
+    padding-left: 19px !important;
+    padding-right: 19px !important;
+    background-color: #367fa9 !important;
+}
+
+    .main-header .sidebar-toggle a:hover {
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+.sidebar-mini.sidebar-collapse .main-header .navbar {
+    margin-right: 0px;
+}
+
+.main-header .navbar .dropdown-menu li a {
+    color: #777 !important;
+}
+
+    .main-header .navbar .dropdown-menu li a:hover {
+        color: #333 !important;
+        background-color: #e1e3e9 !important;
+    }
+
+.main-header .navbar .dropdown-menu li.divider {
+    background-color: #eee !important;
+}
+
+.main-header .btn:active {
+    box-shadow: none;
+}
+
+.dropdown-menu {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2) !important;
+    padding: 5px 0 !important;
+    background-clip: padding-box !important;
+    position: absolute !important;
+    z-index: 10000 !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    overflow: visible !important;
+}
+
+    .dropdown-menu a {
+        padding: 8px 25px !important;
+    }
+
+.main-sidebar {
+    position: fixed;
+}
+
+.btn-fixed-bottom {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px;
+    width: auto;
+    border:0px;
+}

@@ -1,0 +1,42 @@
+﻿    <!-- right side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-right image">
+                <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-right info">
+                <p>علیرضا حسینی زاده</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> آنلاین</a>
+            </div>
+        </div>
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="@ReportsActive treeview">
+                <NavLink href="#" @onclick="ReportsClicked">
+                    <i class="fa fa-files-o"></i> <span>گزارش‌ها</span>
+                </NavLink>
+            </li>
+            <li class="@CreditActive treeview">
+                <NavLink href="#" @onclick="CreditClicked">
+                    <i class="fa fa-credit-card"></i>
+                    <span>اعتبار و تراکنش‌ها</span>
+                </NavLink>
+            </li>
+            <li class="@AboutActive treeview">
+                <NavLink href="#" @onclick="AboutClicked">
+                    <i class="fa fa-heart-o"></i> <span>درباره ما</span>
+                </NavLink>
+            </li>
+            <li class="nav-divider divider" />
+            <li class="@SignOutActive treeview">
+                <NavLink href="#" @onclick="SignOutClicked">
+                    <i class="fa fa-sign-out"></i>
+                    <span>خروج از حساب</span>
+                </NavLink>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
