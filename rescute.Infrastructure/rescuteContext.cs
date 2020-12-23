@@ -18,7 +18,7 @@ namespace rescute.Infrastructure
         public rescuteContext() { }
         public DbSet<Report> Reports { get; private set; }
         public DbSet<Animal> Animals { get; private set; }
-        public DbSet<Domain.Aggregates.Samaritan> Samaritans { get; private set; }
+        public DbSet<Samaritan> Samaritans { get; private set; }
 
         public static string ConnectionString => "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=rescute;Integrated Security=SSPI;";
         //AttachDBFilename=rescute.mdf
@@ -35,12 +35,12 @@ namespace rescute.Infrastructure
 
 
             // Samaritan
-            modelBuilder.Entity<Domain.Aggregates.Samaritan>(b => b.HasKey(samaritan => samaritan.Id));
-            modelBuilder.Entity<Domain.Aggregates.Samaritan>(b => b.Property(samaritan => samaritan.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<rescute.Domain.Aggregates.Samaritan>.Generate(Guid.Parse(v))));
-            modelBuilder.Entity<Domain.Aggregates.Samaritan>(b => b.OwnsOne(samaritan => samaritan.Mobile));
-            modelBuilder.Entity<Domain.Aggregates.Samaritan>(b => b.OwnsOne(samaritan => samaritan.FirstName));
-            modelBuilder.Entity<Domain.Aggregates.Samaritan>(b => b.OwnsOne(samaritan => samaritan.LastName));
-            modelBuilder.Entity<Domain.Aggregates.Samaritan>(b => b.ToTable("Samaritans"));
+            modelBuilder.Entity<Samaritan>(b => b.HasKey(samaritan => samaritan.Id));
+            modelBuilder.Entity<Samaritan>(b => b.Property(samaritan => samaritan.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Samaritan>.Generate(Guid.Parse(v))));
+            modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.Mobile));
+            modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.FirstName));
+            modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.LastName));
+            modelBuilder.Entity<Samaritan>(b => b.ToTable("Samaritans"));
 
             // Animal
             modelBuilder.Entity<Animal>(b => b.HasKey(Animal => Animal.Id));
