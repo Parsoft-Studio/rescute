@@ -5,14 +5,15 @@ using System.Text;
 
 namespace rescute.Domain.ValueObjects
 {
-    public sealed class DocumentType : ValueObject
+    public sealed class AttachmentType : ValueObject
     {
-        public static DocumentType Image = new DocumentType("Image");
-        public static DocumentType Video = new DocumentType("Video");
-        public static DocumentType TestResult = new DocumentType("TestResult");
-        public static DocumentType Bill = new DocumentType("Bill");
+        public static AttachmentType Image = new AttachmentType("Image");
+        public static AttachmentType Video = new AttachmentType("Video");
+        public static AttachmentType TestResult = new AttachmentType("TestResult");
+        public static AttachmentType Bill = new AttachmentType("Bill");
+        public static AttachmentType ProfilePicture = new AttachmentType("ProfilePicture");
         public string Type { get; private set; }
-        public DocumentType(string type)
+        public AttachmentType(string type)
         {
             Type = type;
         }
@@ -20,6 +21,6 @@ namespace rescute.Domain.ValueObjects
         {
             return this.Type;
         }
-        private DocumentType() { }
+        private AttachmentType() { }
     }
 }

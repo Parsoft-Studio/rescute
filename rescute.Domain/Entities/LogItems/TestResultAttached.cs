@@ -7,11 +7,11 @@ using System.Text;
 
 namespace rescute.Domain.Entities.LogItems
 {
-    public class TestResultAttached : DocumentedLogItem
+    public class TestResultAttached : LogItemWithAttachments
 
     {
-        public override IReadOnlyList<DocumentType> AcceptableDocumentTypes => new DocumentType[] { DocumentType.TestResult };
-        public TestResultAttached(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, string description, params Document[] documents) : base(eventDate, createdBy, description, documents)
+        public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.TestResult };
+        public TestResultAttached(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, string description, params Attachment[] documents) : base(eventDate, createdBy, description, documents)
         {
 
         }

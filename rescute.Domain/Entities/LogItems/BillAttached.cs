@@ -7,15 +7,15 @@ using System.Text;
 
 namespace rescute.Domain.Entities.LogItems
 {
-    public class BillAttached : DocumentedLogItem
+    public class BillAttached : LogItemWithAttachments
 
     {
         public long Total { get; private set; }
         public bool ContributionRequested { get; private set; }
 
-        public override IReadOnlyList<DocumentType> AcceptableDocumentTypes => new DocumentType[] { DocumentType.Bill };
+        public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.Bill };
 
-        public BillAttached(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, string description, params Document[] documents) : base(eventDate, createdBy, description, documents) { }
+        public BillAttached(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, string description, params Attachment[] documents) : base(eventDate, createdBy, description, documents) { }
 
         public void UpdateTotal(long newTotal)
         {

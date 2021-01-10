@@ -8,8 +8,7 @@ namespace rescute.Infrastructure
 {
     interface IUnitOfWork
     {
-        IAnimalRepository Animals { get; }
-        IReportRepository Reports { get; }
+        IAnimalRepository Animals { get; }        
         ISamaritanRepository Samaritans { get; }
 
         Task Complete();

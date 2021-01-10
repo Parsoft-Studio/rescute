@@ -5,14 +5,14 @@ using System.Text;
 
 namespace rescute.Domain.Entities.LogItems
 {
-    public class Commented : ReportLogItem, ILogItemReplier
+    public class Commented : LogItem, ILogItemReplier
     {
-        public Commented(DateTime eventDate, Aggregates.Samaritan createdBy, string comment, ReportLogItem replyTo) : base(eventDate, createdBy, comment)
+        public Commented(DateTime eventDate, Aggregates.Samaritan createdBy, string comment, LogItem replyTo) : base(eventDate, createdBy, comment)
         {
             RepliesTo = replyTo;
         }
 
-        public ReportLogItem RepliesTo { get; private set; }
+        public LogItem RepliesTo { get; private set; }
 
         private Commented() { }
     }

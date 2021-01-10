@@ -13,7 +13,6 @@ namespace rescute.Infrastructure
 
         private SamaritanRepository samaritans;
         private AnimalRepository animals;
-        private ReportRepository reports;
 
         public UnitOfWork(rescuteContext c)
         {
@@ -21,13 +20,11 @@ namespace rescute.Infrastructure
 
             samaritans = new SamaritanRepository(context);
             animals = new AnimalRepository(context);
-            reports = new ReportRepository(context);
 
         }
 
         public IAnimalRepository Animals => animals;
 
-        public IReportRepository Reports => reports;
 
         public ISamaritanRepository Samaritans => samaritans;
 

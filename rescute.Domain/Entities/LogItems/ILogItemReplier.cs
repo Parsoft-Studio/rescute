@@ -5,10 +5,10 @@ using System.Text;
 namespace rescute.Domain.Entities.LogItems
 {
     /// <summary>
-    /// Represents an item that can be considered as a reply to a <see cref="ReportLogItem"/>.
+    /// Represents an item that can be considered as a reply to a <see cref="LogItem"/>.
     /// </summary>
     public interface ILogItemReplier
     {
-        ReportLogItem RepliesTo { get; }
+        LogItem RepliesTo { get; }
     }
 }

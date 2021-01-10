@@ -1,13 +1,39 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="wrapper">
-    <MainMenu />
+<div id="wrapper" class="@toggle">
+    <div class="bg-light border-left" id="sidebar-wrapper">
+        <div class="sidebar-heading">Start Bootstrap </div>
+        <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+        </div>
+    </div>
 
-    
-    <div class="content-wrapper">
-        @Body
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle" @onclick="@ToggleMenu">Toggle Menu</button>
+        </nav>
+        <div class="container-fluid">
+            @Body
+        </div>
     </div>
 </div>
 @code
 {
+    private string toggle;
+    private void ToggleMenu()
+    {
+        if (string.IsNullOrEmpty(toggle))
+        {
+            toggle = "toggled";
+        }
+        else
+        {
+            toggle = string.Empty;
+        }
+    }
 }

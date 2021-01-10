@@ -7,14 +7,14 @@ using System.Text;
 
 namespace rescute.Domain.Entities.LogItems
 {
-    public class VideoAttached : DocumentedLogItem, ILogItemReplier
+    public class VideoAttached : LogItemWithAttachments, ILogItemReplier
 
     {
-        public override IReadOnlyList<DocumentType> AcceptableDocumentTypes => new DocumentType[] { DocumentType.Video };
+        public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.Video };
 
-        public ReportLogItem RepliesTo { get; private set; }
+        public LogItem RepliesTo { get; private set; }
 
-        public VideoAttached(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, string description, params Document[] documents) : base(eventDate, createdBy, description, documents)
+        public VideoAttached(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, string description, params Attachment[] documents) : base(eventDate, createdBy, description, documents)
         {
 
         }
