@@ -16,7 +16,6 @@ namespace rescute.Infrastructure
 
         }
         public rescuteContext() { }
-        public DbSet<Report> Reports { get; private set; }
         public DbSet<Animal> Animals { get; private set; }
         public DbSet<Samaritan> Samaritans { get; private set; }
 
@@ -43,32 +42,36 @@ namespace rescute.Infrastructure
             modelBuilder.Entity<Samaritan>(b => b.ToTable("Samaritans"));
 
             // Animal
-            modelBuilder.Entity<Animal>(b => b.HasKey(Animal => Animal.Id));
-            modelBuilder.Entity<Animal>(b => b.Property(Animal => Animal.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Animal>.Generate(Guid.Parse(v))));
+            modelBuilder.Entity<Animal>(b => b.HasKey(animal => animal.Id));
+            modelBuilder.Entity<Animal>(b => b.Property(animal => animal.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Animal>.Generate(Guid.Parse(v))));
+            modelBuilder.Entity<Animal>(b => b.HasMany(animal => animal.Log));
             modelBuilder.Entity<Animal>(b => b.OwnsOne(animal => animal.Type));
+            modelBuilder.Entity<Animal>(b => b.HasOne(animal => animal.IntroducedBy));
+            modelBuilder.Entity<Animal>(b => b.Ignore(animal => animal.AcceptableAttachmentTypes));
+            modelBuilder.Entity<Animal>(b => b.OwnsMany(animal => animal.Attachments, re =>
+            {
+                re.OwnsOne(attachment => attachment.Type);
+                re.ToTable("AnimalAttachments");
+            }));
+
             modelBuilder.Entity<Animal>(b => b.ToTable("Animals"));
 
             // ReportLogItem
-            modelBuilder.Entity<ReportLogItem>(b => b.HasKey(ReportLogItem => ReportLogItem.Id));
-            modelBuilder.Entity<ReportLogItem>(b => b.Property(ReportLogItem => ReportLogItem.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<ReportLogItem>.Generate(Guid.Parse(v))));
-            modelBuilder.Entity<ReportLogItem>(b => b.HasOne(ReportLogItem => ReportLogItem.Samaritan));
-            modelBuilder.Entity<ReportLogItem>(b => b.ToTable("ReportLogs"));
+            modelBuilder.Entity<LogItem>(b => b.HasKey(ReportLogItem => ReportLogItem.Id));
+            modelBuilder.Entity<LogItem>(b => b.Property(ReportLogItem => ReportLogItem.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<LogItem>.Generate(Guid.Parse(v))));
+            modelBuilder.Entity<LogItem>(b => b.HasOne(ReportLogItem => ReportLogItem.Samaritan));
+            modelBuilder.Entity<LogItem>(b => b.ToTable("AnimalLogs"));
 
-            // DocumentedLogItem
-            modelBuilder.Entity<DocumentedLogItem>(b => b.OwnsMany(documentedLogItem => documentedLogItem.Documents, re => 
+            // LogItemWithAttachment
+            modelBuilder.Entity<LogItemWithAttachments>(b => b.Ignore(logItemWithAttachments => logItemWithAttachments.AcceptableAttachmentTypes));
+            modelBuilder.Entity<LogItemWithAttachments>(b => b.OwnsMany(logItemWithAttachment => logItemWithAttachment.Attachments, re => 
             {
-                re.OwnsOne(document => document.Type);
-                re.ToTable("Documents");
+                re.OwnsOne(attachment => attachment.Type);
+                re.ToTable("AnimalLogAttachments");
             }));
-            
+           
 
-            // Report
-            modelBuilder.Entity<Report>(b => b.HasKey(report => report.Id));
-            modelBuilder.Entity<Report>(b => b.Property(report => report.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Report>.Generate(Guid.Parse(v))));
-            modelBuilder.Entity<Report>(b => b.HasMany(report => report.Logs));
-            modelBuilder.Entity<Report>(b => b.HasMany(report => report.Animals));
-            modelBuilder.Entity<Report>(b => b.HasOne(report => report.Samaritan));
-            modelBuilder.Entity<Report>(b => b.ToTable("Reports"));
+           
 
 
             // BillAttached
@@ -80,14 +83,14 @@ namespace rescute.Infrastructure
             modelBuilder.Entity<Commented>(b => b.HasOne(commented => commented.RepliesTo));
 
             // Contributed
-            modelBuilder.Entity<Contributed>(b => b.HasOne(contributed => contributed.Bill));
+            modelBuilder.Entity<SamaritanContributed>(b => b.HasOne(contributed => contributed.Bill));
 
 
             // ImageAttached
 
 
-            // ReportCreated
-            modelBuilder.Entity<ReportCreated>(b => b.OwnsOne(reportCreated => reportCreated.EventLocation));
+            // StatusReported
+            modelBuilder.Entity<StatusReported>(b => b.OwnsOne(statusReported => statusReported.EventLocation));
 
             // TransportRequested
             modelBuilder.Entity<TransportRequested>(b => b.OwnsOne(transportRequested => transportRequested.EventLocation));

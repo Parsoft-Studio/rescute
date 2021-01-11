@@ -1,76 +1,44 @@
-﻿
-.main-sidebar {
+﻿#wrapper {
+    overflow-x: hidden;
 }
 
-.wrapper .main-header {
-    margin-bottom: 50px;
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-right: -15rem;
+    -webkit-transition: margin-right .25s ease-out;
+    -moz-transition: margin-right .25s ease-out;
+    -o-transition: margin-right .25s ease-out;
+    transition: margin-right .25s ease-out;
 }
 
-.main-header .dropdown-toggle {
-    display: inline-block;
-    padding: 15px;
-    color: white;
-}
-
-    .main-header .dropdown-toggle:hover {
-        background-color: #367fa9;
+    #sidebar-wrapper .sidebar-heading {
+        padding: 0.875rem 1.25rem;
+        font-size: 1.2rem;
     }
 
-.main-header .sidebar-toggle {
-    padding-left: 19px !important;
-    padding-right: 19px !important;
-    background-color: #367fa9 !important;
-}
-
-    .main-header .sidebar-toggle a:hover {
-        border: none;
-        box-shadow: none;
-        background-color: transparent;
+    #sidebar-wrapper .list-group {
+        width: 15rem;
     }
 
-.sidebar-mini.sidebar-collapse .main-header .navbar {
-    margin-right: 0px;
+#page-content-wrapper {
+    min-width: 100vw;
 }
 
-.main-header .navbar .dropdown-menu li a {
-    color: #777 !important;
+#wrapper.toggled #sidebar-wrapper {
+    margin-right: 0;
 }
 
-    .main-header .navbar .dropdown-menu li a:hover {
-        color: #333 !important;
-        background-color: #e1e3e9 !important;
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-right: 0;
     }
 
-.main-header .navbar .dropdown-menu li.divider {
-    background-color: #eee !important;
-}
-
-.main-header .btn:active {
-    box-shadow: none;
-}
-
-.dropdown-menu {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2) !important;
-    padding: 5px 0 !important;
-    background-clip: padding-box !important;
-    position: absolute !important;
-    z-index: 10000 !important;
-    border: 1px solid rgba(0, 0, 0, 0.2) !important;
-    overflow: visible !important;
-}
-
-    .dropdown-menu a {
-        padding: 8px 25px !important;
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
     }
 
-.main-sidebar {
-    position: fixed;
-}
-
-.btn-fixed-bottom {
-    position: fixed !important;
-    bottom: 20px !important;
-    left: 20px;
-    width: auto;
-    border:0px;
+    #wrapper.toggled #sidebar-wrapper {
+        margin-right: -15rem;
+    }
 }

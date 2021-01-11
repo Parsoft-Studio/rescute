@@ -5,7 +5,7 @@ using System.Text;
 
 namespace rescute.Domain.Entities.LogItems
 {
-    public class TransportRequested: ReportLogItem, ITransport
+    public class TransportRequested: LogItem, ITransport
     {
         public TransportRequested(DateTime eventDate, Aggregates.Samaritan createdBy, MapPoint from, MapPoint to, string description) : base(eventDate, createdBy, description)
         {

@@ -6,10 +6,10 @@ using System.Text;
 
 namespace rescute.Domain.Exceptions
 {
-    public class InvalidDocumentType : Exception
+    public class InvalidAttachmentType : Exception
     {
-        private List<DocumentType> types = new List<DocumentType>();
-        public InvalidDocumentType(params DocumentType[] acceptableTypes)
+        private List<AttachmentType> types = new List<AttachmentType>();
+        public InvalidAttachmentType(params AttachmentType[] acceptableTypes)
         {
             types.AddRange(acceptableTypes);
         }
@@ -22,7 +22,7 @@ namespace rescute.Domain.Exceptions
                 {
                     typeString += t.ToString() + ", ";
                 }
-                return "Invalid document type. Acceptable types: " + typeString;
+                return "Invalid attachment type. Acceptable types: " + typeString;
             }
         }
     }
