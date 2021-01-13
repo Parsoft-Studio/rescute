@@ -6,5 +6,7 @@ namespace rescute.Domain.Exceptions
 {
     public class ContributionExceedsRequirement : Exception
     {
+        public ContributionExceedsRequirement():base("Contribution exceeds bill amount.")
+        { }
     }
 }

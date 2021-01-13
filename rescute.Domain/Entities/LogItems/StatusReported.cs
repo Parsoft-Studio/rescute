@@ -11,7 +11,7 @@ namespace rescute.Domain.Entities.LogItems
         public MapPoint EventLocation { get; private set; }
 
         public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.Image, AttachmentType.Video };
-        public StatusReported(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, MapPoint location, string description, params Attachment[] documents) : base(eventDate, createdBy, description, documents)
+        public StatusReported(DateTime eventDate, rescute.Domain.Aggregates.Samaritan createdBy, MapPoint location, string description, params Attachment[] attachments) : base(eventDate, createdBy, description, attachments)
         {
             EventLocation = location;
         }

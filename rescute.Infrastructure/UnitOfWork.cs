@@ -16,13 +16,15 @@ namespace rescute.Infrastructure
 
         public UnitOfWork(rescuteContext c)
         {
+            if (c is null) throw new ArgumentNullException("Context is required.");
+
             context = c;
 
             samaritans = new SamaritanRepository(context);
             animals = new AnimalRepository(context);
 
         }
-
+        private UnitOfWork() { }
         public IAnimalRepository Animals => animals;
 
 
@@ -31,6 +33,11 @@ namespace rescute.Infrastructure
         public async Task Complete()
         {
             await context.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
         }
     }
 }

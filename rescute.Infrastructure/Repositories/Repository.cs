@@ -13,7 +13,7 @@ namespace rescute.Infrastructure.Repositories
     public abstract class Repository<T> : IRepository<T> where T : AggregateRoot<T>
 
     {
-        private DbContext context;
+        private readonly DbContext context;
         public Repository(DbContext c)
         {
             this.context = c;
@@ -40,6 +40,15 @@ namespace rescute.Infrastructure.Repositories
         public void Remove(T item)
         {
             context.Set<T>().Remove(item);
+        }
+
+        public void RemoveAll()
+        {
+            context.Set<T>().RemoveRange(context.Set<T>().ToArray());
+            var entityType = context.Model.FindEntityType(typeof(T));
+            var tableName = entityType.GetTableName();
+            var schema= entityType.GetSchema();
+            context.Database.ExecuteSqlRaw($"DELETE FROM {schema}.{tableName}");
         }
     }
 }
