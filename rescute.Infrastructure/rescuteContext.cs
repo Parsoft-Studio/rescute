@@ -13,13 +13,20 @@ namespace rescute.Infrastructure
     {
         public rescuteContext(DbContextOptions<rescuteContext> options) : base(options)
         {
-
+            ConnectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=rescute;Integrated Security=SSPI;";
         }
-        public rescuteContext() { }
+        public rescuteContext()
+        {
+            ConnectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=rescute;Integrated Security=SSPI;";
+        }
+        public rescuteContext(string connectionString)
+        {
+            ConnectionString = connectionString;
+        }
         public DbSet<Animal> Animals { get; private set; }
         public DbSet<Samaritan> Samaritans { get; private set; }
 
-        public static string ConnectionString => "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=rescute;Integrated Security=SSPI;";
+        public string ConnectionString { get; set; }
         //AttachDBFilename=rescute.mdf
         public static string Schema => "rescute";
 
@@ -64,20 +71,20 @@ namespace rescute.Infrastructure
 
             // LogItemWithAttachment
             modelBuilder.Entity<LogItemWithAttachments>(b => b.Ignore(logItemWithAttachments => logItemWithAttachments.AcceptableAttachmentTypes));
-            modelBuilder.Entity<LogItemWithAttachments>(b => b.OwnsMany(logItemWithAttachment => logItemWithAttachment.Attachments, re => 
+            modelBuilder.Entity<LogItemWithAttachments>(b => b.OwnsMany(logItemWithAttachment => logItemWithAttachment.Attachments, re =>
             {
                 re.OwnsOne(attachment => attachment.Type);
                 re.ToTable("AnimalLogAttachments");
             }));
-           
 
-           
+
+
 
 
             // BillAttached
             modelBuilder.Entity<BillAttached>(b => b.Property(billAttached => billAttached.Total));
             modelBuilder.Entity<BillAttached>(b => b.Property(billAttached => billAttached.ContributionRequested));
-           
+
 
             // Commented
             modelBuilder.Entity<Commented>(b => b.HasOne(commented => commented.RepliesTo));

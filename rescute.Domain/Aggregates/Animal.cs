@@ -17,7 +17,6 @@ namespace rescute.Domain.Aggregates
         private readonly List<Attachment> attachments = new List<Attachment>();
         public IReadOnlyCollection<LogItem> Log => log.OrderByDescending(l => l.EventDate).ToList().DeepCopy();
         public IReadOnlyList<Attachment> Attachments=> attachments.OrderByDescending(a => a.CreationDate).ToList().AsReadOnly();
-        public string CaseNumber { get; private set; }
         public AnimalType Type { get; private set; }
 
 

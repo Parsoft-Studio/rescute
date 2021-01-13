@@ -14,5 +14,6 @@ namespace rescute.Domain.Repositories
 
         void Add(T item);
         void Remove(T item);
+        void RemoveAll();
     }
 }

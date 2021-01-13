@@ -7,18 +7,19 @@ namespace rescute.Domain.Aggregates
 {
     public class Samaritan : AggregateRoot<Samaritan>
     {
-        public  Samaritan()
+        private  Samaritan()
         { }
 
-        public Samaritan(MyName firstName, MyName lastName, PhoneNumber mobile)
+        public Samaritan(Name firstName, Name lastName, PhoneNumber mobile)
         {
+            if (!mobile.IsMobile) throw new Domain.Exceptions.MobilePhoneExpected();
             FirstName = firstName;
             LastName = lastName;
             Mobile = mobile;
         }
 
-        public MyName FirstName { get; private set; }
-        public MyName LastName { get; private set; }
+        public Name FirstName { get; private set; }
+        public Name LastName { get; private set; }
 
         public PhoneNumber Mobile { get; private set; }
 

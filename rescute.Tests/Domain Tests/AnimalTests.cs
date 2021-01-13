@@ -8,14 +8,14 @@ using rescute.Domain.Entities.LogItems;
 using rescute.Domain.Exceptions;
 using System.Collections.Generic;
 
-namespace rescute.Tests
+namespace rescute.Tests.DomainTests
 {
-    public class AnimalTest
+    public class AnimalTests
     {
         [Fact]
-        public void SamaritanReportsAnimalAndStatus()
+        public void AnimalAndStatusReported()
         {
-            var samaritan = new Samaritan();
+            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
             var desc = "this is a status descritpion";
             var location = new MapPoint(10, 20);
             var animal = Animal.New(
@@ -33,13 +33,13 @@ namespace rescute.Tests
             animal.Log.First().GetType().Should().Be(typeof(StatusReported));
             animal.Log.First().Should().Be(inner);
             inner.Description.Should().Be(desc);
-            inner.EventLocation.Should().Be(location);            
+            inner.EventLocation.Should().Be(location);
             inner.Attachments.Count.Should().Be(2);
         }
         [Fact]
-        public void SamaritanRequestsTransport()
+        public void TransportRequestedForAnimal()
         {
-            var samaritan = new Samaritan();
+            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
 
             MapPoint point1 = new MapPoint(10, 20);
             MapPoint point2 = new MapPoint(30, 40);
@@ -67,9 +67,9 @@ namespace rescute.Tests
         }
 
         [Fact]
-        public void SamaritanAttachesBill()
+        public void BillAttachedForAnimal()
         {
-            var samaritan = new Samaritan();
+            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
             var billTotal = 150_000;
             var comment1 = "An animal was hurt here.";
             var comment2 = "I can't pay this on my own!";
@@ -104,8 +104,8 @@ namespace rescute.Tests
             var contribution_comment = "Here, have this contribution.";
             var contributionAmount = 100000;
 
-            var samaritan = new Samaritan();
-            var contributor = new Samaritan();
+            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
+            var contributor = new Samaritan(new Shared.Name("Pooya"), new Shared.Name("Bisadi"), new Shared.PhoneNumber(true, "09385242601"));
 
             var animal = Animal.New(
                 registrationDate: DateTime.Now,
@@ -131,8 +131,8 @@ namespace rescute.Tests
         [Fact]
         public void AnimalDoesntAcceptExcessContribution()
         {
-            var samaritan = new Samaritan();
-            var contributor = new Samaritan();
+            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
+            var contributor = new Samaritan(new Shared.Name("Pooya"), new Shared.Name("Bisadi"), new Shared.PhoneNumber(true, "09385242601"));
 
             var animal = Animal.New(
                 registrationDate: DateTime.Now,
@@ -167,8 +167,8 @@ namespace rescute.Tests
         [Fact]
         public void SamaritanCommentsOnLogItem()
         {
-            var samaritan = new Samaritan();
-            var commenter = new Samaritan();
+            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
+            var commenter = new Samaritan(new Shared.Name("Pooya"), new Shared.Name("Bisadi"), new Shared.PhoneNumber(true, "09385242601"));
             var merly_comment = "Haha! That's funny!";
 
 
@@ -198,7 +198,7 @@ namespace rescute.Tests
 
         public void TwoAnimalsOfDifferentTypeAreNotTheSame()
         {
-            var samaritan = new Samaritan();
+            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
             var animal1 = Animal.New(
                 registrationDate: DateTime.Now,
                 introducedBy: samaritan,
@@ -217,7 +217,7 @@ namespace rescute.Tests
         [Fact]
         public void EventsOnlyAcceptProperDocumentTypes()
         {
-            var sam = new Samaritan();
+            var sam = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"));
             var docImage = new Attachment(AttachmentType.Image, "filename", DateTime.Now, string.Empty);
             var docVid = new Attachment(AttachmentType.Video, "filename", DateTime.Now, string.Empty);
             var docTest = new Attachment(AttachmentType.TestResult, "filename", DateTime.Now, string.Empty);

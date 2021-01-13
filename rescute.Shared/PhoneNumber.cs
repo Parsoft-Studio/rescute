@@ -20,7 +20,7 @@ namespace rescute.Shared
                 IsMobile = isMobile;
             }
         }
-        public PhoneNumber()
+        private PhoneNumber()
         {
 
         }
