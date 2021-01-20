@@ -10,7 +10,7 @@ using rescute.Infrastructure;
 namespace rescute.Infrastructure.Migrations
 {
     [DbContext(typeof(rescuteContext))]
-    [Migration("20210110095500_InitialCreate")]
+    [Migration("20210120012543_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,13 +30,10 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<string>("BirthCertificateId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CaseNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IntroducedById")
+                    b.Property<string>("IntroducedBy")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("RegistrationDate")
@@ -44,9 +41,35 @@ namespace rescute.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IntroducedById");
+                    b.HasIndex("IntroducedBy");
 
                     b.ToTable("Animals");
+                });
+
+            modelBuilder.Entity("rescute.Domain.Aggregates.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommentText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RepliesTo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("RepliesTo");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("rescute.Domain.Aggregates.Samaritan", b =>
@@ -54,17 +77,23 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Samaritans");
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.LogItem", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.TimelineEvent", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AnimalId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -77,64 +106,34 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SamaritanId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AnimalId");
 
-                    b.HasIndex("SamaritanId");
+                    b.HasIndex("CreatedBy");
 
-                    b.ToTable("AnimalLogs");
+                    b.ToTable("TimelineEvents");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("LogItem");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("TimelineEvent");
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.Commented", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.TimelineEventWithAttachments", b =>
                 {
-                    b.HasBaseType("rescute.Domain.Entities.LogItems.LogItem");
+                    b.HasBaseType("rescute.Domain.Aggregates.TimelineEvents.TimelineEvent");
 
-                    b.Property<string>("RepliesToId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("RepliesToId");
-
-                    b.HasDiscriminator().HasValue("Commented");
+                    b.HasDiscriminator().HasValue("TimelineEventWithAttachments");
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.LogItemWithAttachments", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.TransportRequested", b =>
                 {
-                    b.HasBaseType("rescute.Domain.Entities.LogItems.LogItem");
-
-                    b.HasDiscriminator().HasValue("LogItemWithAttachments");
-                });
-
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.SamaritanContributed", b =>
-                {
-                    b.HasBaseType("rescute.Domain.Entities.LogItems.LogItem");
-
-                    b.Property<long>("Amount")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("BillId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("BillId");
-
-                    b.HasDiscriminator().HasValue("SamaritanContributed");
-                });
-
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.TransportRequested", b =>
-                {
-                    b.HasBaseType("rescute.Domain.Entities.LogItems.LogItem");
+                    b.HasBaseType("rescute.Domain.Aggregates.TimelineEvents.TimelineEvent");
 
                     b.HasDiscriminator().HasValue("TransportRequested");
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.BillAttached", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.BillAttached", b =>
                 {
-                    b.HasBaseType("rescute.Domain.Entities.LogItems.LogItemWithAttachments");
+                    b.HasBaseType("rescute.Domain.Aggregates.TimelineEvents.TimelineEventWithAttachments");
 
                     b.Property<bool>("ContributionRequested")
                         .HasColumnType("bit");
@@ -145,18 +144,18 @@ namespace rescute.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("BillAttached");
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.StatusReported", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.StatusReported", b =>
                 {
-                    b.HasBaseType("rescute.Domain.Entities.LogItems.LogItemWithAttachments");
+                    b.HasBaseType("rescute.Domain.Aggregates.TimelineEvents.TimelineEventWithAttachments");
 
                     b.HasDiscriminator().HasValue("StatusReported");
                 });
 
             modelBuilder.Entity("rescute.Domain.Aggregates.Animal", b =>
                 {
-                    b.HasOne("rescute.Domain.Aggregates.Samaritan", "IntroducedBy")
+                    b.HasOne("rescute.Domain.Aggregates.Samaritan", null)
                         .WithMany()
-                        .HasForeignKey("IntroducedById");
+                        .HasForeignKey("IntroducedBy");
 
                     b.OwnsOne("rescute.Domain.ValueObjects.AnimalType", "Type", b1 =>
                         {
@@ -226,9 +225,20 @@ namespace rescute.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("rescute.Domain.Aggregates.Comment", b =>
+                {
+                    b.HasOne("rescute.Domain.Aggregates.Samaritan", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedBy");
+
+                    b.HasOne("rescute.Domain.Aggregates.TimelineEvents.TimelineEvent", null)
+                        .WithMany()
+                        .HasForeignKey("RepliesTo");
+                });
+
             modelBuilder.Entity("rescute.Domain.Aggregates.Samaritan", b =>
                 {
-                    b.OwnsOne("rescute.Shared.MyName", "FirstName", b1 =>
+                    b.OwnsOne("rescute.Shared.Name", "FirstName", b1 =>
                         {
                             b1.Property<string>("SamaritanId")
                                 .HasColumnType("nvarchar(450)");
@@ -247,7 +257,7 @@ namespace rescute.Infrastructure.Migrations
                                 .HasForeignKey("SamaritanId");
                         });
 
-                    b.OwnsOne("rescute.Shared.MyName", "LastName", b1 =>
+                    b.OwnsOne("rescute.Shared.Name", "LastName", b1 =>
                         {
                             b1.Property<string>("SamaritanId")
                                 .HasColumnType("nvarchar(450)");
@@ -286,29 +296,24 @@ namespace rescute.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.LogItem", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.TimelineEvent", b =>
                 {
                     b.HasOne("rescute.Domain.Aggregates.Animal", null)
-                        .WithMany("Log")
-                        .HasForeignKey("AnimalId");
-
-                    b.HasOne("rescute.Domain.Aggregates.Samaritan", "Samaritan")
                         .WithMany()
-                        .HasForeignKey("SamaritanId");
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("rescute.Domain.Aggregates.Samaritan", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.Commented", b =>
-                {
-                    b.HasOne("rescute.Domain.Entities.LogItems.LogItem", "RepliesTo")
-                        .WithMany()
-                        .HasForeignKey("RepliesToId");
-                });
-
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.LogItemWithAttachments", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.TimelineEventWithAttachments", b =>
                 {
                     b.OwnsMany("rescute.Domain.ValueObjects.Attachment", "Attachments", b1 =>
                         {
-                            b1.Property<string>("LogItemWithAttachmentsId")
+                            b1.Property<string>("TimelineEventWithAttachmentsId")
                                 .HasColumnType("nvarchar(450)");
 
                             b1.Property<int>("Id")
@@ -328,16 +333,16 @@ namespace rescute.Infrastructure.Migrations
                             b1.Property<string>("FileName")
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("LogItemWithAttachmentsId", "Id");
+                            b1.HasKey("TimelineEventWithAttachmentsId", "Id");
 
-                            b1.ToTable("AnimalLogAttachments");
+                            b1.ToTable("TimelineEventAttachments");
 
                             b1.WithOwner()
-                                .HasForeignKey("LogItemWithAttachmentsId");
+                                .HasForeignKey("TimelineEventWithAttachmentsId");
 
                             b1.OwnsOne("rescute.Domain.ValueObjects.AttachmentType", "Type", b2 =>
                                 {
-                                    b2.Property<string>("AttachmentLogItemWithAttachmentsId")
+                                    b2.Property<string>("AttachmentTimelineEventWithAttachmentsId")
                                         .HasColumnType("nvarchar(450)");
 
                                     b2.Property<int>("AttachmentId")
@@ -348,24 +353,17 @@ namespace rescute.Infrastructure.Migrations
                                     b2.Property<string>("Type")
                                         .HasColumnType("nvarchar(max)");
 
-                                    b2.HasKey("AttachmentLogItemWithAttachmentsId", "AttachmentId");
+                                    b2.HasKey("AttachmentTimelineEventWithAttachmentsId", "AttachmentId");
 
-                                    b2.ToTable("AnimalLogAttachments");
+                                    b2.ToTable("TimelineEventAttachments");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("AttachmentLogItemWithAttachmentsId", "AttachmentId");
+                                        .HasForeignKey("AttachmentTimelineEventWithAttachmentsId", "AttachmentId");
                                 });
                         });
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.SamaritanContributed", b =>
-                {
-                    b.HasOne("rescute.Domain.Entities.LogItems.BillAttached", "Bill")
-                        .WithMany()
-                        .HasForeignKey("BillId");
-                });
-
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.TransportRequested", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.TransportRequested", b =>
                 {
                     b.OwnsOne("rescute.Domain.ValueObjects.MapPoint", "EventLocation", b1 =>
                         {
@@ -380,7 +378,7 @@ namespace rescute.Infrastructure.Migrations
 
                             b1.HasKey("TransportRequestedId");
 
-                            b1.ToTable("AnimalLogs");
+                            b1.ToTable("TimelineEvents");
 
                             b1.WithOwner()
                                 .HasForeignKey("TransportRequestedId");
@@ -399,14 +397,56 @@ namespace rescute.Infrastructure.Migrations
 
                             b1.HasKey("TransportRequestedId");
 
-                            b1.ToTable("AnimalLogs");
+                            b1.ToTable("TimelineEvents");
 
                             b1.WithOwner()
                                 .HasForeignKey("TransportRequestedId");
                         });
                 });
 
-            modelBuilder.Entity("rescute.Domain.Entities.LogItems.StatusReported", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.BillAttached", b =>
+                {
+                    b.OwnsMany("rescute.Domain.ValueObjects.BillContribution", "Contributions", b1 =>
+                        {
+                            b1.Property<string>("BillAttachedId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<long>("Amount")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("ContributorId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<DateTime>("Date")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Description")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("TransactionId")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("BillAttachedId", "Id");
+
+                            b1.HasIndex("ContributorId");
+
+                            b1.ToTable("BillContributions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BillAttachedId");
+
+                            b1.HasOne("rescute.Domain.Aggregates.Samaritan", null)
+                                .WithMany()
+                                .HasForeignKey("ContributorId");
+                        });
+                });
+
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineEvents.StatusReported", b =>
                 {
                     b.OwnsOne("rescute.Domain.ValueObjects.MapPoint", "EventLocation", b1 =>
                         {
@@ -421,7 +461,7 @@ namespace rescute.Infrastructure.Migrations
 
                             b1.HasKey("StatusReportedId");
 
-                            b1.ToTable("AnimalLogs");
+                            b1.ToTable("TimelineEvents");
 
                             b1.WithOwner()
                                 .HasForeignKey("StatusReportedId");

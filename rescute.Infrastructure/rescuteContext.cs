@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using rescute.Domain.Aggregates;
-using rescute.Domain.Entities.LogItems;
-using rescute.Domain.ValueObjects;
+using rescute.Domain.Aggregates.TimelineEvents;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace rescute.Infrastructure
 {
@@ -25,9 +21,11 @@ namespace rescute.Infrastructure
         }
         public DbSet<Animal> Animals { get; private set; }
         public DbSet<Samaritan> Samaritans { get; private set; }
+        public DbSet<TimelineEvent> TimelineEvents { get; private set; }
+        public DbSet<Comment> Comments { get; private set; }
 
         public string ConnectionString { get; set; }
-        //AttachDBFilename=rescute.mdf
+
         public static string Schema => "rescute";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -51,9 +49,8 @@ namespace rescute.Infrastructure
             // Animal
             modelBuilder.Entity<Animal>(b => b.HasKey(animal => animal.Id));
             modelBuilder.Entity<Animal>(b => b.Property(animal => animal.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Animal>.Generate(Guid.Parse(v))));
-            modelBuilder.Entity<Animal>(b => b.HasMany(animal => animal.Log));
             modelBuilder.Entity<Animal>(b => b.OwnsOne(animal => animal.Type));
-            modelBuilder.Entity<Animal>(b => b.HasOne(animal => animal.IntroducedBy));
+            modelBuilder.Entity<Animal>(b => b.HasOne<Samaritan>().WithMany().HasForeignKey(animal => animal.IntroducedBy));
             modelBuilder.Entity<Animal>(b => b.Ignore(animal => animal.AcceptableAttachmentTypes));
             modelBuilder.Entity<Animal>(b => b.OwnsMany(animal => animal.Attachments, re =>
             {
@@ -63,47 +60,51 @@ namespace rescute.Infrastructure
 
             modelBuilder.Entity<Animal>(b => b.ToTable("Animals"));
 
-            // ReportLogItem
-            modelBuilder.Entity<LogItem>(b => b.HasKey(ReportLogItem => ReportLogItem.Id));
-            modelBuilder.Entity<LogItem>(b => b.Property(ReportLogItem => ReportLogItem.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<LogItem>.Generate(Guid.Parse(v))));
-            modelBuilder.Entity<LogItem>(b => b.HasOne(ReportLogItem => ReportLogItem.Samaritan));
-            modelBuilder.Entity<LogItem>(b => b.ToTable("AnimalLogs"));
+            // TimelineEvent
+            modelBuilder.Entity<TimelineEvent>(b => b.HasKey(tEvent => tEvent.Id));
+            modelBuilder.Entity<TimelineEvent>(b => b.Property(tEvent => tEvent.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<TimelineEvent>.Generate(Guid.Parse(v))));
+            modelBuilder.Entity<TimelineEvent>(b => b.HasOne<Samaritan>().WithMany().HasForeignKey(tEvent => tEvent.CreatedBy).OnDelete(DeleteBehavior.Cascade));
+            modelBuilder.Entity<TimelineEvent>(b => b.HasOne<Animal>().WithMany().HasForeignKey(tEvent => tEvent.AnimalId).OnDelete(DeleteBehavior.Cascade));
+            modelBuilder.Entity<TimelineEvent>(b => b.ToTable("TimelineEvents"));
 
-            // LogItemWithAttachment
-            modelBuilder.Entity<LogItemWithAttachments>(b => b.Ignore(logItemWithAttachments => logItemWithAttachments.AcceptableAttachmentTypes));
-            modelBuilder.Entity<LogItemWithAttachments>(b => b.OwnsMany(logItemWithAttachment => logItemWithAttachment.Attachments, re =>
+            // TimelineEventWithAttachment
+            modelBuilder.Entity<TimelineEventWithAttachments>(b => b.Ignore(tEventWithAttachments => tEventWithAttachments.AcceptableAttachmentTypes));
+            modelBuilder.Entity<TimelineEventWithAttachments>(b => b.OwnsMany(tEventWithAttachment => tEventWithAttachment.Attachments, re =>
             {
                 re.OwnsOne(attachment => attachment.Type);
-                re.ToTable("AnimalLogAttachments");
+                re.ToTable("TimelineEventAttachments");
             }));
-
-
-
 
 
             // BillAttached
             modelBuilder.Entity<BillAttached>(b => b.Property(billAttached => billAttached.Total));
             modelBuilder.Entity<BillAttached>(b => b.Property(billAttached => billAttached.ContributionRequested));
+            modelBuilder.Entity<BillAttached>(b => b.OwnsMany(billAttached => billAttached.Contributions,re=>
+            {
+                re.HasOne<Samaritan>().WithMany().HasForeignKey(contribution => contribution.ContributorId);
+                re.ToTable("BillContributions");
+            }
 
-
-            // Commented
-            modelBuilder.Entity<Commented>(b => b.HasOne(commented => commented.RepliesTo));
-
-            // Contributed
-            modelBuilder.Entity<SamaritanContributed>(b => b.HasOne(contributed => contributed.Bill));
-
-
-            // ImageAttached
-
+            ));
 
             // StatusReported
             modelBuilder.Entity<StatusReported>(b => b.OwnsOne(statusReported => statusReported.EventLocation));
+
+            // TestResultAttached
+            // No configurable property
+
 
             // TransportRequested
             modelBuilder.Entity<TransportRequested>(b => b.OwnsOne(transportRequested => transportRequested.EventLocation));
             modelBuilder.Entity<TransportRequested>(b => b.OwnsOne(transportRequested => transportRequested.ToLocation));
 
-            // VideoAttached
+            // Comment
+            modelBuilder.Entity<Comment>(c => c.HasKey(comment => comment.Id));
+            modelBuilder.Entity<Comment>(c => c.Property(comment => comment.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Comment>.Generate(Guid.Parse(v))));
+            modelBuilder.Entity<Comment>(b => b.HasOne<TimelineEvent>().WithMany().HasForeignKey(comment=>comment.RepliesTo));
+            modelBuilder.Entity<Comment>(b => b.HasOne<Samaritan>().WithMany().HasForeignKey(comment=> comment.CreatedBy));
+            modelBuilder.Entity<Comment>(b => b.ToTable("Comments"));
+
         }
     }
 }

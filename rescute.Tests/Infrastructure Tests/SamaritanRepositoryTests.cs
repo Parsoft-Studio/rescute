@@ -20,7 +20,7 @@ namespace rescute.Tests.InfrastructureTests
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
-                    var samaritan = new Samaritan(new Name("Ehsan"), new Name("Hosseinkhani"), new PhoneNumber(true, "09355242601"));
+                    var samaritan = new Samaritan(new Name("Ehsan"), new Name("Hosseinkhani"), new PhoneNumber(true, "09355242601"), DateTime.Now);
 
                     unitOfWork.Samaritans.Add(samaritan);
                     await unitOfWork.Complete();

@@ -10,7 +10,7 @@ namespace rescute.Shared
         public override bool Equals(object obj)
         {
             var other = obj as ValueObject;
-            if (ReferenceEquals(obj, null)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return this.GetHashCode() == other.GetHashCode();
 
@@ -28,8 +28,8 @@ namespace rescute.Shared
         }
         public static bool operator ==(ValueObject first, ValueObject second)
         {
-            if (ReferenceEquals(first, null) && ReferenceEquals(second, null)) return true;
-            if (ReferenceEquals(first, null) || ReferenceEquals(second, null)) return false;
+            if (first is null && second is null) return true;
+            if (first is null || second is null) return false;
             return first.Equals(second);
         }
         public static bool operator !=(ValueObject first, ValueObject second)

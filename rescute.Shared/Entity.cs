@@ -13,9 +13,8 @@ namespace rescute.Shared
         public override bool Equals(object obj)
         {
             var other = obj as Entity<T>;
-            if (ReferenceEquals(obj ,null)) return false;            
-            if (ReferenceEquals(this, other)) return true;
-            return this.Id == other.Id;
+            if (obj is null) return false;
+            return ReferenceEquals(this, other) || this.Id == other.Id;
         }
         public override int GetHashCode()
         {
@@ -24,8 +23,8 @@ namespace rescute.Shared
 
         public static bool operator ==(Entity<T> first, Entity<T> second)
         {
-            if (ReferenceEquals(first, null) && ReferenceEquals(second, null)) return true;
-            if (ReferenceEquals(first, null) || ReferenceEquals(second, null)) return false;
+            if (first is null && second is null) return true;
+            if (first is null || second is null) return false;
             return first.Equals(second);
         }
         public static bool operator !=(Entity<T> first, Entity<T> second)
