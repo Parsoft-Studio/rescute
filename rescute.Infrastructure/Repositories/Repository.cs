@@ -28,11 +28,11 @@ namespace rescute.Infrastructure.Repositories
             return await context.Set<T>().SingleOrDefaultAsync(item => item.Id == id);
         }
 
-        public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await context.Set<T>().Where(predicate).ToListAsync();
         }
-        public async Task<IReadOnlyList<T>> GeAllAsync()
+        public async Task<IReadOnlyCollection<T>> GeAllAsync()
         {
             return await context.Set<T>().ToListAsync();
         }

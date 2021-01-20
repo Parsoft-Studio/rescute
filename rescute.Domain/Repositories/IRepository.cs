@@ -10,7 +10,7 @@ namespace rescute.Domain.Repositories
     public interface IRepository<T> where T : AggregateRoot<T>
     {
         Task<T> GetAsync(Id<T> id);
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
+        Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate);
 
         void Add(T item);
         void Remove(T item);
