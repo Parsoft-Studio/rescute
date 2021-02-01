@@ -27,14 +27,18 @@ namespace rescute.Infrastructure.Repositories
         {
             return await context.Set<T>().SingleOrDefaultAsync(item => item.Id == id);
         }
+        public async Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate, int pageSize, int pageIndex)
+        {
+            return await context.Set<T>().Where(predicate).Skip(pageIndex * pageSize).Take(pageSize).ToArrayAsync();
+        }
 
         public async Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            return await context.Set<T>().Where(predicate).ToListAsync();
+            return await context.Set<T>().Where(predicate).ToArrayAsync();
         }
-        public async Task<IReadOnlyCollection<T>> GeAllAsync()
+        public async Task<IReadOnlyCollection<T>> GetAllAsync()
         {
-            return await context.Set<T>().ToListAsync();
+            return await context.Set<T>().ToArrayAsync();
         }
 
         public void Remove(T item)
@@ -47,8 +51,9 @@ namespace rescute.Infrastructure.Repositories
             context.Set<T>().RemoveRange(context.Set<T>().ToArray());
             var entityType = context.Model.FindEntityType(typeof(T));
             var tableName = entityType.GetTableName();
-            var schema= entityType.GetSchema();
+            var schema = entityType.GetSchema();
             context.Database.ExecuteSqlRaw($"DELETE FROM {schema}.{tableName}");
         }
+
     }
 }

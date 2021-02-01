@@ -11,7 +11,8 @@ namespace rescute.Domain.Repositories
     {
         Task<T> GetAsync(Id<T> id);
         Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate);
-
+        Task<IReadOnlyCollection<T>> GetAllAsync();
+        Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate, int pageSize, int pageIndex);
         void Add(T item);
         void Remove(T item);
         void RemoveAll();

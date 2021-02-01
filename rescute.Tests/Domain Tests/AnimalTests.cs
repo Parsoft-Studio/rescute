@@ -23,13 +23,13 @@ namespace rescute.Tests.DomainTests
                 registrationDate: DateTime.Now,
                 introducedBy: samaritan.Id,
                 description: "this is an animal",
-                type: AnimalType.Sparrow);
+                type: AnimalType.Sparrow());
 
             var animal2 = new Animal(
                 registrationDate: DateTime.Now,
                 introducedBy: samaritan.Id,
                 description: "this is an animal",
-                type: AnimalType.Sparrow);
+                type: AnimalType.Sparrow());
 
             animal1.Should().NotBe(animal2);
         }

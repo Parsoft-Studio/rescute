@@ -20,10 +20,10 @@ namespace rescute.Infrastructure
 
             context = c;
 
-            samaritans = new SamaritanRepository(context);
-            animals = new AnimalRepository(context);
-            timelineEvents = new TimelineEventRepository(context);
-            comments = new CommentRepository(context);
+            this.samaritans = new SamaritanRepository(c);
+            this.animals = new AnimalRepository(c);
+            this.timelineEvents = new TimelineEventRepository(c);
+            this.comments = new CommentRepository(c);
         }
         private UnitOfWork() { }
         public IAnimalRepository Animals => animals;

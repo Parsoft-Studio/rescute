@@ -15,7 +15,7 @@ namespace rescute.Domain.Aggregates.TimelineEvents
         public bool ContributionRequested { get; private set; }
         public long ContributionsTotal => contributions.Count == 0 ? 0: contributions.Select(c => c.Amount).Aggregate((total, next) => total += next);
         public IReadOnlyCollection<BillContribution> Contributions => contributions.AsReadOnly();
-        public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.Bill };
+        public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.Bill() };
 
         public BillAttached(DateTime eventDate, Id<Samaritan> createdBy, Id<Animal> animalId, string description, long total, bool contributionRequested, params Attachment[] documents) : base(eventDate, createdBy, animalId, description, documents)
         {

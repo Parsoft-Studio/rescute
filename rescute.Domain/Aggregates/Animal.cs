@@ -9,22 +9,23 @@ namespace rescute.Domain.Aggregates
 {
     public class Animal : AggregateRoot<Animal>, IHasAttachments
     {
-        
+
         private readonly List<Attachment> attachments = new List<Attachment>();
-        
-        public IReadOnlyCollection<Attachment> Attachments=> attachments.OrderByDescending(a => a.CreationDate).ToList().AsReadOnly();
+
+        public IReadOnlyCollection<Attachment> Attachments => attachments.OrderByDescending(a => a.CreationDate).ToList().AsReadOnly();
         public AnimalType Type { get; private set; }
 
 
-        public IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.ProfilePicture };
-        public DateTime RegistrationDate { get ; private set ; }
-        public string Description { get ; private set ; }
+        public IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.ProfilePicture() };
+        public DateTime RegistrationDate { get; private set; }
+        public string Description { get; private set; }
         public string BirthCertificateId { get; private set; }
         public Id<Samaritan> IntroducedBy { get; private set; }
         private Animal() { }
 
-        public Animal (DateTime registrationDate, Id<Samaritan> introducedBy, string description, AnimalType type)
-        {            
+        public Animal(DateTime registrationDate, Id<Samaritan> introducedBy, string description, AnimalType type)
+        {
+
             UpdateRegistrationDate(registrationDate);
             UpdateDescription(description);
             UpdateIntroductionSamaritan(introducedBy);
@@ -33,11 +34,13 @@ namespace rescute.Domain.Aggregates
 
         public void UpdateAnimalType(AnimalType type)
         {
+            if (type == null) throw new ArgumentException("Value cannot be null.", nameof(type));
             Type = type;
         }
 
         public void UpdateIntroductionSamaritan(Id<Samaritan> introducedBy)
         {
+            if (introducedBy == null) throw new ArgumentException("Value cannot be null.", nameof(introducedBy));
             IntroducedBy = introducedBy;
         }
 

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\rescute.API\rescute.API.csproj" />
     <ProjectReference Include="..\rescute.Domain\rescute.Domain.csproj" />
     <ProjectReference Include="..\rescute.Infrastructure\rescute.Infrastructure.csproj" />
   </ItemGroup>

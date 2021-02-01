@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace rescute.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,8 @@ namespace rescute.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Samaritans", x => x.Id);
+                    table.PrimaryKey("PK_Samaritans", x => x.Id)
+                        .Annotation("SqlServer:Clustered", false);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,7 +44,8 @@ namespace rescute.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Animals", x => x.Id);
+                    table.PrimaryKey("PK_Animals", x => x.Id)
+                        .Annotation("SqlServer:Clustered", false);
                     table.ForeignKey(
                         name: "FK_Animals_Samaritans_IntroducedBy",
                         column: x => x.IntroducedBy,
@@ -63,7 +65,6 @@ namespace rescute.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FileName = table.Column<string>(nullable: true),
                     Type_Type = table.Column<string>(nullable: true),
-                    Alias = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CreationDate = table.Column<DateTime>(nullable: false)
                 },
@@ -99,7 +100,8 @@ namespace rescute.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TimelineEvents", x => x.Id);
+                    table.PrimaryKey("PK_TimelineEvents", x => x.Id)
+                        .Annotation("SqlServer:Clustered", false);
                     table.ForeignKey(
                         name: "FK_TimelineEvents_Animals_AnimalId",
                         column: x => x.AnimalId,
@@ -189,7 +191,6 @@ namespace rescute.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FileName = table.Column<string>(nullable: true),
                     Type_Type = table.Column<string>(nullable: true),
-                    Alias = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CreationDate = table.Column<DateTime>(nullable: false)
                 },
