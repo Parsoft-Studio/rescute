@@ -10,8 +10,8 @@ using rescute.Infrastructure;
 namespace rescute.Infrastructure.Migrations
 {
     [DbContext(typeof(rescuteContext))]
-    [Migration("20210120012543_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210129100958_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +39,8 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", false);
 
                     b.HasIndex("IntroducedBy");
 
@@ -80,7 +81,8 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", false);
 
                     b.ToTable("Samaritans");
                 });
@@ -106,7 +108,8 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", false);
 
                     b.HasIndex("AnimalId");
 
@@ -182,9 +185,6 @@ namespace rescute.Infrastructure.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Alias")
-                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("CreationDate")
                                 .HasColumnType("datetime2");
@@ -320,9 +320,6 @@ namespace rescute.Infrastructure.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Alias")
-                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("CreationDate")
                                 .HasColumnType("datetime2");

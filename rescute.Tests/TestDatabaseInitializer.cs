@@ -8,6 +8,7 @@ namespace rescute.Tests.InfrastructureTests
 {
     /// <summary>
     /// This class drops and recreates the test database to be used by Infrastructure tests.
+    /// For any test class that accessed the test database, a [Collection("Database collection")] attribute must be applied.
     /// </summary>
     public class TestDatabaseInitializer : IDisposable
     {

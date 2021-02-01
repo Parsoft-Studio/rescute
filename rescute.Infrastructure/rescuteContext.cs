@@ -39,7 +39,7 @@ namespace rescute.Infrastructure
 
 
             // Samaritan
-            modelBuilder.Entity<Samaritan>(b => b.HasKey(samaritan => samaritan.Id));
+            modelBuilder.Entity<Samaritan>(b => b.HasKey(samaritan => samaritan.Id).IsClustered(false));
             modelBuilder.Entity<Samaritan>(b => b.Property(samaritan => samaritan.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Samaritan>.Generate(Guid.Parse(v))));
             modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.Mobile));
             modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.FirstName));
@@ -47,7 +47,7 @@ namespace rescute.Infrastructure
             modelBuilder.Entity<Samaritan>(b => b.ToTable("Samaritans"));
 
             // Animal
-            modelBuilder.Entity<Animal>(b => b.HasKey(animal => animal.Id));
+            modelBuilder.Entity<Animal>(b => b.HasKey(animal => animal.Id).IsClustered(false));
             modelBuilder.Entity<Animal>(b => b.Property(animal => animal.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<Animal>.Generate(Guid.Parse(v))));
             modelBuilder.Entity<Animal>(b => b.OwnsOne(animal => animal.Type));
             modelBuilder.Entity<Animal>(b => b.HasOne<Samaritan>().WithMany().HasForeignKey(animal => animal.IntroducedBy));
@@ -61,7 +61,7 @@ namespace rescute.Infrastructure
             modelBuilder.Entity<Animal>(b => b.ToTable("Animals"));
 
             // TimelineEvent
-            modelBuilder.Entity<TimelineEvent>(b => b.HasKey(tEvent => tEvent.Id));
+            modelBuilder.Entity<TimelineEvent>(b => b.HasKey(tEvent => tEvent.Id).IsClustered(false));
             modelBuilder.Entity<TimelineEvent>(b => b.Property(tEvent => tEvent.Id).HasConversion(v => v.Value.ToString(), v => Shared.Id<TimelineEvent>.Generate(Guid.Parse(v))));
             modelBuilder.Entity<TimelineEvent>(b => b.HasOne<Samaritan>().WithMany().HasForeignKey(tEvent => tEvent.CreatedBy).OnDelete(DeleteBehavior.Cascade));
             modelBuilder.Entity<TimelineEvent>(b => b.HasOne<Animal>().WithMany().HasForeignKey(tEvent => tEvent.AnimalId).OnDelete(DeleteBehavior.Cascade));

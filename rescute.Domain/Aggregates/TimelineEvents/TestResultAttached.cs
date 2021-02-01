@@ -11,7 +11,7 @@ namespace rescute.Domain.Aggregates.TimelineEvents
     public class TestResultAttached : TimelineEventWithAttachments
 
     {
-        public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.TestResult };
+        public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.TestResult() };
         public TestResultAttached(DateTime eventDate, Id<Samaritan> createdBy, Id<Animal> animalId, string description, params Attachment[] documents) : base(eventDate, createdBy, animalId, description, documents)
         {
 

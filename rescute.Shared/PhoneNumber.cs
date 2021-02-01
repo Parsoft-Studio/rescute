@@ -20,6 +20,10 @@ namespace rescute.Shared
                 IsMobile = isMobile;
             }
         }
+        public override string ToString()
+        {
+            return Value;
+        }
         private PhoneNumber()
         {
 

@@ -37,7 +37,8 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", false);
 
                     b.HasIndex("IntroducedBy");
 
@@ -78,7 +79,8 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", false);
 
                     b.ToTable("Samaritans");
                 });
@@ -104,7 +106,8 @@ namespace rescute.Infrastructure.Migrations
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", false);
 
                     b.HasIndex("AnimalId");
 
@@ -180,9 +183,6 @@ namespace rescute.Infrastructure.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Alias")
-                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("CreationDate")
                                 .HasColumnType("datetime2");
@@ -318,9 +318,6 @@ namespace rescute.Infrastructure.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Alias")
-                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("CreationDate")
                                 .HasColumnType("datetime2");

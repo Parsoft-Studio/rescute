@@ -16,7 +16,7 @@ namespace rescute.Tests.DomainTests
     {
 
         [Fact]
-        public void AnimalDoesntAcceptExcessContribution()
+        public void BillDoesntAcceptExcessContribution()
         {
             var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"), DateTime.Now);
             var contributor = new Samaritan(new Shared.Name("Pooya"), new Shared.Name("Bisadi"), new Shared.PhoneNumber(true, "09385242601"), DateTime.Now);
@@ -25,7 +25,7 @@ namespace rescute.Tests.DomainTests
                 DateTime.Now,
                 introducedBy: samaritan.Id,
                 description: "this is an animal",
-                type: AnimalType.Pigeon);
+                type: AnimalType.Pigeon());
 
             var bill = new BillAttached(
                 DateTime.Now,
@@ -34,7 +34,7 @@ namespace rescute.Tests.DomainTests
                  "I can't pay this on my own!",
                  billTotal,
                  true,
-                new Attachment(AttachmentType.Bill, "filename", DateTime.Now, string.Empty)
+                new Attachment(AttachmentType.Bill(), "filename", DateTime.Now, string.Empty)
                 );
 
             Action action = () =>
@@ -48,11 +48,11 @@ namespace rescute.Tests.DomainTests
         public void EventsOnlyAcceptProperDocumentTypes()
         {
             var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"), DateTime.Now);
-            var animal = new Animal(DateTime.Now, introducedBy: samaritan.Id, description: "this is an animal", type: AnimalType.Pigeon);
-            var docImage = new Attachment(AttachmentType.Image, "filename", DateTime.Now, string.Empty);
-            var docVid = new Attachment(AttachmentType.Video, "filename", DateTime.Now, string.Empty);
-            var docTest = new Attachment(AttachmentType.TestResult, "filename", DateTime.Now, string.Empty);
-            var docBill = new Attachment(AttachmentType.Bill, "filename", DateTime.Now, string.Empty);
+            var animal = new Animal(DateTime.Now, introducedBy: samaritan.Id, description: "this is an animal", type: AnimalType.Pigeon());
+            var docImage = new Attachment(AttachmentType.Image(), "filename", DateTime.Now, string.Empty);
+            var docVid = new Attachment(AttachmentType.Video(), "filename", DateTime.Now, string.Empty);
+            var docTest = new Attachment(AttachmentType.TestResult(), "filename", DateTime.Now, string.Empty);
+            var docBill = new Attachment(AttachmentType.Bill(), "filename", DateTime.Now, string.Empty);
             var point = new MapPoint(0, 0);
 
             // StatusReported

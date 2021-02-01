@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace rescute.Infrastructure
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         IAnimalRepository Animals { get; }
         ISamaritanRepository Samaritans { get; }

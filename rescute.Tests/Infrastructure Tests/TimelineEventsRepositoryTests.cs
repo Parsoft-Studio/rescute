@@ -22,10 +22,10 @@ namespace rescute.Tests.InfrastructureTests
                 using (var unitOfWork = new UnitOfWork(context))
                 {
                     var samaritan = new Samaritan(new Name("Ehsan"), new Name("Hosseinkhani"), new PhoneNumber(true, "09355242601"), DateTime.Now);
-                    var animal = new Animal(DateTime.Now, samaritan.Id, "This is my good pet.", AnimalType.Cat);
+                    var animal = new Animal(DateTime.Now, samaritan.Id, "This is my good pet.", AnimalType.Cat());
                     animal.UpdateBirthCertificateId("birth_cert_id");
 
-                    var tEvent = new StatusReported(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), "This is the cat's status.", new Attachment(AttachmentType.Image, "filename.jpg", DateTime.Now, "Picture of the cat"));
+                    var tEvent = new StatusReported(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), "This is the cat's status.", new Attachment(AttachmentType.Image(), "filename.jpg", DateTime.Now, "Picture of the cat"));
 
                     unitOfWork.Animals.Add(animal);
                     unitOfWork.Samaritans.Add(samaritan);
@@ -60,7 +60,7 @@ namespace rescute.Tests.InfrastructureTests
                         registrationDate: DateTime.Now,
                         introducedBy: samaritan.Id,
                         description: "this is an animal",
-                        type: AnimalType.Dog);
+                        type: AnimalType.Dog());
 
                     var bill = new BillAttached(DateTime.Now,
                         samaritan.Id,
@@ -68,7 +68,7 @@ namespace rescute.Tests.InfrastructureTests
                         "I can't pay this on my own!",
                         billAmount,
                         true,
-                        new Attachment(AttachmentType.Bill, "filename", DateTime.Now, string.Empty)
+                        new Attachment(AttachmentType.Bill(), "filename", DateTime.Now, string.Empty)
                         );
 
                     bill.Contribute(new BillContribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment));
