@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using rescute.API.Extensions;
 using rescute.API.Models;
-using rescute.API.Services;
+using rescute.Infrastructure.Services;
 using rescute.Domain.Aggregates;
 using rescute.Domain.ValueObjects;
 using rescute.Infrastructure;
@@ -54,11 +54,10 @@ namespace rescute.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AnimalGetModel>>> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
-            var animals = await unitOfWork.Animals.GetAsync(a => true, pageSize, pageIndex);
+            var animals = await unitOfWork.Animals.GetAsync(a =>  true, pageSize, pageIndex);
             return Ok(animals.ToModel(relativeAttachmentsRoot));
         }
         [HttpGet("{id}")]
-
         public async Task<ActionResult<AnimalGetModel>> Get([FromRoute] Guid id)
         {
             var animal = await unitOfWork.Animals.GetAsync(Id<Animal>.Generate(id));

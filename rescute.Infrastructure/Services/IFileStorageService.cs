@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace rescute.API.Services
+namespace rescute.Infrastructure.Services
 {
     public interface IFileStorageService
     {
         /// <summary>
-        /// The root directory of tha application in which attachments directory is located.
+        /// The full path of the application's root directory, in which attachments directory is located.
         /// </summary>
         string StorageRootDirectory { get; }
         /// <summary>
-        /// The directory within the storage root directory where all attachments are stored. Includes the root directory path.
+        /// The full path of the directory within the storage root directory where all attachments are stored.
         /// </summary>
         string AttachmentsDirectory { get; }
         /// <summary>

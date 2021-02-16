@@ -15,46 +15,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using System.Threading.Tasks;
+using rescute.Domain.Aggregates.TimelineEvents;
 
 namespace rescute.Tests.APITests
 {
 
     [Collection("Database collection")]
-    public class AnimalsControllerTests
+    public class TimelineEventsControllerTests
     {
         private readonly IConfiguration config = new Configuration();
         [Fact]
-        public async Task AnimalControllerPostsAnimal()
-        {
-            // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
-            {
-                using (var uoW = new UnitOfWork(context))
-                {
-                    var animalDesc = "my new animal";
-                    var attachments = FileStorageServiceTests.CreateIFormFileAttachments(3, 4, 5, "descritpion for files");
-
-                    var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new AnimalsController(storageService, uoW, config);
-                    var postModel = new AnimalPostModel() { AnimalType = AnimalType.Pigeon().ToString(), Description = animalDesc, Attachments = attachments };
-                    // Act
-
-                    var result = await controller.PostAnimal(postModel);
-
-
-                    // Assert
-                    result.Should().NotBeNull();                    
-                    var created = result as CreatedAtActionResult;
-                    var getModel =  created.Value as AnimalGetModel;
-                    getModel.Attachments.Count().Should().Be(3);
-                    getModel.AnimalType.Should().Be(AnimalType.Pigeon().ToString());
-                    getModel.Description.Should().Be(animalDesc);
-                }
-            }
-        }
-                [Fact]
-        public async Task AnimalControllerGetsAnimal()
+        public async System.Threading.Tasks.Task TimelineEventsControllerGetsTimlineEvent()
         {
             // Arrange
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
@@ -62,13 +33,15 @@ namespace rescute.Tests.APITests
                 using (var uoW = new UnitOfWork(context))
                 {
                     var samaritan = new Samaritan(new Name("Test1"), new Name("Test2"), new PhoneNumber(true, "09355242601"), DateTime.Now);
+                    
+                    var animal = new Animal(DateTime.Now, samaritan.Id, $"Test description", AnimalType.Cat());
                     uoW.Samaritans.Add(samaritan);
-                    var animal = new Animal(DateTime.Now, samaritan.Id, $"Test description", AnimalType.Pigeon());
                     uoW.Animals.Add(animal);
+                    var timelineEvent = new StatusReported(DateTime.Now, samaritan.Id, animal.Id, "He's not feeling good",)
                     await uoW.Complete();
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new AnimalsController(storageService, uoW, config);
+                    var controller = new TimelineEventsController(storageService, uoW, config);
 
                     // Act
 

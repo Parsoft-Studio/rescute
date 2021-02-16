@@ -1,4 +1,4 @@
-﻿using rescute.API.Services;
+﻿using rescute.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -10,13 +10,33 @@ using Microsoft.Extensions.Primitives;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace rescute.Tests.APITests
+namespace rescute.Tests.InfrastructureTests
 {
 
     public class FileStorageServiceTests
     {
-        public const string TestFileStorageRoot = @"D:\Active Projects\rescute\rescute.API\bin\Debug\net5.0\FileStorageService Tests";
+        public static readonly string TestFileStorageRoot = Path.Combine(Environment.CurrentDirectory, "FileStorageService Tests");
+        public static IEnumerable<IFormFile> CreateIFormFileAttachments(int howManyFiles, int howManyBytesInFiles, byte byteData, string fileDescription)
+        {
+            var result = new List<IFormFile>();
+            var data = Array.CreateInstance(typeof(byte), howManyBytesInFiles);
 
+            for (int i = 0; i < data.Length; i++)
+            {
+                data.SetValue(byteData, i);
+            }
+            for (int i = 0; i < howManyFiles; i++)
+            {
+
+                var stream = new MemoryStream((byte[])data);
+                var file = new FormFile(stream, 0, howManyBytesInFiles, "name", $"fileName{i}.jpg");
+
+                var headerItem = new KeyValuePair<string, StringValues>("description", new StringValues(fileDescription));
+                file.Headers = new HeaderDictionary { headerItem };
+                yield return file;
+            }
+            //return result;
+        }
         [Fact]
         public async void StorageServiceStoresFileCorrectly()
         {
@@ -27,20 +47,12 @@ namespace rescute.Tests.APITests
             var attachmentDescription = "My test pet image.";
             FileInfo fileInfo;
             Attachment attachment;
-            using (var stream = new MemoryStream(new byte[4] { 5, 5, 5, 5 }))
-            {
-                var file = new FormFile(stream, 0, 4, "name", "fileName.jpg");
-                var headerItem = new KeyValuePair<string, StringValues>("description", new StringValues(attachmentDescription));
-                file.Headers = new HeaderDictionary
-                {
-                    headerItem
-                };
 
+            var files = CreateIFormFileAttachments(1, 4, 5, attachmentDescription);
 
-                // Act
-                attachment = await storageService.Store(file, parentDirectoryId, AttachmentType.Image());
+            // Act
+            attachment = await storageService.Store(files.First(), parentDirectoryId, AttachmentType.Image());
 
-            }
 
             // Assert
             attachment.Should().NotBeNull();
