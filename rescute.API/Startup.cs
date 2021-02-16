@@ -8,7 +8,7 @@ using rescute.Infrastructure;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using rescute.API.Validators;
-using rescute.API.Services;
+using rescute.Infrastructure.Services;
 using System.Collections.Generic;
 using Microsoft.Extensions.FileProviders;
 using System.IO;

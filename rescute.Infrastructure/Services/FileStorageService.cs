@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace rescute.API.Services
+namespace rescute.Infrastructure.Services
 {
     /// <summary>
     /// The default implementation of <see cref="IFileStorageService"/>.
@@ -21,7 +21,7 @@ namespace rescute.API.Services
 
         public FileStorageService(string storageRootDirectory, IEnumerable<string> validFileExtensions)
         {
-            if (validFileExtensions == null || !validFileExtensions.Any()) throw new ArgumentException(nameof(validFileExtensions));
+            if (validFileExtensions == null || !validFileExtensions.Any()) throw new ArgumentException("Valid file extensions should be provided.",nameof(validFileExtensions));
 
             StorageRootDirectory = storageRootDirectory;
             ValidFileExtensions = validFileExtensions.Select(ext => ext.ToLower()).ToList() as IReadOnlyCollection<string>;
