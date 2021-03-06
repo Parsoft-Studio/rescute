@@ -11,6 +11,7 @@ namespace rescute.Infrastructure
         IAnimalRepository Animals { get; }
         ISamaritanRepository Samaritans { get; }
         ITimelineEventRepository TimelineEvents { get; }
+        
         ICommentRepository Comments { get; }
         Task Complete();
     }

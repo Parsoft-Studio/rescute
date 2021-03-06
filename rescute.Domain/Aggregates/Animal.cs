@@ -76,5 +76,10 @@ namespace rescute.Domain.Aggregates
         {
             BirthCertificateId = newId;
         }
+        public static Animal RandomTestAnimal(Id<Samaritan> introducedBy)
+        {
+            return new Animal(DateTime.Now, introducedBy, "test animal", AnimalType.Cat());
+        }
+
     }
 }

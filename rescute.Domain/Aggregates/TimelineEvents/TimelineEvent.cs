@@ -5,7 +5,7 @@ using System.Text;
 
 namespace rescute.Domain.Aggregates.TimelineEvents
 {
-    public abstract class TimelineEvent: AggregateRoot<TimelineEvent>
+    public abstract class TimelineEvent: AggregateRoot<TimelineEvent> 
     {
         public  object Clone()
         {

@@ -33,7 +33,7 @@ namespace rescute.Tests.APITests
                 using (var uoW = new UnitOfWork(context))
                 {
                     var animalDesc = "my new animal";
-                    var attachments = FileStorageServiceTests.CreateIFormFileAttachments(3, 4, 5, "descritpion for files");
+                    var attachments = FileStorageServiceTests.CreateIFormFileAttachments(3, 4, 5, "descritpion for files","image/jpg");
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
                     var controller = new AnimalsController(storageService, uoW, config);
