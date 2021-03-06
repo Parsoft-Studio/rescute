@@ -16,7 +16,7 @@ namespace rescute.Tests.InfrastructureTests
     public class FileStorageServiceTests
     {
         public static readonly string TestFileStorageRoot = Path.Combine(Environment.CurrentDirectory, "FileStorageService Tests");
-        public static IEnumerable<IFormFile> CreateIFormFileAttachments(int howManyFiles, int howManyBytesInFiles, byte byteData, string fileDescription)
+        public static IEnumerable<IFormFile> CreateIFormFileAttachments(int howManyFiles, int howManyBytesInFiles, byte byteData, string fileDescription, string contentType)
         {
             var result = new List<IFormFile>();
             var data = Array.CreateInstance(typeof(byte), howManyBytesInFiles);
@@ -31,8 +31,9 @@ namespace rescute.Tests.InfrastructureTests
                 var stream = new MemoryStream((byte[])data);
                 var file = new FormFile(stream, 0, howManyBytesInFiles, "name", $"fileName{i}.jpg");
 
-                var headerItem = new KeyValuePair<string, StringValues>("description", new StringValues(fileDescription));
-                file.Headers = new HeaderDictionary { headerItem };
+                var descriptionHeader = new KeyValuePair<string, StringValues>("description", new StringValues(fileDescription));
+                var contentTypeHeader = new KeyValuePair<string, StringValues>("content-type", new StringValues(contentType));
+                file.Headers = new HeaderDictionary { descriptionHeader, contentTypeHeader };
                 yield return file;
             }
             //return result;
@@ -48,7 +49,7 @@ namespace rescute.Tests.InfrastructureTests
             FileInfo fileInfo;
             Attachment attachment;
 
-            var files = CreateIFormFileAttachments(1, 4, 5, attachmentDescription);
+            var files = CreateIFormFileAttachments(1, 4, 5, attachmentDescription, "video/mpeg");
 
             // Act
             attachment = await storageService.Store(files.First(), parentDirectoryId, AttachmentType.Image());

@@ -14,9 +14,11 @@ namespace rescute.Domain.ValueObjects
         }
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }
-        public MapPoint(double lattitude, double longitude)
+        public MapPoint(double latitude, double longitude)
         {
-            Latitude = lattitude;
+            if ( latitude < -90 || latitude > 90) throw new ArgumentException("Lattitude must be between -90 and 90.");
+            if (longitude < -180 || longitude > 180) throw new ArgumentException("Longitude must be between -180 and 180.");
+            Latitude = latitude;
             Longitude = longitude;
         }
         private MapPoint (){}

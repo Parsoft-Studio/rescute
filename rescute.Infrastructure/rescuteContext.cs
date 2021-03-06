@@ -21,6 +21,7 @@ namespace rescute.Infrastructure
         }
         public DbSet<Animal> Animals { get; private set; }
         public DbSet<Samaritan> Samaritans { get; private set; }
+        
         public DbSet<TimelineEvent> TimelineEvents { get; private set; }
         public DbSet<Comment> Comments { get; private set; }
 
