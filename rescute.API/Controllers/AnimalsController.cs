@@ -54,6 +54,7 @@ namespace rescute.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AnimalGetModel>>> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
+            if (pageSize < 1 || pageIndex < 0) return BadRequest();
             var animals = await unitOfWork.Animals.GetAsync(a =>  true, pageSize, pageIndex);
             return Ok(animals.ToModel(relativeAttachmentsRoot));
         }

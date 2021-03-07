@@ -33,8 +33,8 @@ namespace rescute.API.Controllers
             this.storageService = storageService;
             this.relativeAttachmentsRoot = config["RelativeAttachmentsRootPath"];
         }
-        [Route("api/[controller]/StatusReports")]
-        [HttpPost]
+        
+        [HttpPost("api/[controller]/StatusReports")]
         public async Task<ActionResult> PostStatus([FromForm] StatusReportedPostModel statusModel)
         {
             var samaritan = Samaritan.RandomTestSamaritan();
@@ -67,16 +67,60 @@ namespace rescute.API.Controllers
         [HttpGet("api/[controller]/StatusReports")]
         public async Task<ActionResult<IEnumerable<StatusReportedGetModel>>> GetStatus([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
+            if (pageSize < 1 || pageIndex < 0) return BadRequest();
+
             var events = await unitOfWork.TimelineEvents.GetAsync<StatusReported>(a => true, pageSize, pageIndex);
             return Ok(events.ToModel(relativeAttachmentsRoot));
         }
-
         [HttpGet("api/[controller]/StatusReports/{id}")]
         public async Task<ActionResult<StatusReportedGetModel>> GetStatus([FromRoute] Guid id)
         {
+            
             var statusEvent = await unitOfWork.TimelineEvents.GetAsync(Id<TimelineEvent>.Generate(id));
             if (statusEvent == null) return NotFound();
             return Ok(((StatusReported)statusEvent).ToModel(relativeAttachmentsRoot));
+        }
+
+        [HttpPost("api/[controller]/TransportRequests")]
+        public async Task<ActionResult> PostTransportRequest([FromForm] TransportRequestedPostModel transportModel)
+        {
+            var samaritan = Samaritan.RandomTestSamaritan();
+            unitOfWork.Samaritans.Add(samaritan);
+
+
+            var animal = await unitOfWork.Animals.GetAsync(Id<Animal>.Generate(Guid.Parse(transportModel.AnimalId)));
+            if (animal == null) return NotFound(transportModel.AnimalId);
+
+            var transportRequested = new TransportRequested(DateTime.Now,
+                                                    samaritan.Id,
+                                                    animal.Id,
+                                                    new MapPoint(transportModel.Lattitude, transportModel.Longitude),
+                                                    new MapPoint(transportModel.ToLattitude, transportModel.ToLongitude),
+                                                    transportModel.Description);
+
+
+            unitOfWork.TimelineEvents.Add(transportRequested);
+
+            await unitOfWork.Complete();
+
+            return CreatedAtAction(nameof(GetTransportRequest), new { id = transportRequested.Id }, transportRequested.ToModel(relativeAttachmentsRoot));
+        }
+        [HttpGet("api/[controller]/TransportRequests")]
+        public async Task<ActionResult<IEnumerable<TransportRequestedGetModel>>> GetTransportRequests([FromQuery] int pageSize, [FromQuery] int pageIndex)
+        {
+            if (pageSize < 1 || pageIndex < 0) return BadRequest();
+
+            var events = await unitOfWork.TimelineEvents.GetAsync<TransportRequested>(a => true, pageSize, pageIndex);
+            return Ok(events.ToModel(relativeAttachmentsRoot));
+        }
+
+        [HttpGet("api/[controller]/TransportRequests/{id}")]
+        public async Task<ActionResult<TransportRequestedGetModel>> GetTransportRequest([FromRoute] Guid id)
+        {
+
+            var statusEvent = await unitOfWork.TimelineEvents.GetAsync(Id<TimelineEvent>.Generate(id));
+            if (statusEvent == null) return NotFound();
+            return Ok(((TransportRequested)statusEvent).ToModel(relativeAttachmentsRoot));
         }
 
     }
