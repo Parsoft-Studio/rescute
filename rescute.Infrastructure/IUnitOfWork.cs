@@ -10,7 +10,7 @@ namespace rescute.Infrastructure
     {
         IAnimalRepository Animals { get; }
         ISamaritanRepository Samaritans { get; }
-        ITimelineEventRepository TimelineEvents { get; }
+        ITimelineItemRepository TimelineItems { get; }
         
         ICommentRepository Comments { get; }
         Task Complete();

@@ -11,7 +11,7 @@ namespace rescute.Infrastructure
 
         private readonly SamaritanRepository samaritans;
         private readonly AnimalRepository animals;
-        private readonly TimelineEventRepository timelineEvents;
+        private readonly TimelineItemRepository timelineItems;
         private readonly CommentRepository comments;
 
         public UnitOfWork(rescuteContext c)
@@ -22,7 +22,7 @@ namespace rescute.Infrastructure
 
             this.samaritans = new SamaritanRepository(c);
             this.animals = new AnimalRepository(c);
-            this.timelineEvents = new TimelineEventRepository(c);
+            this.timelineItems = new TimelineItemRepository(c);
             this.comments = new CommentRepository(c);
         }
         private UnitOfWork() { }
@@ -31,7 +31,7 @@ namespace rescute.Infrastructure
 
         public ISamaritanRepository Samaritans => samaritans;
 
-        public ITimelineEventRepository TimelineEvents => timelineEvents;
+        public ITimelineItemRepository TimelineItems => timelineItems;
 
         public ICommentRepository Comments => comments;
 

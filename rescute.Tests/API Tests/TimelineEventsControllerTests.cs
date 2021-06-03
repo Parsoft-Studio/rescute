@@ -16,17 +16,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using System.Threading.Tasks;
-using rescute.Domain.Aggregates.TimelineEvents;
+using rescute.Domain.Aggregates.TimelineItems;
 
 namespace rescute.Tests.APITests
 {
 
     [Collection("Database collection")]
-    public class TimelineEventsControllerTests
+    public class TimelineItemsControllerTests
     {
         private readonly IConfiguration config = new Configuration();
         [Fact]
-        public async Task TimelineEventsControllerPostsStatusReport()
+        public async Task TimelineItemsControllerPostsStatusReport()
         {
             // Arrange
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
@@ -46,8 +46,8 @@ namespace rescute.Tests.APITests
                     var attachments = FileStorageServiceTests.CreateIFormFileAttachments(3, 4, 5, "descritpion for files", "image/png");
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new TimelineEventsController(storageService, uoW, config);
-                    var postModel = new StatusReportedPostModel() { Attachments = attachments, AnimalId = animal.Id.ToString(), Description = eventDesc, Lattitude = location.Latitude, Longitude = location.Longitude };
+                    var controller = new TimelineItemsController(storageService, uoW, config);
+                    var postModel = new StatusReportPostModel() { Attachments = attachments, AnimalId = animal.Id.ToString(), Description = eventDesc, Lattitude = location.Latitude, Longitude = location.Longitude };
 
 
                     // Act
@@ -58,7 +58,7 @@ namespace rescute.Tests.APITests
                     // Assert
                     result.Should().NotBeNull();
                     var created = result as CreatedAtActionResult;
-                    var getModel = created.Value as StatusReportedGetModel;
+                    var getModel = created.Value as StatusReportGetModel;
                     getModel.Attachments.Count().Should().Be(3);
                     getModel.AnimalId.Should().Be(animal.Id.ToString());
                     getModel.Lattitude.Should().Be(location.Latitude);
@@ -68,7 +68,7 @@ namespace rescute.Tests.APITests
             }
         }
         [Fact]
-        public async Task TimelineEventsControllerGetsStatusReportedEvent()
+        public async Task TimelineItemsControllerGetsStatusReport()
         {
             // Arrange
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
@@ -81,14 +81,14 @@ namespace rescute.Tests.APITests
                     uoW.Samaritans.Add(samaritan);
                     var animal = Animal.RandomTestAnimal(samaritan.Id);
                     uoW.Animals.Add(animal);
-                    var attachment = new Attachment(AttachmentType.Image(), "image.jpg", DateTime.Now, "desc");
-                    var statusEvent = new StatusReported(DateTime.Now, samaritan.Id, animal.Id, location, eventDesc, attachment);
-                    uoW.TimelineEvents.Add(statusEvent);
+                    var attachment = new Attachment("image.jpg", "jpg", DateTime.Now, "desc");
+                    var statusEvent = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, location, eventDesc, attachment);
+                    uoW.TimelineItems.Add(statusEvent);
 
                     await uoW.Complete();
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new TimelineEventsController(storageService, uoW, config);
+                    var controller = new TimelineItemsController(storageService, uoW, config);
 
                     // Act
 
@@ -99,7 +99,7 @@ namespace rescute.Tests.APITests
                     result.Result.Should().BeOfType<OkObjectResult>();
 
                     ((OkObjectResult)result.Result).Value.Should().NotBeNull();
-                    var stored = ((StatusReportedGetModel)((OkObjectResult)result.Result).Value);
+                    var stored = ((StatusReportGetModel)((OkObjectResult)result.Result).Value);
                     stored.EventId.Should().Be(statusEvent.Id.ToString());
                     stored.Attachments.Count().Should().Be(1);
                     stored.Description.Should().Be(eventDesc);
@@ -111,7 +111,7 @@ namespace rescute.Tests.APITests
         }
 
         [Fact]
-        public async Task TimelineEventsControllerGetsPagedStatusReportedEvents()
+        public async Task TimelineItemsControllerGetsPagedStatusReports()
         {
             // Arrange
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
@@ -127,12 +127,12 @@ namespace rescute.Tests.APITests
                     for (int i = 1; i <= 10; i++)
                     {
 
-                        uoW.TimelineEvents.Add(new StatusReported(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), $"Test description {i}"));
+                        uoW.TimelineItems.Add(new StatusReport(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), $"Test description {i}"));
                     }
                     await uoW.Complete();
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new TimelineEventsController(storageService, uoW, config);
+                    var controller = new TimelineItemsController(storageService, uoW, config);
 
                     // Act
                     var result = await controller.GetStatus(10, 0);
@@ -142,7 +142,7 @@ namespace rescute.Tests.APITests
                     result.Result.Should().BeOfType<OkObjectResult>();
 
                     ((OkObjectResult)result.Result).Value.Should().NotBeNull();
-                    var statusModels = ((IEnumerable<StatusReportedGetModel>)((OkObjectResult)result.Result).Value);
+                    var statusModels = ((IEnumerable<StatusReportGetModel>)((OkObjectResult)result.Result).Value);
                     statusModels.Count().Should().Be(10);
 
                 }
@@ -150,7 +150,7 @@ namespace rescute.Tests.APITests
         }
 
         [Fact]
-        public async Task TimelineEventsControllerPostsTransportRequested()
+        public async Task TimelineItemsControllerRequestsTransport()
         {
             // Arrange
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
@@ -169,8 +169,8 @@ namespace rescute.Tests.APITests
                     await uoW.Complete();
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new TimelineEventsController(storageService, uoW, config);
-                    var postModel = new TransportRequestedPostModel()
+                    var controller = new TimelineItemsController(storageService, uoW, config);
+                    var postModel = new TransportRequestPostModel()
                     {
                         AnimalId = animal.Id.ToString(),
                         Description = eventDesc,
@@ -189,8 +189,8 @@ namespace rescute.Tests.APITests
                     // Assert
                     result.Should().NotBeNull();
                     var created = result as CreatedAtActionResult;
-                    var getModel = created.Value as TransportRequestedGetModel;
-                    
+                    var getModel = created.Value as TransportRequestGetModel;
+
                     getModel.AnimalId.Should().Be(animal.Id.ToString());
                     getModel.Lattitude.Should().Be(location.Latitude);
                     getModel.Longitude.Should().Be(location.Longitude);
@@ -201,7 +201,7 @@ namespace rescute.Tests.APITests
             }
         }
         [Fact]
-        public async Task TimelineEventsControllerGetsTransportRequestedEvent()
+        public async Task TimelineItemsControllerGetsTransportRequest()
         {
             // Arrange
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
@@ -215,13 +215,13 @@ namespace rescute.Tests.APITests
                     uoW.Samaritans.Add(samaritan);
                     var animal = Animal.RandomTestAnimal(samaritan.Id);
                     uoW.Animals.Add(animal);
-                    var transportEvent = new TransportRequested(DateTime.Now, samaritan.Id, animal.Id, location,toLocation, eventDesc);
-                    uoW.TimelineEvents.Add(transportEvent);
+                    var transportEvent = new TransportRequest(DateTime.Now, samaritan.Id, animal.Id, location, toLocation, eventDesc);
+                    uoW.TimelineItems.Add(transportEvent);
 
                     await uoW.Complete();
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new TimelineEventsController(storageService, uoW, config);
+                    var controller = new TimelineItemsController(storageService, uoW, config);
 
                     // Act
 
@@ -232,7 +232,7 @@ namespace rescute.Tests.APITests
                     result.Result.Should().BeOfType<OkObjectResult>();
 
                     ((OkObjectResult)result.Result).Value.Should().NotBeNull();
-                    var stored = ((TransportRequestedGetModel)((OkObjectResult)result.Result).Value);
+                    var stored = ((TransportRequestGetModel)((OkObjectResult)result.Result).Value);
                     stored.EventId.Should().Be(transportEvent.Id.ToString());
                     stored.Description.Should().Be(eventDesc);
                     stored.CreatedById.Should().Be(samaritan.Id.ToString());
@@ -248,7 +248,7 @@ namespace rescute.Tests.APITests
         }
 
         [Fact]
-        public async Task TimelineEventsControllerGetsPagedTransportRequestedEvents()
+        public async Task TimelineItemsControllerGetsPagedTransportRequests()
         {
             // Arrange
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
@@ -264,12 +264,12 @@ namespace rescute.Tests.APITests
                     for (int i = 1; i <= 10; i++)
                     {
 
-                        uoW.TimelineEvents.Add(new TransportRequested(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), new MapPoint(20, 30), $"Test description {i}"));
+                        uoW.TimelineItems.Add(new TransportRequest(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), new MapPoint(20, 30), $"Test description {i}"));
                     }
                     await uoW.Complete();
 
                     var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
-                    var controller = new TimelineEventsController(storageService, uoW, config);
+                    var controller = new TimelineItemsController(storageService, uoW, config);
 
                     // Act
                     var result = await controller.GetTransportRequests(10, 0);
@@ -279,7 +279,159 @@ namespace rescute.Tests.APITests
                     result.Result.Should().BeOfType<OkObjectResult>();
 
                     ((OkObjectResult)result.Result).Value.Should().NotBeNull();
-                    var statusModels = ((IEnumerable<TransportRequestedGetModel>)((OkObjectResult)result.Result).Value);
+                    var statusModels = ((IEnumerable<TransportRequestGetModel>)((OkObjectResult)result.Result).Value);
+                    statusModels.Count().Should().Be(10);
+                }
+            }
+        }
+
+        //[Theory]
+        //[InlineData(true, false, false)]
+        //[InlineData(false, true, false)]
+        //[InlineData(false, false, true)]
+        //public async Task TimelineItemsControllerPostsBill(bool includesLab, bool includesPrescription, bool includesVetFee)
+        //{
+        //    // Arrange
+        //    using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+        //    {
+        //        using (var uoW = new UnitOfWork(context))
+        //        {
+        //            var eventDesc = "This is the bill I got from the vet.";
+
+        //            var samaritan = Samaritan.RandomTestSamaritan();
+        //            var animal = Animal.RandomTestAnimal(samaritan.Id);
+        //            var attachments = FileStorageServiceTests.CreateIFormFileAttachments(1, 1, 1, "descritpion for files", "image/png");
+
+        //            var medDoc1 = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, string.Empty, MedicalDocumentType.DoctorsOrders(), new Attachment("filename", "jpg", DateTime.Now, string.Empty));
+        //            var medDoc2 = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, string.Empty, MedicalDocumentType.LabResults(), new Attachment("filename", "jpg", DateTime.Now, string.Empty));
+        //            var medDoc3 = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, string.Empty, MedicalDocumentType.Prescription(), new Attachment("filename", "jpg", DateTime.Now, string.Empty));
+
+        //            decimal billTotal = 1000;
+        //            uoW.Samaritans.Add(samaritan);
+        //            uoW.Animals.Add(animal);
+        //            uoW.TimelineItems.Add(medDoc1);
+        //            uoW.TimelineItems.Add(medDoc2);
+        //            uoW.TimelineItems.Add(medDoc3);
+        //            await uoW.Complete();
+
+
+
+        //            var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
+        //            var controller = new TimelineItemsController(storageService, uoW, config);
+        //            var postModel = new BillPostModel()
+        //            {
+        //                AnimalId = animal.Id.ToString(),
+        //                Description = eventDesc,
+        //                Attachments = attachments,
+        //                IncludesLabResults = includesLab,
+        //                IncludesPrescription = includesPrescription,
+        //                IncludesVetFee = includesVetFee,
+        //                Total = billTotal,
+        //                RelatedMedicalDocumentIds = new List<string>() { medDoc1.Id.ToString(), medDoc2.Id.ToString(), medDoc3.Id.ToString() }
+        //            };
+
+
+        //            // Act
+
+        //            var result = await controller.PostBill(postModel);
+
+
+        //            // Assert
+        //            result.Should().NotBeNull();
+        //            var created = result as CreatedAtActionResult;
+        //            var getModel = created.Value as BillGetModel;
+
+        //            getModel.AnimalId.Should().Be(animal.Id.ToString());
+        //            getModel.Description.Should().Be(eventDesc);
+        //            getModel.Attachments.Count().Should().Be(1);
+        //            getModel.IncludesVetFee.Should().Be(includesVetFee);
+        //            getModel.IncludesLabResults.Should().Be(includesLab);
+        //            getModel.IncludesPrescription.Should().Be(includesPrescription);
+        //            getModel.Total.Should().Be(billTotal);
+        //            getModel.RelatedMedicalDocumentIds.Count().Should().Be(3);
+        //        }
+        //    }
+        //}
+        [Fact]
+        public async Task TimelineItemsControllerGetsBill()
+        {
+            // Arrange
+            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            {
+                using (var uoW = new UnitOfWork(context))
+                {
+                    var location = new MapPoint(20, 30);
+                    var toLocation = new MapPoint(30, 40);
+                    var eventDesc = "I want to take it there.";
+                    var samaritan = Samaritan.RandomTestSamaritan();
+                    uoW.Samaritans.Add(samaritan);
+                    var animal = Animal.RandomTestAnimal(samaritan.Id);
+                    uoW.Animals.Add(animal);
+                    var transportEvent = new TransportRequest(DateTime.Now, samaritan.Id, animal.Id, location, toLocation, eventDesc);
+                    uoW.TimelineItems.Add(transportEvent);
+
+                    await uoW.Complete();
+
+                    var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
+                    var controller = new TimelineItemsController(storageService, uoW, config);
+
+                    // Act
+
+                    var result = await controller.GetTransportRequest(transportEvent.Id.Value);
+
+                    // Assert
+                    result.Should().NotBeNull();
+                    result.Result.Should().BeOfType<OkObjectResult>();
+
+                    ((OkObjectResult)result.Result).Value.Should().NotBeNull();
+                    var stored = ((TransportRequestGetModel)((OkObjectResult)result.Result).Value);
+                    stored.EventId.Should().Be(transportEvent.Id.ToString());
+                    stored.Description.Should().Be(eventDesc);
+                    stored.CreatedById.Should().Be(samaritan.Id.ToString());
+                    stored.AnimalId.Should().Be(animal.Id.ToString());
+                    stored.Lattitude.Should().Be(location.Latitude);
+                    stored.Longitude.Should().Be(location.Longitude);
+                    stored.ToLattitude.Should().Be(toLocation.Latitude);
+                    stored.ToLongitude.Should().Be(toLocation.Longitude);
+
+                }
+            }
+
+        }
+
+        [Fact]
+        public async Task TimelineItemsControllerGetsPagedBills()
+        {
+            // Arrange
+            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            {
+                using (var uoW = new UnitOfWork(context))
+                {
+                    var samaritan = Samaritan.RandomTestSamaritan();
+                    var animal = Animal.RandomTestAnimal(samaritan.Id);
+
+                    uoW.Animals.Add(animal);
+                    uoW.Samaritans.Add(samaritan);
+
+                    for (int i = 1; i <= 10; i++)
+                    {
+
+                        uoW.TimelineItems.Add(new TransportRequest(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), new MapPoint(20, 30), $"Test description {i}"));
+                    }
+                    await uoW.Complete();
+
+                    var storageService = new FileStorageService(FileStorageServiceTests.TestFileStorageRoot, new List<string>() { "jpg", "avi", "png", "mp4" });
+                    var controller = new TimelineItemsController(storageService, uoW, config);
+
+                    // Act
+                    var result = await controller.GetTransportRequests(10, 0);
+
+                    // Assert
+                    result.Should().NotBeNull();
+                    result.Result.Should().BeOfType<OkObjectResult>();
+
+                    ((OkObjectResult)result.Result).Value.Should().NotBeNull();
+                    var statusModels = ((IEnumerable<TransportRequestGetModel>)((OkObjectResult)result.Result).Value);
                     statusModels.Count().Should().Be(10);
                 }
             }

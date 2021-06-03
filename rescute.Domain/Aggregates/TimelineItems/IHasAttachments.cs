@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace rescute.Domain
+namespace rescute.Domain.Aggregates.TimelineItems
 {
     /// <summary>
     /// Represents an item that has a list of attachments.

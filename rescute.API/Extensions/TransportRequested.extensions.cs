@@ -1,6 +1,6 @@
 ﻿using rescute.API.Models;
 using rescute.Domain.Aggregates;
-using rescute.Domain.Aggregates.TimelineEvents;
+using rescute.Domain.Aggregates.TimelineItems;
 using rescute.Domain.ValueObjects;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +9,9 @@ namespace rescute.API.Extensions
 {
     public static class TransportRequestedExtensions
     {
-        public static TransportRequestedGetModel ToModel(this TransportRequested timelineEvent, string relativeAttachmentsRootPath)
+        public static TransportRequestGetModel ToModel(this TransportRequest timelineEvent)
         {
-            var model = new TransportRequestedGetModel
+            var model = new TransportRequestGetModel
             {
                 AnimalId = timelineEvent.AnimalId.ToString(),
                 Description = timelineEvent.Description,
@@ -26,12 +26,12 @@ namespace rescute.API.Extensions
 
             return model;
         }
-        public static IReadOnlyCollection<TransportRequestedGetModel> ToModel(this IEnumerable<TransportRequested> timelineEvents, string relativeAttachmentsRootPath)
+        public static IReadOnlyCollection<TransportRequestGetModel> ToModel(this IEnumerable<TransportRequest> timelineEvents)
         {
-            var result = new List<TransportRequestedGetModel>();
-            foreach (TransportRequested timelineEvent in timelineEvents)
+            var result = new List<TransportRequestGetModel>();
+            foreach (TransportRequest timelineEvent in timelineEvents)
             {
-                result.Add(timelineEvent.ToModel(relativeAttachmentsRootPath));
+                result.Add(timelineEvent.ToModel());
             }
 
             return result;

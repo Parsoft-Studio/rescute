@@ -1,5 +1,5 @@
 ﻿using rescute.Domain.Aggregates;
-using rescute.Domain.Aggregates.TimelineEvents;
+using rescute.Domain.Aggregates.TimelineItems;
 using System;
 using System.Collections.Generic;
 using System.Text;

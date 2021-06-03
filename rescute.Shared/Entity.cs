@@ -4,7 +4,7 @@ namespace rescute.Shared
 {
     public abstract class Entity<T> where T : Entity<T>
     {
-        public Id<T> Id { get; private set; }
+        public Id<T> Id { get; protected set; }
 
         public Entity()
         {

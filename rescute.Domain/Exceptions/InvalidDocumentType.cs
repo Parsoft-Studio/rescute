@@ -22,6 +22,7 @@ namespace rescute.Domain.Exceptions
                 {
                     typeString += t.ToString() + ", ";
                 }
+                typeString.TrimEnd(',', ' ');
                 return "Invalid attachment type. Acceptable types: " + typeString;
             }
         }

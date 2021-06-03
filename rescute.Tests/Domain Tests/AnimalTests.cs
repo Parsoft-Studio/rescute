@@ -6,7 +6,7 @@ using FluentAssertions;
 using System.Linq;
 using rescute.Domain.Exceptions;
 using System.Collections.Generic;
-using rescute.Domain.Aggregates.TimelineEvents;
+using rescute.Domain.Aggregates.TimelineItems;
 
 namespace rescute.Tests.DomainTests
 {
@@ -18,18 +18,9 @@ namespace rescute.Tests.DomainTests
 
         public void TwoAnimalsAreNotTheSame()
         {
-            var samaritan = new Samaritan(new Shared.Name("Ehsan"), new Shared.Name("Hosseinkhani"), new Shared.PhoneNumber(true, "09355242601"), DateTime.Now);
-            var animal1 = new Animal(
-                registrationDate: DateTime.Now,
-                introducedBy: samaritan.Id,
-                description: "this is an animal",
-                type: AnimalType.Sparrow());
-
-            var animal2 = new Animal(
-                registrationDate: DateTime.Now,
-                introducedBy: samaritan.Id,
-                description: "this is an animal",
-                type: AnimalType.Sparrow());
+            var samaritan = TestUtilities.RandomTestSamaritan();
+            var animal1 = TestUtilities.RandomTestAnimal(samaritan.Id);
+            var animal2 = TestUtilities.RandomTestAnimal(samaritan.Id);
 
             animal1.Should().NotBe(animal2);
         }

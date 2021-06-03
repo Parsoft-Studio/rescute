@@ -1,11 +1,11 @@
 ﻿using rescute.Domain.ValueObjects;
 
-namespace rescute.Domain.Aggregates.TimelineEvents
+namespace rescute.Domain.Aggregates.TimelineItems
 {
     /// <summary>
     /// Represents an event with a geographical location on the map.
     /// </summary>
-    interface ICoordinated
+    public interface ICoordinated
     {
         MapPoint EventLocation { get; }
     }
