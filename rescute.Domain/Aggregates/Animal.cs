@@ -1,4 +1,5 @@
-﻿using rescute.Domain.Exceptions;
+﻿using rescute.Domain.Aggregates.TimelineItems;
+using rescute.Domain.Exceptions;
 using rescute.Domain.ValueObjects;
 using rescute.Shared;
 using System;
@@ -16,10 +17,10 @@ namespace rescute.Domain.Aggregates
         public AnimalType Type { get; private set; }
 
 
-        public IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.ProfilePicture() };
+        public IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => new AttachmentType[] { AttachmentType.Image() };
         public DateTime RegistrationDate { get; private set; }
         public string Description { get; private set; }
-        public string BirthCertificateId { get; private set; }
+        public string IdentityCertificateId { get; private set; }
         public Id<Samaritan> IntroducedBy { get; private set; }
         private Animal() { }
 
@@ -74,11 +75,7 @@ namespace rescute.Domain.Aggregates
         }
         public void UpdateBirthCertificateId(string newId)
         {
-            BirthCertificateId = newId;
-        }
-        public static Animal RandomTestAnimal(Id<Samaritan> introducedBy)
-        {
-            return new Animal(DateTime.Now, introducedBy, "test animal", AnimalType.Cat());
+            IdentityCertificateId = newId;
         }
 
     }

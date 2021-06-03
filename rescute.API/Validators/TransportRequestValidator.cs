@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace rescute.API.Validators
 {
-    public class TransportRequestedValidator : AbstractValidator<TransportRequestedPostModel>
+    public class TransportRequestValidator : AbstractValidator<TransportRequestPostModel>
 
     {
-        public TransportRequestedValidator()
+        public TransportRequestValidator()
         {
             RuleFor(transportRequested => transportRequested.AnimalId)
                 .NotNull()

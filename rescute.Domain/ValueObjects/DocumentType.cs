@@ -9,9 +9,8 @@ namespace rescute.Domain.ValueObjects
     {
         public static AttachmentType Image() { return new AttachmentType("Image"); }
         public static AttachmentType Video() { return new AttachmentType("Video"); }
-        public static AttachmentType TestResult() { return new AttachmentType("TestResult"); }
-        public static AttachmentType Bill() { return new AttachmentType("Bill"); }
-        public static AttachmentType ProfilePicture() { return new AttachmentType("ProfilePicture"); }
+        public static AttachmentType Document() { return new AttachmentType("Document"); }
+        public static AttachmentType Unknown() { return new AttachmentType("Unknown"); }
         public string Type { get; private set; }
         public AttachmentType(string type)
         {

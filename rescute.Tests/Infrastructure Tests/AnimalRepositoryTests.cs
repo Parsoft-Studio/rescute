@@ -19,7 +19,7 @@ namespace rescute.Tests.InfrastructureTests
         {
             // Arrange
             var animals = new List<Animal>();
-            var samaritan = new Samaritan(new Name("Ehsan"), new Name("Hosseinkhani"), new PhoneNumber(true, "09355242601"), DateTime.Now);
+            var samaritan = TestUtilities.RandomTestSamaritan();
 
             using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
             {
@@ -31,7 +31,7 @@ namespace rescute.Tests.InfrastructureTests
 
                     for (int i = 1; i <= 10; i++)
                     {
-                        animal = new Animal(DateTime.Now, samaritan.Id, "This is my good pet.", AnimalType.Cat());
+                        animal = TestUtilities.RandomTestAnimal(samaritan.Id);
                         animal.UpdateBirthCertificateId("birth_cert_id");
                         unitOfWork.Animals.Add(animal);
                         animals.Add(animal);

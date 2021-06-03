@@ -54,7 +54,7 @@ namespace rescute.Infrastructure.Services
         }
 
 
-        public async Task<Attachment> Store(IFormFile file, string attachmentParentDirectoryName, AttachmentType type)
+        public async Task<Attachment> Store(IFormFile file, string attachmentParentDirectoryName)
         {
             
             if (file == null) throw new ArgumentException("file cannot be null.", nameof(file));
@@ -86,7 +86,7 @@ namespace rescute.Infrastructure.Services
                 return new Attachment(filename: Path.Combine(attachmentParentDirectoryName, randomeFileName),
                                       creationDate: DateTime.Now,
                                       description: description,
-                                      type: type
+                                      extension: Path.GetExtension(randomeFileName)
                                      );
 
             });

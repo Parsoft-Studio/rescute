@@ -1,6 +1,6 @@
 ﻿using rescute.API.Models;
 using rescute.Domain.Aggregates;
-using rescute.Domain.Aggregates.TimelineEvents;
+using rescute.Domain.Aggregates.TimelineItems;
 using rescute.Domain.ValueObjects;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +9,9 @@ namespace rescute.API.Extensions
 {
     public static class StatusReportedExtensions
     {
-        public static StatusReportedGetModel ToModel(this StatusReported timelineEvent, string relativeAttachmentsRootPath)
+        public static StatusReportGetModel ToModel(this StatusReport timelineEvent, string relativeAttachmentsRootPath)
         {
-            var model = new StatusReportedGetModel
+            var model = new StatusReportGetModel
             {
                 AnimalId = timelineEvent.AnimalId.ToString(),
                 Description = timelineEvent.Description,
@@ -36,10 +36,10 @@ namespace rescute.API.Extensions
 
             return model;
         }
-        public static IReadOnlyCollection<StatusReportedGetModel> ToModel(this IEnumerable<StatusReported> timelineEvents, string relativeAttachmentsRootPath)
+        public static IReadOnlyCollection<StatusReportGetModel> ToModel(this IEnumerable<StatusReport> timelineEvents, string relativeAttachmentsRootPath)
         {
-            var result = new List<StatusReportedGetModel>();
-            foreach (StatusReported timelineEvent in timelineEvents)
+            var result = new List<StatusReportGetModel>();
+            foreach (StatusReport timelineEvent in timelineEvents)
             {
                 result.Add(timelineEvent.ToModel(relativeAttachmentsRootPath));
             }

@@ -41,7 +41,7 @@ namespace rescute.API.Controllers
             {
                 foreach (var file in animalModel.Attachments)
                 {
-                    animal.AddAttachments(await storageService.Store(file, animal.Id.ToString(), AttachmentType.ProfilePicture()));
+                    animal.AddAttachments(await storageService.Store(file, animal.Id.ToString()));
                 }
             }
             unitOfWork.Samaritans.Add(samaritan);

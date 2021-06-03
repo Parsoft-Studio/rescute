@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace rescute.API.Validators
 {
-    public class StatusReportedValidator : AbstractValidator<StatusReportedPostModel>
+    public class StatusReportValidator : AbstractValidator<StatusReportPostModel>
 
     {
-        public StatusReportedValidator()
+        public StatusReportValidator()
         {
             RuleFor(statusReported => statusReported.AnimalId)
                 .NotNull()

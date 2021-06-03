@@ -27,9 +27,8 @@ namespace rescute.Infrastructure.Services
         /// <param name="file">The <see cref="IFormFile"/> to be stored.</param>
         /// <param name="attachmentParentDirectoryName">The directory name (not path) of the parent to which specified file belongs. The file will be stored in this directory,
         /// which will be created in attachments directory if it doesn't already exist.</param>
-        /// <param name="type">The type of this attachment.</param>
         /// <returns></returns>        
-        Task<Attachment> Store(IFormFile file, string attachmentParentDirectoryName, AttachmentType type);
+        Task<Attachment> Store(IFormFile file, string attachmentParentDirectoryName);
         /// <summary>
         /// Deletes the directory pertaining to a specific attachment (located inside the attachments directory) and all the files in it.
         /// </summary>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace rescute.API.Models
 {
-    public class TransportRequestedPostModel
+    public class TransportRequestPostModel
     {
         public double Lattitude { get; set; }
         public double Longitude { get; set; }

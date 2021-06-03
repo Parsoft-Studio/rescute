@@ -8,22 +8,46 @@ namespace rescute.Domain.ValueObjects
     public class Attachment : ValueObject
     {
         public string FileName { get; private set; }
-        public AttachmentType Type { get; private set; }
+        public string Extension { get; private set; }
+        public AttachmentType Type => GetAttachmentType();
         public string Description { get; private set; }
         public DateTime CreationDate { get; private set; }
-        public Attachment(AttachmentType type, string filename, DateTime creationDate, string description)
+        public Attachment(string filename, string extension, DateTime creationDate, string description)
         {
             FileName = filename;
-            Type = type;
             CreationDate = creationDate;
             Description = description;
-            
+            UpdateExtension(extension);
         }
+
+        private void UpdateExtension(string extension)
+        {
+            while (extension.StartsWith("."))
+            {
+                extension = extension[1..];
+            }
+            Extension = extension.Trim();
+        }
+
         private Attachment() { }
 
-        public static object Should()
+
+        private AttachmentType GetAttachmentType()
         {
-            throw new NotImplementedException();
+            switch (Extension)
+            {
+                case "jpg":
+                case "png":
+                    return AttachmentType.Image();
+                case "mp4":
+                case "mpg":
+                case "avi":
+                    return AttachmentType.Video();
+                case "pdf":
+                    return AttachmentType.Document();
+                default:
+                    return AttachmentType.Unknown();
+            }
         }
     }
 }

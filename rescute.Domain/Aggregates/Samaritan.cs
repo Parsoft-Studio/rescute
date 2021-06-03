@@ -25,9 +25,5 @@ namespace rescute.Domain.Aggregates
 
         public PhoneNumber Mobile { get; private set; }
 
-        public static Samaritan RandomTestSamaritan()
-        {
-            return new Samaritan(new Name("Test First"), new Name("Test Last"), new PhoneNumber(true, "0912121212"), DateTime.Now);
-        }
     }
 }

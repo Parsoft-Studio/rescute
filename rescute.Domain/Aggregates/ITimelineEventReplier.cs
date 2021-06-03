@@ -1,12 +1,12 @@
 ﻿using rescute.Shared;
 
-namespace rescute.Domain.Aggregates.TimelineEvents
+namespace rescute.Domain.Aggregates.TimelineItems
 {
     /// <summary>
-    /// Represents an item that can be considered as a reply to a <see cref="TimelineEvent"/>.
+    /// Represents an item that can be considered as a reply to a <see cref="TimelineItem"/>.
     /// </summary>
-    public interface ITimelineEventReplier
+    public interface ITimelineItemReplier
     {
-        Id<TimelineEvent> RepliesTo { get; }
+        Id<TimelineItem> RepliesTo { get; }
     }
 }

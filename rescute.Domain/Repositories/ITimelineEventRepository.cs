@@ -1,5 +1,5 @@
 ﻿using rescute.Domain.Aggregates;
-using rescute.Domain.Aggregates.TimelineEvents;
+using rescute.Domain.Aggregates.TimelineItems;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace rescute.Domain.Repositories
 {
-    public interface ITimelineEventRepository: IRepository<TimelineEvent>
+    public interface ITimelineItemRepository: IRepository<TimelineItem>
     {
         Task<IReadOnlyCollection<T>> GetAsync<T>(Expression<Func<T, bool>> predicate);
         Task<IReadOnlyCollection<T>> GetAllAsync<T>();

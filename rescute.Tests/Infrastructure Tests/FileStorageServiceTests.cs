@@ -17,8 +17,7 @@ namespace rescute.Tests.InfrastructureTests
     {
         public static readonly string TestFileStorageRoot = Path.Combine(Environment.CurrentDirectory, "FileStorageService Tests");
         public static IEnumerable<IFormFile> CreateIFormFileAttachments(int howManyFiles, int howManyBytesInFiles, byte byteData, string fileDescription, string contentType)
-        {
-            var result = new List<IFormFile>();
+        {            
             var data = Array.CreateInstance(typeof(byte), howManyBytesInFiles);
 
             for (int i = 0; i < data.Length; i++)
@@ -52,7 +51,7 @@ namespace rescute.Tests.InfrastructureTests
             var files = CreateIFormFileAttachments(1, 4, 5, attachmentDescription, "video/mpeg");
 
             // Act
-            attachment = await storageService.Store(files.First(), parentDirectoryId, AttachmentType.Image());
+            attachment = await storageService.Store(files.First(), parentDirectoryId);
 
 
             // Assert
@@ -88,7 +87,7 @@ namespace rescute.Tests.InfrastructureTests
                     file.Headers = new HeaderDictionary();
 
                     // Act
-                    attachment = await storageService.Store(file, parentDirectoryId, AttachmentType.Image());
+                    attachment = await storageService.Store(file, parentDirectoryId);
                 }
 
             };
@@ -112,7 +111,7 @@ namespace rescute.Tests.InfrastructureTests
                 file.Headers = new HeaderDictionary();
 
                 // Act
-                attachment = await storageService.Store(file, parentDirectoryId, AttachmentType.Image());
+                attachment = await storageService.Store(file, parentDirectoryId);
                 await storageService.DeleteAttachmentFile(attachment.FileName);
             }
 
@@ -137,7 +136,7 @@ namespace rescute.Tests.InfrastructureTests
                 file.Headers = new HeaderDictionary();
 
                 // Act
-                attachment = await storageService.Store(file, parentDirectoryId, AttachmentType.Image());
+                attachment = await storageService.Store(file, parentDirectoryId);
                 await storageService.DeleteDirectoryForAttachment(parentDirectoryId.ToString());
             }
 

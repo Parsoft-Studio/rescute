@@ -15,8 +15,4 @@
     <ProjectReference Include="..\rescute.Shared\rescute.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>

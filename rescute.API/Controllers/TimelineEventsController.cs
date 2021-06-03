@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using rescute.API.Extensions;
 using rescute.API.Models;
 using rescute.Domain.Aggregates;
-using rescute.Domain.Aggregates.TimelineEvents;
+using rescute.Domain.Aggregates.TimelineItems;
 using rescute.Domain.ValueObjects;
 using rescute.Infrastructure;
 using rescute.Infrastructure.Services;
@@ -19,23 +19,23 @@ namespace rescute.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TimelineEventsController : ControllerBase
+    public class TimelineItemsController : ControllerBase
     {
         private readonly string relativeAttachmentsRoot;
         //private readonly ILogger<AnimalsController> logger;
         private readonly IUnitOfWork unitOfWork;
         private readonly IFileStorageService storageService;
 
-        public TimelineEventsController(IFileStorageService storageService, IUnitOfWork unitOfWork, IConfiguration config)
+        public TimelineItemsController(IFileStorageService storageService, IUnitOfWork unitOfWork, IConfiguration config)
         {
             //this.logger = logger;
             this.unitOfWork = unitOfWork;
             this.storageService = storageService;
             this.relativeAttachmentsRoot = config["RelativeAttachmentsRootPath"];
         }
-        
+
         [HttpPost("api/[controller]/StatusReports")]
-        public async Task<ActionResult> PostStatus([FromForm] StatusReportedPostModel statusModel)
+        public async Task<ActionResult> PostStatus([FromForm] StatusReportPostModel statusModel)
         {
             var samaritan = Samaritan.RandomTestSamaritan();
             unitOfWork.Samaritans.Add(samaritan);
@@ -44,7 +44,7 @@ namespace rescute.API.Controllers
             var animal = await unitOfWork.Animals.GetAsync(Id<Animal>.Generate(Guid.Parse(statusModel.AnimalId)));
             if (animal == null) return NotFound(statusModel.AnimalId);
 
-            var statusReported = new StatusReported(DateTime.Now,
+            var statusReport = new StatusReport(DateTime.Now,
                                                     samaritan.Id,
                                                     animal.Id,
                                                     new MapPoint(statusModel.Lattitude, statusModel.Longitude),
@@ -54,35 +54,35 @@ namespace rescute.API.Controllers
             {
                 foreach (var file in statusModel.Attachments)
                 {
-                    statusReported.AddAttachments(await storageService.Store(file, statusReported.Id.ToString(), file.ContentType.StartsWith("image") == true ? AttachmentType.Image() : AttachmentType.Video()));
+                    statusReport.AddAttachments(await storageService.Store(file, statusReport.Id.ToString()));
                 }
             }
 
-            unitOfWork.TimelineEvents.Add(statusReported);
+            unitOfWork.TimelineItems.Add(statusReport);
 
             await unitOfWork.Complete();
 
-            return CreatedAtAction(nameof(GetStatus), new { id = statusReported.Id }, statusReported.ToModel(relativeAttachmentsRoot));
+            return CreatedAtAction(nameof(GetStatus), new { id = statusReport.Id }, statusReport.ToModel(relativeAttachmentsRoot));
         }
         [HttpGet("api/[controller]/StatusReports")]
-        public async Task<ActionResult<IEnumerable<StatusReportedGetModel>>> GetStatus([FromQuery] int pageSize, [FromQuery] int pageIndex)
+        public async Task<ActionResult<IEnumerable<StatusReportGetModel>>> GetStatus([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
             if (pageSize < 1 || pageIndex < 0) return BadRequest();
 
-            var events = await unitOfWork.TimelineEvents.GetAsync<StatusReported>(a => true, pageSize, pageIndex);
+            var events = await unitOfWork.TimelineItems.GetAsync<StatusReport>(a => true, pageSize, pageIndex);
             return Ok(events.ToModel(relativeAttachmentsRoot));
         }
         [HttpGet("api/[controller]/StatusReports/{id}")]
-        public async Task<ActionResult<StatusReportedGetModel>> GetStatus([FromRoute] Guid id)
+        public async Task<ActionResult<StatusReportGetModel>> GetStatus([FromRoute] Guid id)
         {
-            
-            var statusEvent = await unitOfWork.TimelineEvents.GetAsync(Id<TimelineEvent>.Generate(id));
+
+            var statusEvent = await unitOfWork.TimelineItems.GetAsync(Id<TimelineItem>.Generate(id));
             if (statusEvent == null) return NotFound();
-            return Ok(((StatusReported)statusEvent).ToModel(relativeAttachmentsRoot));
+            return Ok(((StatusReport)statusEvent).ToModel(relativeAttachmentsRoot));
         }
 
         [HttpPost("api/[controller]/TransportRequests")]
-        public async Task<ActionResult> PostTransportRequest([FromForm] TransportRequestedPostModel transportModel)
+        public async Task<ActionResult> PostTransportRequest([FromForm] TransportRequestPostModel transportModel)
         {
             var samaritan = Samaritan.RandomTestSamaritan();
             unitOfWork.Samaritans.Add(samaritan);
@@ -91,7 +91,7 @@ namespace rescute.API.Controllers
             var animal = await unitOfWork.Animals.GetAsync(Id<Animal>.Generate(Guid.Parse(transportModel.AnimalId)));
             if (animal == null) return NotFound(transportModel.AnimalId);
 
-            var transportRequested = new TransportRequested(DateTime.Now,
+            var transportRequested = new TransportRequest(DateTime.Now,
                                                     samaritan.Id,
                                                     animal.Id,
                                                     new MapPoint(transportModel.Lattitude, transportModel.Longitude),
@@ -99,29 +99,68 @@ namespace rescute.API.Controllers
                                                     transportModel.Description);
 
 
-            unitOfWork.TimelineEvents.Add(transportRequested);
+            unitOfWork.TimelineItems.Add(transportRequested);
 
             await unitOfWork.Complete();
 
-            return CreatedAtAction(nameof(GetTransportRequest), new { id = transportRequested.Id }, transportRequested.ToModel(relativeAttachmentsRoot));
+            return CreatedAtAction(nameof(GetTransportRequest), new { id = transportRequested.Id }, transportRequested.ToModel());
         }
         [HttpGet("api/[controller]/TransportRequests")]
-        public async Task<ActionResult<IEnumerable<TransportRequestedGetModel>>> GetTransportRequests([FromQuery] int pageSize, [FromQuery] int pageIndex)
+        public async Task<ActionResult<IEnumerable<TransportRequestGetModel>>> GetTransportRequests([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
             if (pageSize < 1 || pageIndex < 0) return BadRequest();
 
-            var events = await unitOfWork.TimelineEvents.GetAsync<TransportRequested>(a => true, pageSize, pageIndex);
-            return Ok(events.ToModel(relativeAttachmentsRoot));
+            var events = await unitOfWork.TimelineItems.GetAsync<TransportRequest>(a => true, pageSize, pageIndex);
+            return Ok(events.ToModel());
         }
 
         [HttpGet("api/[controller]/TransportRequests/{id}")]
-        public async Task<ActionResult<TransportRequestedGetModel>> GetTransportRequest([FromRoute] Guid id)
+        public async Task<ActionResult<TransportRequestGetModel>> GetTransportRequest([FromRoute] Guid id)
         {
 
-            var statusEvent = await unitOfWork.TimelineEvents.GetAsync(Id<TimelineEvent>.Generate(id));
+            var statusEvent = await unitOfWork.TimelineItems.GetAsync(Id<TimelineItem>.Generate(id));
             if (statusEvent == null) return NotFound();
-            return Ok(((TransportRequested)statusEvent).ToModel(relativeAttachmentsRoot));
+            return Ok(((TransportRequest)statusEvent).ToModel());
         }
+
+        //[HttpPost("api/[controller]/Bills")]
+        //public async Task<ActionResult> PostBill([FromForm] BillPostModel billModel)
+        //{
+        //    var samaritan = Samaritan.RandomTestSamaritan();
+        //    unitOfWork.Samaritans.Add(samaritan);
+
+        //    var animal = await unitOfWork.Animals.GetAsync(Id<Animal>.Generate(Guid.Parse(billModel.AnimalId)));
+        //    if (animal == null) return NotFound(billModel.AnimalId);
+        //    //unitOfWork.TimelineItems.GetAsync()
+        //    //billModel.
+        //    var id = Id<TimelineItem>.Generate();
+        //    var attachments = new List<Attachment>();
+        //    if (billModel.Attachments != null)
+        //    {
+        //        foreach (var file in billModel.Attachments)
+        //        {
+        //            attachments.Add(await storageService.Store(file, id.ToString()));
+        //        }
+        //    }
+
+        //    var bill = new Bill(id, DateTime.Now,
+        //                        samaritan.Id,
+        //                        animal.Id,
+        //                        billModel.Description,
+        //                        billModel.Total,
+        //                        billModel.IncludesLabResults,
+        //                        billModel.IncludesPrescription,
+        //                        billModel.IncludesVetFee
+        //                        );
+
+
+        //    unitOfWork.TimelineItems.Add(statusReported);
+
+        //    await unitOfWork.Complete();
+
+        //    return CreatedAtAction(nameof(GetStatus), new { id = statusReported.Id }, statusReported.ToModel(relativeAttachmentsRoot));
+        //}
+
 
     }
 }
