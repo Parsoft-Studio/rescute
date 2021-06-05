@@ -41,18 +41,89 @@ namespace rescute.Tests.DomainTests
             var contributor = TestUtilities.RandomTestSamaritan();
             var attachment = new Attachment("test.pdf", "pdf", DateTime.Now, "Attachment description");
 
+            bool includesVetFee = true, includesPrescription = false, includesLabResults = false;
+
             var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
 
-            var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "All the costs.", billTotal, false, false, true, null, attachment);
+            var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "All the costs.", billTotal, includesLabResults, includesPrescription, includesVetFee, null, attachment);
             bill.RequestContribution();
 
             var contrib = new Contribution(DateTime.Now, billTotal + 1, contributor.Id, transactionId, "My contribution.");
 
             Action action = () =>
             {
-                bill.Contribute(contrib);
+                bill.Contribute(contrib, includesLabResults, includesPrescription, includesVetFee);
             };
             action.Should().Throw<ContributionExceedsRequirement>();
+        }
+        [Fact]
+        public void BillIsConsistentWithAttachedMedicalDocuments()
+        {
+            var billAmount = 150000;
+            var contribution_comment = "Here, have this contribution.";
+            var contributionAmount = 100000;
+
+            var samaritan = TestUtilities.RandomTestSamaritan();
+            var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+            var contributor = TestUtilities.RandomTestSamaritan();
+            var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment);
+
+            var billAttachment = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
+            var labAttachment = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
+            var prescriptionAttachment = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
+
+            var medicalDocuments = new List<MedicalDocument>();
+            medicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.", MedicalDocumentType.Prescription(), prescriptionAttachment));
+            medicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.", MedicalDocumentType.LabResults(), labAttachment));
+
+            var bill = new Bill(DateTime.Now,
+                samaritan.Id,
+                animal.Id,
+                "I can't pay this on my own!",
+                billAmount,
+                includesLabResults: true,
+                includesPrescription: true,
+                includesVetFee: true,
+                medicalDocuments,
+                billAttachment);
+
+
+            bill.RequestContribution();
+            Action action = () =>
+            {
+                bill.Contribute(contribution,
+                    includesLabResults: true,
+                    includesPrescription: true,
+                    includesVetFee: false);
+            };
+            action.Should().Throw<InconsistentBill>();
+            action = () =>
+             {
+                 bill.Contribute(contribution,
+                     includesLabResults: true,
+                     includesPrescription: false,
+                     includesVetFee: true);
+             };
+            action.Should().Throw<InconsistentBill>();
+            action = () =>
+            {
+                bill.Contribute(contribution,
+                    includesLabResults: false,
+                    includesPrescription: true,
+                    includesVetFee: true);
+            };
+            action.Should().Throw<InconsistentBill>();
+
+            action = () =>
+            {
+                bill.Contribute(contribution,
+                    includesLabResults: true,
+                    includesPrescription: true,
+                    includesVetFee: true);
+            };
+            action.Should().NotThrow<InconsistentBill>();
+
+
         }
         [Fact]
         public void BillAcceptsContribution()
@@ -64,6 +135,7 @@ namespace rescute.Tests.DomainTests
             var samaritan = TestUtilities.RandomTestSamaritan();
             var contributor = TestUtilities.RandomTestSamaritan();
             var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment);
+            bool includesVetFee = true, includesPrescription = false, includesLabResults = false;
 
             var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
 
@@ -72,15 +144,15 @@ namespace rescute.Tests.DomainTests
                 animal.Id,
                 "I can't pay this on my own!",
                 billAmount,
-                false,
-                false,
-                false,
+                includesLabResults,
+                includesPrescription,
+                includesVetFee,
                 null,
                 new Attachment("filename", "pdf", DateTime.Now, string.Empty)
                 );
 
             bill.RequestContribution();
-            bill.Contribute(contribution);
+            bill.Contribute(contribution, includesLabResults, includesPrescription, includesVetFee);
 
 
             var same = bill.ContributionRequest.Contributions.First();

@@ -47,8 +47,8 @@ namespace rescute.Infrastructure
             modelBuilder.Entity<Samaritan>(b => b.HasKey(samaritan => samaritan.Id).IsClustered(false));
             modelBuilder.Entity<Samaritan>(b => b.Property(samaritan => samaritan.Id).HasConversion(v => v.Value.ToString(), v => Id<Samaritan>.Generate(Guid.Parse(v))));
             modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.Mobile));
-            modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.FirstName));
-            modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.LastName));
+            modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.FirstName, re => re.Ignore(name => name.MaxLength)));
+            modelBuilder.Entity<Samaritan>(b => b.OwnsOne(samaritan => samaritan.LastName, re => re.Ignore(name => name.MaxLength)));
             modelBuilder.Entity<Samaritan>(b => b.ToTable("Samaritans"));
 
             // Animal
@@ -81,19 +81,19 @@ namespace rescute.Infrastructure
             }));
 
             // Bill
-            modelBuilder.Entity<Bill>(b => b.HasOne(bill => bill.ContributionRequest).WithOne().HasForeignKey<ContributionRequest>(contribRequest => contribRequest.BillId).OnDelete(DeleteBehavior.Cascade));
+            modelBuilder.Entity<Bill>(b => b.HasOne(bill => (Bill.ContribRequest)bill.ContributionRequest).WithOne(contributionRequest => contributionRequest.Bill).HasForeignKey<Bill.ContribRequest>(contribRequest => contribRequest.BillId).OnDelete(DeleteBehavior.Cascade));
 
             // ContributionRequest
-            modelBuilder.Entity<ContributionRequest>(b => b.HasKey(tItem => tItem.Id).IsClustered(false));
-            modelBuilder.Entity<ContributionRequest>(b => b.Property(tItem => tItem.Id).HasConversion(v => v.Value.ToString(), v => Id<ContributionRequest>.Generate(Guid.Parse(v))));
-            modelBuilder.Entity<ContributionRequest>(b => b.OwnsMany(contReq => contReq.Contributions, re =>
+            modelBuilder.Entity<Bill.ContribRequest>(b => b.HasKey(tItem => tItem.Id).IsClustered(false));
+            modelBuilder.Entity<Bill.ContribRequest>(b => b.Property(tItem => tItem.Id).HasConversion(v => v.Value.ToString(), v => Id<Bill.ContribRequest>.Generate(Guid.Parse(v))));
+            modelBuilder.Entity<Bill.ContribRequest>(b => b.OwnsMany(contReq => contReq.Contributions, re =>
              {
                  re.HasOne<Samaritan>().WithMany().HasForeignKey(contribution => contribution.ContributorId);
                  re.ToTable("Contributions");
              }
             ));
-            modelBuilder.Entity<ContributionRequest>(b => b.Ignore(contReq => contReq.ContributionsTotal));
-            modelBuilder.Entity<ContributionRequest>(b => b.ToTable("ContributionRequests"));
+            modelBuilder.Entity<Bill.ContribRequest>(b => b.Ignore(contReq => contReq.ContributionsTotal));
+            modelBuilder.Entity<Bill.ContribRequest>(b => b.ToTable("ContributionRequests"));
 
             // StatusReport
             modelBuilder.Entity<StatusReport>(b => b.OwnsOne(statusReport => statusReport.EventLocation));

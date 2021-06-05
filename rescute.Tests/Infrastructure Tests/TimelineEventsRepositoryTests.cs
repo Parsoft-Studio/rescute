@@ -52,26 +52,27 @@ namespace rescute.Tests.InfrastructureTests
                     var billAmount = 150000;
                     var contribution_comment = "Here, have this contribution.";
                     var contributionAmount = 100000;
+                    bool includesVetFee = true, includesPrescription = false, includesLabResults = false;
 
                     var samaritan = TestUtilities.RandomTestSamaritan();
                     var contributor = TestUtilities.RandomTestSamaritan();
-
                     var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+                    var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment);
 
                     var bill = new Bill(DateTime.Now,
                         samaritan.Id,
                         animal.Id,
                         "I can't pay this on my own!",
                         billAmount,
-                        false,
-                        false,
-                        false,
+                        includesLabResults,
+                        includesPrescription,
+                        includesVetFee,
                         null,
                         new Attachment("filename", "pdf", DateTime.Now, string.Empty)
                         );
 
                     bill.RequestContribution();
-                    bill.Contribute(new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment));
+                    bill.Contribute(contribution,includesLabResults,includesPrescription,includesVetFee);
 
                     unitOfWork.Animals.Add(animal);
                     unitOfWork.Samaritans.Add(samaritan);

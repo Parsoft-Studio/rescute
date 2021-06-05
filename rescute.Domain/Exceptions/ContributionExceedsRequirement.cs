@@ -4,7 +4,7 @@ using System.Text;
 
 namespace rescute.Domain.Exceptions
 {
-    public class ContributionExceedsRequirement : ContributionException
+    public class ContributionExceedsRequirement : InvalidContribution
     {
         public ContributionExceedsRequirement() : base("Contribution exceeds bill amount.")
         { }

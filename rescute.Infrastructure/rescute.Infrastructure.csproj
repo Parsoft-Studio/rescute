@@ -18,8 +18,4 @@
     <ProjectReference Include="..\rescute.Domain\rescute.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>
