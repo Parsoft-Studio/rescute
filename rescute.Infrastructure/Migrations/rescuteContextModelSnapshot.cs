@@ -85,7 +85,7 @@ namespace rescute.Infrastructure.Migrations
                     b.ToTable("Samaritans");
                 });
 
-            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineItems.ContributionRequest", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineItems.Bill+ContribRequest", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -253,9 +253,6 @@ namespace rescute.Infrastructure.Migrations
                             b1.Property<string>("SamaritanId")
                                 .HasColumnType("nvarchar(450)");
 
-                            b1.Property<int>("MaxLength")
-                                .HasColumnType("int");
-
                             b1.Property<string>("Value")
                                 .HasColumnType("nvarchar(max)");
 
@@ -271,9 +268,6 @@ namespace rescute.Infrastructure.Migrations
                         {
                             b1.Property<string>("SamaritanId")
                                 .HasColumnType("nvarchar(450)");
-
-                            b1.Property<int>("MaxLength")
-                                .HasColumnType("int");
 
                             b1.Property<string>("Value")
                                 .HasColumnType("nvarchar(max)");
@@ -306,16 +300,16 @@ namespace rescute.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineItems.ContributionRequest", b =>
+            modelBuilder.Entity("rescute.Domain.Aggregates.TimelineItems.Bill+ContribRequest", b =>
                 {
-                    b.HasOne("rescute.Domain.Aggregates.TimelineItems.Bill", null)
+                    b.HasOne("rescute.Domain.Aggregates.TimelineItems.Bill", "Bill")
                         .WithOne("ContributionRequest")
-                        .HasForeignKey("rescute.Domain.Aggregates.TimelineItems.ContributionRequest", "BillId")
+                        .HasForeignKey("rescute.Domain.Aggregates.TimelineItems.Bill+ContribRequest", "BillId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsMany("rescute.Domain.ValueObjects.Contribution", "Contributions", b1 =>
                         {
-                            b1.Property<string>("ContributionRequestId")
+                            b1.Property<string>("ContribRequestId")
                                 .HasColumnType("nvarchar(450)");
 
                             b1.Property<int>("Id")
@@ -338,14 +332,14 @@ namespace rescute.Infrastructure.Migrations
                             b1.Property<string>("TransactionId")
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("ContributionRequestId", "Id");
+                            b1.HasKey("ContribRequestId", "Id");
 
                             b1.HasIndex("ContributorId");
 
                             b1.ToTable("Contributions");
 
                             b1.WithOwner()
-                                .HasForeignKey("ContributionRequestId");
+                                .HasForeignKey("ContribRequestId");
 
                             b1.HasOne("rescute.Domain.Aggregates.Samaritan", null)
                                 .WithMany()

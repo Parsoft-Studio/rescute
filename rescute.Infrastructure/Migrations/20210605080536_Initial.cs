@@ -18,9 +18,7 @@ namespace rescute.Infrastructure.Migrations
                     Id = table.Column<string>(nullable: false),
                     RegistrationDate = table.Column<DateTime>(nullable: false),
                     FirstName_Value = table.Column<string>(nullable: true),
-                    FirstName_MaxLength = table.Column<int>(nullable: true),
                     LastName_Value = table.Column<string>(nullable: true),
-                    LastName_MaxLength = table.Column<int>(nullable: true),
                     Mobile_IsMobile = table.Column<bool>(nullable: true),
                     Mobile_Value = table.Column<string>(nullable: true)
                 },
@@ -203,7 +201,7 @@ namespace rescute.Infrastructure.Migrations
                 schema: "rescute",
                 columns: table => new
                 {
-                    ContributionRequestId = table.Column<string>(nullable: false),
+                    ContribRequestId = table.Column<string>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: false),
@@ -214,10 +212,10 @@ namespace rescute.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contributions", x => new { x.ContributionRequestId, x.Id });
+                    table.PrimaryKey("PK_Contributions", x => new { x.ContribRequestId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Contributions_ContributionRequests_ContributionRequestId",
-                        column: x => x.ContributionRequestId,
+                        name: "FK_Contributions_ContributionRequests_ContribRequestId",
+                        column: x => x.ContribRequestId,
                         principalSchema: "rescute",
                         principalTable: "ContributionRequests",
                         principalColumn: "Id",
