@@ -12,7 +12,7 @@ namespace rescute.Infrastructure
         public static string Schema => "rescute";
 
         public rescuteContext(DbContextOptions<rescuteContext> options) : base(options)
-        {
+        {            
             ConnectionString = defaultConnectionString;
         }
         public rescuteContext()
@@ -35,7 +35,6 @@ namespace rescute.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
