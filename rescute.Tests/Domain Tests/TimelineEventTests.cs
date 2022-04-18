@@ -18,10 +18,10 @@ namespace rescute.Tests.DomainTests
         public void BillRequestsContributions()
         {
             var billTotal = 5000;
-            var samaritan = TestUtilities.RandomTestSamaritan();
+            var samaritan = TestUtility.RandomTestSamaritan();
             var attachment = new Attachment("test.pdf", "pdf", DateTime.Now, "Attachment description");
 
-            var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+            var animal = TestUtility.RandomTestAnimal(samaritan.Id);
 
             var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "All the costs.", billTotal, false, false, true, null, attachment);
 
@@ -37,13 +37,13 @@ namespace rescute.Tests.DomainTests
         {
             var transactionId = "TRANSACTION_ID";
             var billTotal = 5000;
-            var samaritan = TestUtilities.RandomTestSamaritan();
-            var contributor = TestUtilities.RandomTestSamaritan();
+            var samaritan = TestUtility.RandomTestSamaritan();
+            var contributor = TestUtility.RandomTestSamaritan();
             var attachment = new Attachment("test.pdf", "pdf", DateTime.Now, "Attachment description");
 
             bool includesVetFee = true, includesPrescription = false, includesLabResults = false;
 
-            var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+            var animal = TestUtility.RandomTestAnimal(samaritan.Id);
 
             var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "All the costs.", billTotal, includesLabResults, includesPrescription, includesVetFee, null, attachment);
             bill.RequestContribution();
@@ -63,9 +63,9 @@ namespace rescute.Tests.DomainTests
             var contribution_comment = "Here, have this contribution.";
             var contributionAmount = 100000;
 
-            var samaritan = TestUtilities.RandomTestSamaritan();
-            var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
-            var contributor = TestUtilities.RandomTestSamaritan();
+            var samaritan = TestUtility.RandomTestSamaritan();
+            var animal = TestUtility.RandomTestAnimal(samaritan.Id);
+            var contributor = TestUtility.RandomTestSamaritan();
             var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment);
 
             var billAttachment = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
@@ -132,12 +132,12 @@ namespace rescute.Tests.DomainTests
             var contribution_comment = "Here, have this contribution.";
             var contributionAmount = 100000;
 
-            var samaritan = TestUtilities.RandomTestSamaritan();
-            var contributor = TestUtilities.RandomTestSamaritan();
+            var samaritan = TestUtility.RandomTestSamaritan();
+            var contributor = TestUtility.RandomTestSamaritan();
             var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment);
             bool includesVetFee = true, includesPrescription = false, includesLabResults = false;
 
-            var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+            var animal = TestUtility.RandomTestAnimal(samaritan.Id);
 
             var bill = new Bill(DateTime.Now,
                 samaritan.Id,
@@ -166,8 +166,8 @@ namespace rescute.Tests.DomainTests
         [Fact]
         public void EventsOnlyAcceptProperDocumentTypes()
         {
-            var samaritan = TestUtilities.RandomTestSamaritan();
-            var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+            var samaritan = TestUtility.RandomTestSamaritan();
+            var animal = TestUtility.RandomTestAnimal(samaritan.Id);
 
             var docImage = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
             var docVid = new Attachment("filename", "mp4", DateTime.Now, string.Empty);

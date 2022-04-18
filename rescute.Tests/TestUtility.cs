@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace rescute.Tests
 {
-    class TestUtilities
+    class TestUtility
     {
         public static Samaritan RandomTestSamaritan()
         {

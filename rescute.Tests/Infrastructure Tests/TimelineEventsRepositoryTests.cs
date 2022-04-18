@@ -10,19 +10,19 @@ using Xunit;
 
 namespace rescute.Tests.InfrastructureTests
 {
-    [Collection("Database collection")]
+    // [Collection("Database collection")]
     public class TimelineItemsRepositoryTests
     {
 
         [Fact]
         public async void TimelineItemsRepositoryAddsAndGetsEvent()
         {
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
-                    var samaritan = TestUtilities.RandomTestSamaritan();
-                    var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+                    var samaritan = TestUtility.RandomTestSamaritan();
+                    var animal = TestUtility.RandomTestAnimal(samaritan.Id);
                     animal.UpdateBirthCertificateId("birth_cert_id");
 
                     var tEvent = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), "This is the cat's status.", new Attachment("filename.jpg", "jpg", DateTime.Now, "Picture of the cat"));
@@ -45,7 +45,7 @@ namespace rescute.Tests.InfrastructureTests
         [Fact]
         public async void TimelineItemsRepositoryAddsAndGetsBillAndContribution()
         {
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
@@ -54,9 +54,9 @@ namespace rescute.Tests.InfrastructureTests
                     var contributionAmount = 100000;
                     bool includesVetFee = true, includesPrescription = false, includesLabResults = false;
 
-                    var samaritan = TestUtilities.RandomTestSamaritan();
-                    var contributor = TestUtilities.RandomTestSamaritan();
-                    var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+                    var samaritan = TestUtility.RandomTestSamaritan();
+                    var contributor = TestUtility.RandomTestSamaritan();
+                    var animal = TestUtility.RandomTestAnimal(samaritan.Id);
                     var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contribution_comment);
 
                     var bill = new Bill(DateTime.Now,

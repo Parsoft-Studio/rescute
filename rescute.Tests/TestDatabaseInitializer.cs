@@ -1,4 +1,5 @@
-﻿using rescute.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using rescute.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,6 +26,10 @@ namespace rescute.Tests.InfrastructureTests
 
         public void Dispose() { }
 
+        public static DbContextOptions<rescuteContext> GetTestDatabaseOptions()
+        {
+            return new DbContextOptionsBuilder<rescuteContext>().UseInMemoryDatabase(databaseName: "rescute").Options;
+        }
 
     }
 
@@ -35,4 +40,5 @@ namespace rescute.Tests.InfrastructureTests
         // to be the place to apply [CollectionDefinition] and all the
         // ICollectionFixture<> interfaces.
     }
+
 }

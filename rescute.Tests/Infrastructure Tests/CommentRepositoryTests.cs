@@ -9,19 +9,19 @@ using Xunit;
 
 namespace rescute.Tests.InfrastructureTests
 {
-    [Collection("Database collection")]
+    // [Collection("Database collection")]
     public class CommentRepositoryTests
     {
 
         [Fact]
         public async void CommentRepositoryAddsAndGetsComment()
         {
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
-                    var samaritan = TestUtilities.RandomTestSamaritan();
-                    var animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+                    var samaritan = TestUtility.RandomTestSamaritan();
+                    var animal = TestUtility.RandomTestAnimal(samaritan.Id);
 
                     animal.UpdateBirthCertificateId("birth_cert_id");
                     var tEvent = new TransportRequest(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20), new MapPoint(15, 25), "My description");

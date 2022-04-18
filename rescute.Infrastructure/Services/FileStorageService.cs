@@ -54,12 +54,12 @@ namespace rescute.Infrastructure.Services
         }
 
 
-        public async Task<Attachment> Store(IFormFile file, string attachmentParentDirectoryName)
+        public async Task<Attachment> Store(Stream file, string fileName, string description, string attachmentParentDirectoryName)
         {
-            
+                                    
             if (file == null) throw new ArgumentException("file cannot be null.", nameof(file));
 
-            var extension = Path.GetExtension(file.FileName).Substring(1);
+            var extension = Path.GetExtension(fileName).Substring(1);
             if (!ValidFileExtensions.Contains(extension.ToLower())) throw new InvalidOperationException("Invalid extension found in list of specified files.");
 
             var attachmentPath = Path.Combine(AttachmentsDirectory, attachmentParentDirectoryName);
@@ -69,10 +69,9 @@ namespace rescute.Infrastructure.Services
                 if (!Directory.Exists(attachmentPath)) Directory.CreateDirectory(attachmentPath);
 
                 string randomeFileName;
-                string fileName;
                 do
                 {
-                    randomeFileName = Path.GetRandomFileName() + Path.GetExtension(file.FileName);
+                    randomeFileName = Path.GetRandomFileName() + Path.GetExtension(fileName);
                     fileName = Path.Combine(attachmentPath, randomeFileName);
                 } while (File.Exists(fileName));
 
@@ -82,7 +81,6 @@ namespace rescute.Infrastructure.Services
                     await file.CopyToAsync(fs);
                     fs.Flush();
                 }
-                var found = file.Headers.TryGetValue("description", out var description);
                 return new Attachment(filename: Path.Combine(attachmentParentDirectoryName, randomeFileName),
                                       creationDate: DateTime.Now,
                                       description: description,

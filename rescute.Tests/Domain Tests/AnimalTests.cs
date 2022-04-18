@@ -18,9 +18,9 @@ namespace rescute.Tests.DomainTests
 
         public void TwoAnimalsAreNotTheSame()
         {
-            var samaritan = TestUtilities.RandomTestSamaritan();
-            var animal1 = TestUtilities.RandomTestAnimal(samaritan.Id);
-            var animal2 = TestUtilities.RandomTestAnimal(samaritan.Id);
+            var samaritan = TestUtility.RandomTestSamaritan();
+            var animal1 = TestUtility.RandomTestAnimal(samaritan.Id);
+            var animal2 = TestUtility.RandomTestAnimal(samaritan.Id);
 
             animal1.Should().NotBe(animal2);
         }

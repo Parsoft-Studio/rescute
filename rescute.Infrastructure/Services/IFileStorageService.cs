@@ -2,6 +2,7 @@
 using rescute.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,13 +23,15 @@ namespace rescute.Infrastructure.Services
         /// </summary>
         public IReadOnlyCollection<string> ValidFileExtensions { get; }
         /// <summary>
-        /// Stores the specified <see cref="IFormFile"/>s on disk and returns the corresponding <see cref="Attachment"/>.
+        /// Stores the specified <see cref="Stream"/> on disk and returns the corresponding <see cref="Attachment"/>.
         /// </summary>
-        /// <param name="file">The <see cref="IFormFile"/> to be stored.</param>
+        /// <param name="file">The <see cref="Stream"/> to be stored.</param>
+        /// <param name="fileName">The name of the file to be stored.</param>
+        /// <param name="description">The description of the file to be stored.</param>
         /// <param name="attachmentParentDirectoryName">The directory name (not path) of the parent to which specified file belongs. The file will be stored in this directory,
         /// which will be created in attachments directory if it doesn't already exist.</param>
         /// <returns></returns>        
-        Task<Attachment> Store(IFormFile file, string attachmentParentDirectoryName);
+        Task<Attachment> Store(Stream file, String fileName, string description, string attachmentParentDirectoryName);
         /// <summary>
         /// Deletes the directory pertaining to a specific attachment (located inside the attachments directory) and all the files in it.
         /// </summary>

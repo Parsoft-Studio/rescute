@@ -16,27 +16,6 @@ namespace rescute.Tests.InfrastructureTests
     public class FileStorageServiceTests
     {
         public static readonly string TestFileStorageRoot = Path.Combine(Environment.CurrentDirectory, "FileStorageService Tests");
-        public static IEnumerable<IFormFile> CreateIFormFileAttachments(int howManyFiles, int howManyBytesInFiles, byte byteData, string fileDescription, string contentType)
-        {            
-            var data = Array.CreateInstance(typeof(byte), howManyBytesInFiles);
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                data.SetValue(byteData, i);
-            }
-            for (int i = 0; i < howManyFiles; i++)
-            {
-
-                var stream = new MemoryStream((byte[])data);
-                var file = new FormFile(stream, 0, howManyBytesInFiles, "name", $"fileName{i}.jpg");
-
-                var descriptionHeader = new KeyValuePair<string, StringValues>("description", new StringValues(fileDescription));
-                var contentTypeHeader = new KeyValuePair<string, StringValues>("content-type", new StringValues(contentType));
-                file.Headers = new HeaderDictionary { descriptionHeader, contentTypeHeader };
-                yield return file;
-            }
-            //return result;
-        }
         [Fact]
         public async void StorageServiceStoresFileCorrectly()
         {
@@ -48,10 +27,10 @@ namespace rescute.Tests.InfrastructureTests
             FileInfo fileInfo;
             Attachment attachment;
 
-            var files = CreateIFormFileAttachments(1, 4, 5, attachmentDescription, "video/mpeg");
+            var files = CreateAttachments(1, 4, 5);
 
             // Act
-            attachment = await storageService.Store(files.First(), parentDirectoryId);
+            attachment = await storageService.Store(files.First(), "filename.jpg", attachmentDescription, parentDirectoryId);
 
 
             // Assert
@@ -83,11 +62,8 @@ namespace rescute.Tests.InfrastructureTests
             {
                 using (var stream = new MemoryStream(new byte[4] { 5, 5, 5, 5 }))
                 {
-                    var file = new FormFile(stream, 0, 4, "name", "fileName.exe");
-                    file.Headers = new HeaderDictionary();
-
                     // Act
-                    attachment = await storageService.Store(file, parentDirectoryId);
+                    attachment = await storageService.Store(stream, "filename.pdf", "description", parentDirectoryId);
                 }
 
             };
@@ -107,11 +83,8 @@ namespace rescute.Tests.InfrastructureTests
             Attachment attachment;
             using (var stream = new MemoryStream(new byte[4] { 5, 5, 5, 5 }))
             {
-                var file = new FormFile(stream, 0, 4, "name", "fileName.jpg");
-                file.Headers = new HeaderDictionary();
-
                 // Act
-                attachment = await storageService.Store(file, parentDirectoryId);
+                attachment = await storageService.Store(stream, "filename.jpg", "description", parentDirectoryId);
                 await storageService.DeleteAttachmentFile(attachment.FileName);
             }
 
@@ -132,11 +105,8 @@ namespace rescute.Tests.InfrastructureTests
             Attachment attachment;
             using (var stream = new MemoryStream(new byte[4] { 5, 5, 5, 5 }))
             {
-                var file = new FormFile(stream, 0, 4, "name", "fileName.jpg");
-                file.Headers = new HeaderDictionary();
-
                 // Act
-                attachment = await storageService.Store(file, parentDirectoryId);
+                attachment = await storageService.Store(stream, "filename.jpg", "description", parentDirectoryId);
                 await storageService.DeleteDirectoryForAttachment(parentDirectoryId.ToString());
             }
 
@@ -145,5 +115,23 @@ namespace rescute.Tests.InfrastructureTests
             directoryInfo.Exists.Should().Be(false);
 
         }
+        public static IEnumerable<Stream> CreateAttachments(int howManyFiles, int howManyBytesInFiles, byte byteData)
+        {
+            var data = Array.CreateInstance(typeof(byte), howManyBytesInFiles);
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                data.SetValue(byteData, i);
+            }
+            for (int i = 0; i < howManyFiles; i++)
+            {
+
+                var stream = new MemoryStream((byte[])data);
+
+                yield return stream;
+            }
+            //return result;
+        }
+
     }
 }

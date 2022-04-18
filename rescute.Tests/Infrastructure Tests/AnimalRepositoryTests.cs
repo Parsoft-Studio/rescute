@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using rescute.Domain.Aggregates;
 using rescute.Domain.ValueObjects;
 using rescute.Infrastructure;
@@ -10,7 +11,7 @@ using Xunit;
 
 namespace rescute.Tests.InfrastructureTests
 {
-    [Collection("Database collection")]
+    // [Collection("Database collection")]
     public class AnimalRepositoryTests
     {
 
@@ -19,9 +20,9 @@ namespace rescute.Tests.InfrastructureTests
         {
             // Arrange
             var animals = new List<Animal>();
-            var samaritan = TestUtilities.RandomTestSamaritan();
+            var samaritan = TestUtility.RandomTestSamaritan();
 
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
@@ -31,7 +32,7 @@ namespace rescute.Tests.InfrastructureTests
 
                     for (int i = 1; i <= 10; i++)
                     {
-                        animal = TestUtilities.RandomTestAnimal(samaritan.Id);
+                        animal = TestUtility.RandomTestAnimal(samaritan.Id);
                         animal.UpdateBirthCertificateId("birth_cert_id");
                         unitOfWork.Animals.Add(animal);
                         animals.Add(animal);
@@ -44,7 +45,7 @@ namespace rescute.Tests.InfrastructureTests
 
             }
             // Assert
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {

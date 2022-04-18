@@ -10,17 +10,17 @@ using Xunit;
 
 namespace rescute.Tests.InfrastructureTests
 {
-    [Collection("Database collection")]
+    // [Collection("Database collection")]
     public class SamaritanRepositoryTests
     {
         [Fact]
         public async void SamaritanRepositoryAddsAndGetsSamaritan()
         {
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
-                    var samaritan = TestUtilities.RandomTestSamaritan();
+                    var samaritan = TestUtility.RandomTestSamaritan();
 
                     unitOfWork.Samaritans.Add(samaritan);
                     await unitOfWork.Complete();
