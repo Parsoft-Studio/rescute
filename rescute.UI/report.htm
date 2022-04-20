@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles/fontawesome.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/bootstrap.min.css" crossorigin="anonymous">
+    <link href="styles/viewer.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/rescute.css?v=2">
+    <link rel="stylesheet" href="styles/rescute-nav.css?v=2">
+    <link rel="stylesheet" href="styles/rescute-report.css?v=1">
+    <link rel="stylesheet" href="styles/rescute-chat.css?v=3">
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="scripts/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="scripts/viewer.min.js"></script>
+    <script type="text/javascript" src="scripts/rescute-nav.js"></script>
+    <script type="text/javascript" src="scripts/rescute-report.js?v=1"></script>
+</head>
+<body>
+    <nav id="mainNav" class="main-nav bg-nav">
+        <a class="nav-toggle nav-item">
+            <i class="fas fa-fw fa-bars"></i>
+        </a>
+        <a class="nav-item nav-profile" href="#">
+            <img src="images/profile.jpg" />
+            <p>احسان حسینخانی</p>
+        </a>
+        <a class="nav-item" href="#"><i class="fas fa-fw fa-copy"></i> گزارش‌ها</a>
+        <a class="nav-item" href="#"><i class="fas fa-fw fa-credit-card"></i> اعتبار و تراکنش‌ها</a>
+        <a class="nav-item" href="#"><i class="fas fa-fw fa-heart"></i> درباره ما</a>
+    </nav>
+    <div id="mainContainer">
+        <nav class="top-bar bg-rescute">
+            <div id="pillsContainer" class="container-fluid ">
+                <button type="button" class="btn btn-primary btn-sm nav-pill" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    گزارش وضعیت
+                </button>
+                <button type="button" class="btn btn-primary btn-sm nav-pill" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    درخواست حمل و نقل
+                </button>
+                <button type="button" class="btn btn-primary btn-sm nav-pill" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    مدارک پزشکی
+                </button>
+                <button type="button" class="btn btn-primary btn-sm nav-pill" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    صورت‌حساب
+                </button>
+            </div>
+            <a class="navbar-brand" href="#">
+                <div>
+                    <img src="images/logo-light.png" alt="rescute">
+                </div>
+            </a>
+        </nav>
+        <div class="container-fluid">
+            <div class="d-flex events" id="events">
+                <div class="card status-report">
+                    <div class="card-header">
+                        <span>
+                            <a class="card-profile" href="#">
+                                <img src="images/profile.jpg" alt="احسان حسینخانی" data-toggle="tooltip" data-placement="bottom" title="احسان حسینخانی" />
+                            </a>گزارش وضعیت
+                        </span>
+                        <span class="time-stamp left" data-toggle="tooltip" data-placement="bottom" title="25 مرداد 1400">12:17 PM</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="statusReport1_indicators" class="carousel slide" data-interval="false">
+                            <ol class="carousel-indicators">
+                                <li data-target="#statusReport1_indicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#statusReport1_indicators" data-slide-to="1"></li>
+                                <li data-target="#statusReport1_indicators" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="images/reports/1.jpg" alt="First slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="images/reports/2.jpg" alt="Second slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <iframe style="height: 100%; width:100%; border: none;"
+                                            frameborder="0"
+                                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAxd0MnvcP4b9OZSkgeNclxjV6tgi3W5HU&q=Azadi+Tower&language=fa" allowfullscreen>
+                                    </iframe>
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#statusReport1_indicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fa fas fa-2x fa-chevron-left"></i></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#statusReport1_indicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"><i class="fa fas fa-2x fa-chevron-right"></i></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="footer-title">
+                            <span><i class="fa fas fa-paw"></i>&nbsp;گربه</span>
+                            <a class="btn btn-primary btn-sm left" href="#" data-target="#statusReport1_indicators" data-slide-to="2"><span><i class="fa fas fa-map-marker-alt"></i>&nbsp;600 متر</span></a>
+                        </div>
+
+                        <div class="footer-subtitle">
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                        </div>
+                        <div class="footer-toolbar dropup">
+                            <a href="" data-toggle="modal" data-target="#chat" class="btn btn-primary btn-sm"><i class="fas fa-fw fa-comment-alt"></i>&nbsp;<span>12 پیام</span></a>
+                            <a class="left" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-ellipsis-v"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">ویرایش</a>
+                                <a class="dropdown-item" href="#">لغو</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card transport-request">
+                    <div class="card-header">
+                        <span>
+                            <a class="card-profile" href="#">
+                                <img src="images/profile.jpg" alt="احسان حسینخانی" data-toggle="tooltip" data-placement="bottom" title="احسان حسینخانی" />
+                            </a>درخواست حمل و نقل
+                        </span>
+                        <span class="time-stamp left" data-toggle="tooltip" data-placement="bottom" title="25 مرداد 1400">12:45 PM</span>
+                    </div>
+                    <div class="card-body">
+                        <iframe style="height: 100%; width:100%; border: none"
+                                frameborder="0"
+                                src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAxd0MnvcP4b9OZSkgeNclxjV6tgi3W5HU&origin=Azadi+Tower&destination=Ariashahr&avoid=tolls|highways&language=fa" allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="card-footer">
+                        <div class="footer-title">
+                        </div>
+                        <div class="footer-subtitle">
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                        </div>
+                        <div class="footer-toolbar dropup">
+                            <a href="" class="btn btn-secondary btn-sm"><i class="fas fa-fw fa-comment-alt"></i>&nbsp;<span>12 پیام</span></a>
+                            <a class="left" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-ellipsis-v"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">ویرایش</a>
+                                <a class="dropdown-item" href="#">لغو</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card medical-document">
+                    <div class="card-header">
+                        <span>
+                            <a class="card-profile" href="#">
+                                <img src="images/profile.jpg" alt="احسان حسینخانی" data-toggle="tooltip" data-placement="bottom" title="احسان حسینخانی" />
+                            </a>مدارک پزشکی
+                        </span>
+                        <span class="time-stamp left" data-toggle="tooltip" data-placement="bottom" title="25 مرداد 1400">12:48 PM</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="medicalDocuments1_indicators" class="carousel slide" data-interval="false">
+                            <ol class="carousel-indicators">
+                                <li data-target="#medicalDocuments1_indicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#medicalDocuments1_indicators" data-slide-to="1"></li>
+                                <li data-target="#medicalDocuments1_indicators" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="images/reports/xray1.jpg" alt="First slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="images/reports/xray2.jpg" alt="Second slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="images/reports/xray3.jpg" alt="Third slide">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#medicalDocuments1_indicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fa fas fa-2x fa-chevron-left"></i></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#medicalDocuments1_indicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"><i class="fa fas fa-2x fa-chevron-right"></i></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="footer-subtitle">
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                        </div>
+                        <div class="footer-toolbar dropup">
+                            <a href="" class="btn btn-secondary btn-sm"><i class="fas fa-fw fa-comment-alt"></i>&nbsp;<span>12 پیام</span></a>
+                            <a class="left" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-ellipsis-v"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">ویرایش</a>
+                                <a class="dropdown-item" href="#">لغو</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bill">
+                    <div class="card-header">
+                        <span>
+                            <a class="card-profile" href="#">
+                                <img src="images/profile.jpg" alt="احسان حسینخانی" data-toggle="tooltip" data-placement="bottom" title="احسان حسینخانی" />
+                            </a>صورت‌حساب خدمات
+                        </span>
+                        <span class="time-stamp left" data-toggle="tooltip" data-placement="bottom" title="25 مرداد 1400">12:55 PM</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="bill1_indicators" class="carousel slide" data-interval="false">
+                            <ol class="carousel-indicators">
+                                <li data-target="#bill1_indicators" data-slide-to="0" class="active"></li>
+                                <li data-target="#bill1_indicators" data-slide-to="1"></li>
+                                <li data-target="#bill1_indicators" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="images/reports/samplebill.png" alt="First slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="images/reports/samplebill.png" alt="Second slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="images/reports/samplebill.png" alt="Third slide">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#bill1_indicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fa fas fa-2x fa-chevron-left"></i></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#bill1_indicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"><i class="fa fas fa-2x fa-chevron-right"></i></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="footer-title">
+                            <h5 class="bill-total">210,000 تومان</h5>
+                            <button class="btn btn-secondary btn-sm left">درخواست کمک مالی</button>
+                        </div>
+                        <div class="footer-subtitle">
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                        </div>
+                        <div class="footer-toolbar dropup">
+                            <a href="" class="btn btn-sm btn-secondary"><i class="fas fa-fw fa-comment-alt"></i>&nbsp;<span>12 پیام</span></a>
+                            <a class="left" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-ellipsis-v"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">ویرایش</a>
+                                <a class="dropdown-item" href="#">لغو</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-new" title="رویداد جدید"><i class="fas fa-fw fa-plus"></i><span class="btn-new-text"> رویداد جدید</span></button>
+        </div>
+    </div>
+    <div class="chat modal fade transport-request" id="chat" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="chat-title">
+                        <span>
+                            <a class="card-profile" href="#">
+                                <img src="images/profile.jpg" data-toggle="tooltip" data-placement="top" alt="احسان حسینخانی" title="احسان حسینخانی" />
+                            </a>درخواست حمل و نقل
+                        </span>
+                        <span class="time-stamp left" data-toggle="tooltip" data-placement="bottom" title="25 مرداد 1400">12:17 PM</span>
+                    </div>
+                    <nav class="chat-profiles">
+                        <span>
+                            <a class="chat-profile selected" href="#">
+                                <img src="images/profile1.jpg" data-toggle="tooltip" data-placement="bottom" alt="احسان حسینخانی" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile unread" href="#">
+                                <img src="images/profile2.jpg" data-toggle="tooltip" data-placement="bottom" alt="بنگ دینگ آو" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile unread" href="#">
+                                <img src="images/profile1.jpg" data-toggle="tooltip" data-placement="bottom" alt="وی تو لو" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile" href="#">
+                                <img src="images/profile1.jpg" data-toggle="tooltip" data-placement="bottom" alt="احسان حسینخانی" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile unread" href="#">
+                                <img src="images/profile2.jpg" data-toggle="tooltip" data-placement="bottom" alt="بنگ دینگ آو" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile unread" href="#">
+                                <img src="images/profile1.jpg" data-toggle="tooltip" data-placement="bottom" alt="وی تو لو" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile" href="#">
+                                <img src="images/profile1.jpg" data-toggle="tooltip" data-placement="bottom" alt="احسان حسینخانی" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile unread" href="#">
+                                <img src="images/profile2.jpg" data-toggle="tooltip" data-placement="bottom" alt="بنگ دینگ آو" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+                        <span>
+                            <a class="chat-profile" href="#">
+                                <img src="images/profile1.jpg" data-toggle="tooltip" data-placement="bottom" alt="وی تو لو" title="احسان حسینخانی" />
+                            </a>
+                        </span>
+
+                    </nav>
+                </div>
+                <div class="modal-body">
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.</p>
+                    </div>
+                    <div class="my-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.</p>
+                    </div>
+                    <div class="my-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.</p>
+                    </div>
+                    <div class="my-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+                    <div class="their-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.</p>
+                    </div>
+                    <div class="my-chat-bubble">
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="پیامی بنویسید" aria-label="پیامی بنویسید" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button"><i class="fa fa-arrow-left"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
