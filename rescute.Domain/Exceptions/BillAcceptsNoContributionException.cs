@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace rescute.Domain.Exceptions
 {
-    class BillAcceptsNoContribution : InvalidContribution
+    class BillAcceptsNoContributionException : InvalidContributionException
     {
-        public BillAcceptsNoContribution() : base("The bill doesn't accept contributions.")
+        public BillAcceptsNoContributionException() : base("The bill doesn't accept contributions.")
         { }
     }
 }

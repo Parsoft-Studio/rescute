@@ -49,7 +49,7 @@ namespace rescute.Domain.Aggregates
         {
             if (attachments != null)
             {
-                if (!attachments.All(d => this.AcceptableAttachmentTypes.Contains(d.Type))) throw new InvalidAttachmentType(AcceptableAttachmentTypes.ToArray());
+                if (!attachments.All(d => this.AcceptableAttachmentTypes.Contains(d.Type))) throw new InvalidAttachmentTypeException(AcceptableAttachmentTypes.ToArray());
 
                 this.attachments.AddRange(attachments);
             }

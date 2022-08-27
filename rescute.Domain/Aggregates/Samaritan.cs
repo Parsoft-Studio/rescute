@@ -12,7 +12,7 @@ namespace rescute.Domain.Aggregates
 
         public Samaritan(Name firstName, Name lastName, PhoneNumber mobile,DateTime registrationDate)
         {
-            if (!mobile.IsMobile) throw new Domain.Exceptions.MobilePhoneExpected();
+            if (!mobile.IsMobile) throw new Domain.Exceptions.MobilePhoneExpectedException();
             FirstName = firstName;
             LastName = lastName;
             Mobile = mobile;
