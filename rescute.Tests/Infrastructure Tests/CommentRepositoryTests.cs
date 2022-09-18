@@ -16,7 +16,7 @@ namespace rescute.Tests.InfrastructureTests
         [Fact]
         public async void CommentRepositoryAddsAndGetsComment()
         {
-            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
+            using (var context = new rescuteContext(TestUtility.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {

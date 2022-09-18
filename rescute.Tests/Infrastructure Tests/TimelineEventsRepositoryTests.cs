@@ -17,7 +17,7 @@ namespace rescute.Tests.InfrastructureTests
         [Fact]
         public async void TimelineItemsRepositoryAddsAndGetsEvent()
         {
-            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
+            using (var context = new rescuteContext(TestUtility.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
@@ -45,7 +45,7 @@ namespace rescute.Tests.InfrastructureTests
         [Fact]
         public async void TimelineItemsRepositoryAddsAndGetsBillAndContribution()
         {
-            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
+            using (var context = new rescuteContext(TestUtility.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {

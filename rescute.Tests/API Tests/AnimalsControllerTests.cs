@@ -28,7 +28,7 @@ namespace rescute.Tests.APITests
         public async Task AnimalControllerPostsAnimal()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -57,7 +57,7 @@ namespace rescute.Tests.APITests
         public async Task AnimalControllerGetsAnimal()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -90,7 +90,7 @@ namespace rescute.Tests.APITests
         public async System.Threading.Tasks.Task AnimalControllerGetsPagedAnimals()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {

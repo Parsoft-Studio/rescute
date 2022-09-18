@@ -22,7 +22,7 @@ namespace rescute.Tests.InfrastructureTests
             var animals = new List<Animal>();
             var samaritan = TestUtility.RandomTestSamaritan();
 
-            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
+            using (var context = new rescuteContext(TestUtility.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {
@@ -45,7 +45,7 @@ namespace rescute.Tests.InfrastructureTests
 
             }
             // Assert
-            using (var context = new rescuteContext(TestDatabaseInitializer.GetTestDatabaseOptions()))
+            using (var context = new rescuteContext(TestUtility.GetTestDatabaseOptions()))
             {
                 using (var unitOfWork = new UnitOfWork(context))
                 {

@@ -29,7 +29,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerPostsStatusReport()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -71,7 +71,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerGetsStatusReport()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -114,7 +114,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerGetsPagedStatusReports()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -153,7 +153,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerRequestsTransport()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -204,7 +204,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerGetsTransportRequest()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -251,7 +251,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerGetsPagedTransportRequests()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -292,7 +292,7 @@ namespace rescute.Tests.APITests
         //public async Task TimelineItemsControllerPostsBill(bool includesLab, bool includesPrescription, bool includesVetFee)
         //{
         //    // Arrange
-        //    using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+        //    using (var context = new rescuteContext(TestUtility.TestsConnectionString))
         //    {
         //        using (var uoW = new UnitOfWork(context))
         //        {
@@ -356,7 +356,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerGetsBill()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
@@ -403,7 +403,7 @@ namespace rescute.Tests.APITests
         public async Task TimelineItemsControllerGetsPagedBills()
         {
             // Arrange
-            using (var context = new rescuteContext(TestDatabaseInitializer.TestsConnectionString))
+            using (var context = new rescuteContext(TestUtility.TestsConnectionString))
             {
                 using (var uoW = new UnitOfWork(context))
                 {
