@@ -86,7 +86,7 @@ namespace rescute.Domain.Aggregates.TimelineItems
 
         public void Contribute(Contribution contrib, bool includesLabResults, bool includesPrescription, bool includesVetFee)
         {
-            if (ContributionRequest == null) throw new BillAcceptsNoContribution();
+            if (ContributionRequest == null) throw new BillAcceptsNoContributionException();
             IsContributionValid(contrib.Amount, Total);
             contributionRequest.Contribute(contrib, includesLabResults, includesPrescription, includesVetFee);
         }
@@ -95,12 +95,12 @@ namespace rescute.Domain.Aggregates.TimelineItems
         {
             if (shouldHavePrescription)
             {
-                if (documents == null || !documents.Any(doc => doc.Type == MedicalDocumentType.Prescription())) throw new MissingMedicalDocumentType(MedicalDocumentType.Prescription());
+                if (documents == null || !documents.Any(doc => doc.Type == MedicalDocumentType.Prescription())) throw new MissingMedicalDocumentTypeException(MedicalDocumentType.Prescription());
             }
 
             if (shouldHaveLabResults)
             {
-                if (documents == null || !documents.Any(doc => doc.Type == MedicalDocumentType.LabResults())) throw new MissingMedicalDocumentType(MedicalDocumentType.LabResults());
+                if (documents == null || !documents.Any(doc => doc.Type == MedicalDocumentType.LabResults())) throw new MissingMedicalDocumentTypeException(MedicalDocumentType.LabResults());
             }
             medicalDocumentIds = documents == null ? medicalDocumentIds : documents.Select(doc => doc.Id).ToList();
         }
@@ -111,7 +111,7 @@ namespace rescute.Domain.Aggregates.TimelineItems
         }
         private void IsContributionValid(decimal amount, decimal billTotal)
         {
-            if ((this.ContributionRequest.ContributionsTotal + amount) > billTotal) { throw new ContributionExceedsRequirement(); }
+            if ((this.ContributionRequest.ContributionsTotal + amount) > billTotal) { throw new ContributionExceedsRequirementException(); }
         }
 
         public class ContribRequest : Entity<ContribRequest>, IContributionRequest
@@ -137,8 +137,8 @@ namespace rescute.Domain.Aggregates.TimelineItems
 
             public void Contribute(Contribution contribution, bool includesLabResults, bool includesPrescription, bool includesVetFee)
             {
-                if (!Bill.CheckConsistency(includesLabResults, includesPrescription, includesVetFee)) throw new InconsistentBill();
-                if (contribution == null || contribution.Amount <= 0) throw new InvalidContribution();
+                if (!Bill.CheckConsistency(includesLabResults, includesPrescription, includesVetFee)) throw new InconsistentBillException();
+                if (contribution == null || contribution.Amount <= 0) throw new InvalidContributionException();
                 contributions.Add(contribution);
             }
             public void SetRequestComplete(DateTime completionDate)

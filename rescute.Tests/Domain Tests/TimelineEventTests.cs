@@ -54,7 +54,7 @@ namespace rescute.Tests.DomainTests
             {
                 bill.Contribute(contrib, includesLabResults, includesPrescription, includesVetFee);
             };
-            action.Should().Throw<ContributionExceedsRequirement>();
+            action.Should().Throw<ContributionExceedsRequirementException>();
         }
         [Fact]
         public void BillIsConsistentWithAttachedMedicalDocuments()
@@ -96,7 +96,7 @@ namespace rescute.Tests.DomainTests
                     includesPrescription: true,
                     includesVetFee: false);
             };
-            action.Should().Throw<InconsistentBill>();
+            action.Should().Throw<InconsistentBillException>();
             action = () =>
              {
                  bill.Contribute(contribution,
@@ -104,7 +104,7 @@ namespace rescute.Tests.DomainTests
                      includesPrescription: false,
                      includesVetFee: true);
              };
-            action.Should().Throw<InconsistentBill>();
+            action.Should().Throw<InconsistentBillException>();
             action = () =>
             {
                 bill.Contribute(contribution,
@@ -112,7 +112,7 @@ namespace rescute.Tests.DomainTests
                     includesPrescription: true,
                     includesVetFee: true);
             };
-            action.Should().Throw<InconsistentBill>();
+            action.Should().Throw<InconsistentBillException>();
 
             action = () =>
             {
@@ -121,7 +121,7 @@ namespace rescute.Tests.DomainTests
                     includesPrescription: true,
                     includesVetFee: true);
             };
-            action.Should().NotThrow<InconsistentBill>();
+            action.Should().NotThrow<InconsistentBillException>();
 
 
         }
@@ -181,14 +181,14 @@ namespace rescute.Tests.DomainTests
                 var statusReported = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, docImage, docVid);
             });
 
-            statusReportedValidAction.Should().NotThrow<InvalidAttachmentType>();
+            statusReportedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
             var statusReportedInvalidAction = new Action(() =>
             {
                 var statusReported = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, docImage, docVid, docFile);
             });
 
-            statusReportedInvalidAction.Should().Throw<InvalidAttachmentType>();
+            statusReportedInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
 
 
             // Bill
@@ -197,14 +197,14 @@ namespace rescute.Tests.DomainTests
                 var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, string.Empty, 1000, false, false, false, null, docPdf, docImage);
             });
 
-            billAttachedValidAction.Should().NotThrow<InvalidAttachmentType>();
+            billAttachedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
             var billAttachedInvalidAction = new Action(() =>
             {
                 var billAttached = new Bill(DateTime.Now, samaritan.Id, animal.Id, string.Empty, 1000, false, false, false, null, docImage, docFile, docVid);
             });
 
-            billAttachedInvalidAction.Should().Throw<InvalidAttachmentType>();
+            billAttachedInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
 
 
             // MedicalDocument
@@ -213,14 +213,14 @@ namespace rescute.Tests.DomainTests
                 var videoAttached = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, string.Empty, MedicalDocumentType.DoctorsOrders(), docPdf);
             });
 
-            testResultAttachedValidAction.Should().NotThrow<InvalidAttachmentType>();
+            testResultAttachedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
             var testResultAttachedInvalidAction = new Action(() =>
             {
                 var videoAttached = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, string.Empty, MedicalDocumentType.IdentityCertificate(), docVid, docFile);
             });
 
-            testResultAttachedInvalidAction.Should().Throw<InvalidAttachmentType>();
+            testResultAttachedInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
 
 
         }

@@ -30,7 +30,7 @@ namespace rescute.Domain.Aggregates.TimelineItems
         public void AddAttachments(params Attachment[] attachments)
         {
             if (attachments == null || attachments.Count() == 0) throw new ArgumentException("Attachments cannot be null or empty.", nameof(attachments));
-            if (!attachments.All(d => this.AcceptableAttachmentTypes.Contains(d.Type))) throw new InvalidAttachmentType(AcceptableAttachmentTypes.ToArray());
+            if (!attachments.All(d => this.AcceptableAttachmentTypes.Contains(d.Type))) throw new InvalidAttachmentTypeException(AcceptableAttachmentTypes.ToArray());
             this.attachments.AddRange(attachments);
         }
 

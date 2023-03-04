@@ -6,10 +6,10 @@ using System.Text;
 
 namespace rescute.Domain.Exceptions
 {
-    public class InvalidAttachmentType : Exception
+    public class InvalidAttachmentTypeException : Exception
     {
         private List<AttachmentType> types = new List<AttachmentType>();
-        public InvalidAttachmentType(params AttachmentType[] acceptableTypes)
+        public InvalidAttachmentTypeException(params AttachmentType[] acceptableTypes)
         {
             types.AddRange(acceptableTypes);
         }
