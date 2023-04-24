@@ -20,5 +20,14 @@ namespace rescute.Tests
             return new Animal(DateTime.Now, introducedBy, "test animal", AnimalType.Cat());
         }
 
+        public static Attachment RandomTestAttachment()
+        {
+            var filename = Guid.NewGuid().ToString();
+            var extension = "jpg";
+            var creationDate = DateTime.Now;
+            var description = "Test attachment";
+            return new Attachment(filename, extension, creationDate, description);
+        }
+
     }
 }
