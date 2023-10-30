@@ -145,9 +145,9 @@ namespace rescute.Tests.DomainTests
             var contributor = TestUtility.RandomTestSamaritan();
             var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID", contributionComment);
 
-            var bill = new Bill(DateTime.Now, _samaritan.Id, _animal.Id, "I can't pay this on my own!", billAmount, true, false, false, null, _pdfAttachment);
+            var bill = new Bill(DateTime.Now, _samaritan.Id, _animal.Id, "I can't pay this on my own!", billAmount, false, false, true, null, _pdfAttachment);
             bill.RequestContribution();
-            bill.Contribute(contribution, true, false, false);
+            bill.Contribute(contribution, false, false, true);
 
             bill.ContributionRequest.Contributions.Count.Should().Be(1);
             var same = bill.ContributionRequest.Contributions.First();
