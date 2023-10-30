@@ -69,7 +69,7 @@ namespace rescute.Tests.DomainTests
 
             Action action = () => bill.Contribute(contrib, false, false, true);
 
-            action.Should().Throw<ContributionExceedsRequirement>();
+            action.Should().Throw<ContributionExceedsRequirementException>();
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace rescute.Tests.DomainTests
                     includesPrescription: true,
                     includesVetFee: false);
             };
-            action.Should().Throw<InconsistentBill>();
+            action.Should().Throw<InconsistentBillException>();
 
             action = () =>
             {
@@ -115,7 +115,7 @@ namespace rescute.Tests.DomainTests
                     includesPrescription: false,
                     includesVetFee: true);
             };
-            action.Should().Throw<InconsistentBill>();
+            action.Should().Throw<InconsistentBillException>();
 
             action = () =>
             {
@@ -124,7 +124,7 @@ namespace rescute.Tests.DomainTests
                     includesPrescription: true,
                     includesVetFee: true);
             };
-            action.Should().Throw<InconsistentBill>();
+            action.Should().Throw<InconsistentBillException>();
 
             action = () =>
             {
@@ -133,7 +133,7 @@ namespace rescute.Tests.DomainTests
                     includesPrescription: true,
                     includesVetFee: true);
             };
-            action.Should().NotThrow<InconsistentBill>();
+            action.Should().NotThrow<InconsistentBillException>();
         }
 
         [Fact]
@@ -172,14 +172,14 @@ namespace rescute.Tests.DomainTests
                 var statusReported = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, docImage, docVid);
             });
 
-            statusReportedValidAction.Should().NotThrow<InvalidAttachmentType>();
+            statusReportedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
             var statusReportedInvalidAction = new Action(() =>
             {
                 var statusReported = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, docImage, docVid, docFile);
             });
 
-            statusReportedInvalidAction.Should().Throw<InvalidAttachmentType>();
+            statusReportedInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
         }
 
         [Fact]
@@ -198,14 +198,14 @@ namespace rescute.Tests.DomainTests
                 var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, string.Empty, 1000, false, false, false, null, docPdf, docImage);
             });
 
-            billAttachedValidAction.Should().NotThrow<InvalidAttachmentType>();
+            billAttachedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
             var billAttachedInvalidAction = new Action(() =>
             {
                 var billAttached = new Bill(DateTime.Now, samaritan.Id, animal.Id, string.Empty, 1000, false, false, false, null, docImage, docFile, docVid);
             });
 
-            billAttachedInvalidAction.Should().Throw<InvalidAttachmentType>();
+            billAttachedInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
         }
 
         [Fact]
@@ -227,7 +227,7 @@ namespace rescute.Tests.DomainTests
                 var invalidStatusReport = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, invalidDocImage, docVid);
             });
 
-            invalidStatusReport.Should().Throw<InvalidAttachmentType>();
+            invalidStatusReport.Should().Throw<InvalidAttachmentTypeException>();
         }
 
 
@@ -252,7 +252,7 @@ namespace rescute.Tests.DomainTests
                 var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "Bill description.", 1000, false, false, false, validMedicalDocuments, validAttachmentPdf, invalidAttachment);
             };
 
-            action.Should().Throw<InvalidAttachmentType>();
+            action.Should().Throw<InvalidAttachmentTypeException>();
         }
 
         [Fact]
@@ -276,7 +276,7 @@ namespace rescute.Tests.DomainTests
                 var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "Bill description.", 1000, false, false, false, validMedicalDocuments, validAttachmentPdf, invalidAttachment);
             };
 
-            action.Should().Throw<InvalidAttachmentType>();
+            action.Should().Throw<InvalidAttachmentTypeException>();
         }
 
         [Fact]
@@ -292,7 +292,7 @@ namespace rescute.Tests.DomainTests
                 var medicalDoc = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description", MedicalDocumentType.Prescription(), validPdfAttachment, validImageAttachment);
             });
 
-            medicalDocumentValidAction.Should().NotThrow<InvalidAttachmentType>();
+            medicalDocumentValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
         }
 
         [Fact]
@@ -308,7 +308,7 @@ namespace rescute.Tests.DomainTests
                 var medicalDoc = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description", MedicalDocumentType.Prescription(), validPdfAttachment, invalidAttachment);
             });
 
-            medicalDocumentInvalidAction.Should().Throw<InvalidAttachmentType>();
+            medicalDocumentInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
         }
 
     }

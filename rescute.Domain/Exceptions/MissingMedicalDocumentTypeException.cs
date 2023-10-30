@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace rescute.Domain.Exceptions
 {
-    class MissingMedicalDocumentTypeException : Exception
+    public class MissingMedicalDocumentTypeException : Exception
     {
         public MissingMedicalDocumentTypeException(MedicalDocumentType missingType) : base($"The following medical document type expected but missing: {missingType}")
         {
