@@ -1,0 +1,152 @@
+﻿/* General */
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+.bg-rescute {
+    background-color: #9C0000 !important;
+}
+
+.bg-bill {
+    background-color: darkgoldenrod !important;
+}
+
+.bg-transport-request {
+    background-color: darkgreen !important;
+}
+
+.bg-status-report {
+    background-color: darkgoldenrod !important;
+}
+
+.bg-medical-document {
+    background-color: darkgreen !important;
+}
+
+.bg-nav {
+    background-color: #222D32;
+}
+
+.fa-1-4x {
+    font-size: 1.4em;
+}
+
+.container-fluid {
+    padding: 15px;
+}
+
+.card, .card-body {
+    color: white !important;
+}
+
+a.card-profile {
+    width: 35px;
+    height: 35px;
+    margin-left: 3px;
+}
+
+    a.card-profile img {
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+    }
+
+
+.btn-primary {
+    border-color: #9C0000 !important;
+    color: white !important;
+    background-color: #9C0000 !important;
+    box-shadow: none !important;
+    text-wrap: nowrap;
+}
+
+    .btn-primary:active, .btn-primary:hover {
+        background-color: #BB0000 !important;
+    }
+
+.btn-secondary {
+    box-shadow: none !important;
+}
+
+    .btn-secondary:active, .btn-secondary:hover {
+        box-shadow: none !important;
+        outline: none;
+    }
+
+.dropdown-menu {
+    direction: rtl;
+    text-align: right;
+    background-color: #252525;
+    font-size: 0.9rem;
+    margin-left: -2px;
+}
+
+
+.dropdown-item, .dropdown-item:active, .dropdown-item:hover {
+    color: white !important;
+}
+
+    .dropdown-item:active, .dropdown-item:hover {
+        background-color: #353535 !important;
+    }
+
+a, a:active, a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.carousel {
+    direction: ltr;
+}
+
+.carousel-indicators li {
+    background-color: #555555;
+}
+
+    .carousel-indicators li.active {
+        background-color: #9C0000;
+    }
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    background-image: none;
+    color: #9C0000;
+    opacity: 0.5;
+}
+
+.btn-new {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.4) !important;
+}
+
+.time-stamp {
+    margin-left: 5px;
+    direction: ltr;
+}
+
+.left {
+    margin-right: auto;
+}
+
+@media (max-width: 768px) {
+    .btn-new {
+        display: block;
+        bottom: 15px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        text-overflow: clip;
+        font-size: 1.2em;
+        padding-left: 20px;
+        text-align: center;
+        padding: 0;
+    }
+
+        .btn-new .btn-new-text {
+            display: none;
+        }
+}

@@ -1,0 +1,190 @@
+.events {
+    position: fixed;
+    top: 60px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow-y: scroll;
+    align-content: start;
+    padding-bottom: 55px !important;
+    flex-wrap: wrap !important;
+}
+
+/* Bill */
+
+.events .card.bill {
+    border: 1px solid darkgoldenrod;
+}
+
+.events .card.bill .card-header, .events .card.bill .card-footer {
+    background-color: darkgoldenrod;
+}
+
+.events .card.bill .btn-secondary {
+    background-color: rgb(205, 147, 12);
+    border: none;
+}
+
+.events .card.bill .btn-secondary:active, .events .card.bill .btn-secondary:hover {
+    background-color: rgb(221, 158, 13);
+}
+
+/* Transport Request */
+.events .card.transport-request {
+    border: 1px solid darkgreen;
+}
+
+.events .card.transport-request .card-header, .events .card.transport-request .card-footer {
+    background-color: darkgreen;
+}
+
+.events .card.transport-request .btn-secondary {
+    background-color: rgb(0, 120, 0);
+    border: none;
+}
+
+.events .card.transport-request .btn-secondary:active, .events .card.transport-request .btn-secondary:hover {
+    background-color: rgb(0, 135, 0);
+}
+
+/*Medical Document*/
+.events .card.medical-document {
+    border: 1px solid darkcyan;
+}
+
+.events .card.medical-document .card-header, .events .card.medical-document .card-footer {
+    background-color: darkcyan;
+}
+
+.events .card.medical-document .btn-secondary {
+    background-color: rgb(0, 160, 160);
+    border: none;
+}
+
+.events .card.medical-document .btn-secondary:active, .events .card.medical-document .btn-secondary:hover {
+    background-color: rgb(0, 180, 180);
+}
+
+/*Status Report*/
+.events .card.status-report {
+    border: 1px solid darkred;
+}
+
+.events .card.status-report .card-header, .events .card.status-report .card-footer {
+    background-color: darkred;
+}
+
+.events .card.status-report .btn-secondary {
+    background-color: #9C0000;
+    border: none;
+}
+
+.events .card.status-report .btn-secondary:active, .events .card.status-report .btn-secondary:hover {
+    background-color: #BB0000;
+}
+
+/* Card */
+.events .card {
+    width: 100%;
+    margin: 20px;
+
+    border: 0;
+    align-self: start;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    font-size: .9rem;
+}
+
+.events .card .card-header .time-stamp {
+    margin-left: 5px;
+    direction: ltr;
+}
+
+.events .card .left {
+    margin-right: auto;
+}
+
+.events .card .card-header {
+    display: flex;
+    height: 50px;
+    border: 0;
+    border-radius: 0;
+    padding: 8px;
+    align-items: center;
+}
+
+.events .card .card-body {
+    padding: 0px;
+    height: 400px;
+}
+
+.events .card .card-body .carousel-item {
+    height: 400px;
+}
+
+.events .card .card-body img {
+    object-fit: cover;
+    height: 400px;
+}
+
+.events .card .card-body iframe {
+    height: 400px;
+}
+
+.events .card .card-footer {
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    background-color: black;
+    padding: 15px;
+}
+
+.events .card .card-footer .footer-title {
+    display: flex;
+    align-content: start;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.events .card .card-footer .footer-title .bill-total {
+    margin-bottom: 0;
+}
+
+.events .card .card-footer .footer-subtitle p {
+    text-align: justify;
+}
+
+.events .card .card-footer .footer-toolbar {
+    display: flex;
+    align-content: start;
+    align-items: center;
+    margin-top: 25px;
+}
+
+
+/* Media */
+@media (max-width: 768px) {
+    .events {
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .events .card {
+        margin: 0px;
+        margin-bottom: 20px;
+        width: 90vw !important;
+        height: auto !important;
+        text-decoration: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .events {
+        flex-direction: column;
+        flex-wrap: unset !important;
+    }
+
+    .events .card {
+        max-width: 500px;
+    }
+}

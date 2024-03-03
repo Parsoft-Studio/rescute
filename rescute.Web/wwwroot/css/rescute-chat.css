@@ -1,0 +1,146 @@
+﻿.modal.chat {
+    color: white;
+    font-size: 0.9rem;
+}
+
+    /*Chat Profiles*/
+
+    .modal.chat .chat-profiles {
+        height: 85px;
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+        background-color: whitesmoke;
+        margin-left: -8px;
+        margin-right: -8px;
+        overflow-y: hidden;
+        overflow-x: scroll;
+    }
+
+        .modal.chat .chat-profiles .chat-profile {
+            margin: 10px;
+            opacity: 0.3;
+        }
+
+            .modal.chat .chat-profiles .chat-profile.unread, .modal.chat .chat-profiles .chat-profile.selected {
+                opacity: 1;
+            }
+
+            .modal.chat .chat-profiles .chat-profile img {
+                height: 60px;
+                width: 60px;
+                border-radius: 50%;
+            }
+
+
+            .modal.chat .chat-profiles .chat-profile.selected img {
+                border: 5px solid rgba(156,0,0,0.7) !important;
+                -moz-box-shadow: 0px 0px 6px 6px #ccc;
+                -webkit-box-shadow: 0px 0px 6px 6px #ccc;
+                box-shadow: 0px 0px 6px 6px #ccc;
+            }
+
+    .modal.chat .modal-header {
+        display: block;
+        border: 0;
+        border-radius: 0;
+        padding: 8px;
+        padding-bottom: 0px;
+        align-items: center;
+    }
+
+        .modal.chat .modal-header .chat-title {
+            display: flex;
+            align-items: center;
+        }
+
+    .modal.chat .modal-body {
+        height: 60vh;
+        overflow-y:scroll;
+    }
+
+    .modal.chat .modal-footer {
+        display: flex;
+        height: auto;
+        border: 0;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .modal.chat .input-group input {
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    .modal.chat .input-group button {
+        border-radius: 5px 0px 0px 5px;
+    }
+
+    .modal.chat .input-group input:active, .modal.chat .input-group input:focus, .modal.chat .input-group input:hover {
+        border-color: #ced4da;
+        outline: 0px !important;
+        -webkit-appearance: none;
+        box-shadow: none !important;
+    }
+
+    /* Transport Request */
+    .modal.chat.transport-request .modal-content {
+        border: solid 1px darkgreen;
+    }
+
+    .modal.chat.transport-request .modal-header {
+        background-color: darkgreen;
+    }
+    /* Bill */
+    .modal.chat.bill .modal-content {
+        border: 1px solid darkgoldenrod;
+    }
+
+    .modal.chat.bill .modal-header, .modal.chat.bill .modal-footer {
+        background-color: darkgoldenrod;
+    }
+
+    /* Status Report */
+    .modal.chat.status-report .modal-content {
+        border: 1px solid darkred;
+    }
+
+    .modal.chat.status-report .modal-header, .modal.chat.status-report .modal-footer {
+        background-color: darkred;
+    }
+
+    /* Medical Document */
+
+    .modal.chat.medical-document .modal-content {
+        border: 1px solid darkcyan;
+    }
+
+    .modal.chat.medical-document .modal-header, .modal.chat.medical-document .modal-footer {
+        background-color: darkcyan;
+    }
+
+    /* Chat Bubbles */
+    .modal.chat .modal-content .my-chat-bubble {
+        border-radius: 10px 10px 0px 10px;
+        background-color: #9C0000;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: inline-block;
+        margin-left: auto;
+        float: right;
+        max-width: 80%;
+    }
+
+    .modal.chat .modal-content .their-chat-bubble {
+        border-radius: 10px 10px 10px 0px;
+        background-color: #EE0000;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: inline-block;
+        margin-right: auto;
+        float:left;
+        max-width:80%;
+    }
+
+        .modal.chat .modal-content .their-chat-bubble p, .modal.chat .modal-content .my-chat-bubble p {
+            margin: 0px;
+        }
