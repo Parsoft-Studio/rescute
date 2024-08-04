@@ -5,7 +5,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Features\Authentication\"/>
         <Folder Include="wwwroot\lib\" />
     </ItemGroup>
     <ItemGroup>
@@ -59,6 +58,8 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.min.css" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.min.js" />
+      <_ContentIncludedByDefault Remove="Shared\MainLayout.razor" />
+      <_ContentIncludedByDefault Remove="Shared\NavMenu.razor" />
     </ItemGroup>
     <Target Name="RestoreNPMPackages" BeforeTargets="CopyNPMPackages;Build">
         <Exec Command="npm install" />
@@ -80,5 +81,8 @@
   <ItemGroup>
     <Content Remove="wwwroot\css\open-iconic\README.md" />
     <Content Remove="wwwroot\css\site.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.7" />
   </ItemGroup>
 </Project>

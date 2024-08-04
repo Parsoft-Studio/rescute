@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using rescute.Domain.ValueObjects;
+﻿using rescute.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace rescute.Infrastructure.Services
