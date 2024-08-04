@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using rescute.Domain.ValueObjects;
+﻿using rescute.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.IO;
