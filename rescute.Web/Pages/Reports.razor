@@ -1,22 +1,15 @@
 @page "/reports"
-@implements IDisposable
-<h3>@header</h3>
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+<h3>@userName</h3>
 
 @code {
-    private string header = string.Empty;
+    private string? userName = String.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        // This code runs when the component is initialized (i.e., when the page is loaded)
-        header = "My Header";
-
-        // Perform any initialization tasks here
-        await Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        Console.WriteLine("Dispose: The page is being disposed.");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        userName = authState.User.FindFirst(c => c.Type == "name")?.Value;
     }
 
 }
