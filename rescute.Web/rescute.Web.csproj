@@ -81,8 +81,15 @@
   <ItemGroup>
     <Content Remove="wwwroot\css\open-iconic\README.md" />
     <Content Remove="wwwroot\css\site.css" />
+    <Content Remove="Pages\Shared\MainLayout.razor" />
+    <Content Remove="Pages\Reports.razor" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Reports\Index.razor" />
+    <AdditionalFiles Include="Pages\Shared\Layout\AppSideBar.razor" />
+    <AdditionalFiles Include="Pages\Shared\Layout\MainLayout.razor" />
   </ItemGroup>
 </Project>
