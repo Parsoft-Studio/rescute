@@ -1,0 +1,24 @@
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<nav id="mainNav" class="main-nav bg-nav">
+    <a class="nav-toggle nav-item">
+        <i class="fa fa-fw fa-bars"></i>
+    </a>
+    <a class="nav-item nav-profile" href="#">
+        <img src="img/profile.jpg" />
+        <p>@userName</p>
+    </a>
+    <a class="nav-item" href="#"><i class="fa fa-fw fa-copy"></i> گزارش‌ها</a>
+    <a class="nav-item" href="#"><i class="fa fa-fw fa-credit-card"></i> اعتبار و تراکنش‌ها</a>
+    <a class="nav-item" href="#"><i class="fa fa-fw fa-heart"></i> درباره ما</a>
+</nav>
+@code {
+    private string? userName = String.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        userName = authState.User.FindFirst(c => c.Type == "name")?.Value;
+    }
+
+}

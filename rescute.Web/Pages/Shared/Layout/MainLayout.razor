@@ -1,0 +1,23 @@
+@inherits LayoutComponentBase
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/rescute.css?v=1">
+    <link rel="stylesheet" href="css/rescute-nav.css?v=1">
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/rescute-nav.js" ></script>
+    <HeadOutlet />
+</head>
+<AppSideBar/>
+<div id="mainContainer">
+    <PageTopBar />
+    @Body
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

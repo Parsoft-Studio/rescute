@@ -1,0 +1,47 @@
+@using rescute.Web.Pages.Report.Model
+@inherits ReportItemBase
+@implements ISliderItem
+@implements ICoordinatedItem
+
+<div class="card status-report">
+
+    <ItemTopBar Parent="@this"/>
+
+    <div class="card-body">
+        <Carousel Parent="@this" />
+    </div>
+    <div class="card-footer">
+        <div class="footer-title">
+            <span><i class="fa fa fa-paw"></i>&nbsp;@AnimalType</span>
+            <a class="btn btn-primary btn-sm left" href="#" data-bs-target="#@ComponentId"
+               data-bs-slide-to="2">
+                <span><i class="fa fa fa-map-marker"></i>&nbsp;@Distance</span>
+            </a>
+        </div>
+        <div class="footer-subtitle">
+            <p>
+                @Description
+            </p>
+        </div>
+        <div class="footer-toolbar dropup">
+            <a href="" data-bs-toggle="modal" data-bs-target="#chat" class="btn btn-primary btn-sm">
+                <i
+                    class="fa fa-fw fa-comment">
+                </i>&nbsp;<span>12 پیام</span>
+            </a>
+            <ItemMenu Parent="@this" />
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override string ReportItemName => "statusReport";
+    public override string ReportItemCaption => "گزارش وضعیت";
+    [Parameter] public IList<ReportItemSlide> Slides { get; set; }
+    [Parameter] public string AnimalType { get; set; }
+    [Parameter] public string Distance { get; set; }
+    [Parameter] public string Location { get; set; }
+
+
+
+}
