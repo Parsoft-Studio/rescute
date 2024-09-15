@@ -1,0 +1,58 @@
+@using rescute.Domain.Aggregates
+@using rescute.Domain.Aggregates.TimelineItems
+@using rescute.Shared
+@using rescute.Web.Pages.Report.ViewModel
+@inherits ReportItemBase
+@implements ISliderItem
+@implements ICoordinatedItem
+
+<div class="card status-report">
+
+    <ItemTopBar Parent="@this"/>
+
+    <div class="card-body">
+        <Carousel Parent="@this"/>
+    </div>
+    <div class="card-footer">
+        <div class="footer-title">
+            <span><i class="fa fa fa-paw"></i>&nbsp;@AnimalType</span>
+            <a class="btn btn-primary btn-sm left" href="#" data-bs-target="#@Carousel.CreateComponentId(ComponentId)"
+               data-bs-slide-to="@Carousel.GetSlideCount(this)">
+                <span><i class="fa fa fa-map-marker"></i>&nbsp;@Distance</span>
+            </a>
+        </div>
+        <div class="footer-subtitle">
+            <p>
+                @Description
+            </p>
+        </div>
+        <div class="footer-toolbar dropup">
+            <ItemChat Parent="@this" ViewModel="@GetChatViewModel()"/>
+            <ItemMenu Parent="@this"/>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override string ReportItemName => "statusReport";
+    public override string ReportItemCaption => "گزارش وضعیت";
+    [Parameter] public required IList<ReportItemSlide> Slides { get; set; }
+    [Parameter] public required string AnimalType { get; set; }
+    [Parameter] public required string Distance { get; set; }
+    [Parameter] public required string Location { get; set; }
+
+    private ChatViewModel GetChatViewModel()
+    {
+        ChatViewModel viewModel = new ChatViewModel(Id<TimelineItem>.Generate());
+        List<Comment> comments = new List<Comment>();
+        for (int i = 0; i < 5; i++)
+        {
+            comments.Add(new Comment(DateTime.Now, Id<Samaritan>.Generate(), "Comment " + i, Id<TimelineItem>.Generate()));
+        }
+
+        viewModel.UpdateComments(comments);
+
+        return viewModel;
+    }
+
+}

@@ -8,16 +8,16 @@ namespace rescute.Infrastructure
 {
     public class rescuteContext : DbContext
     {
-        private const string defaultConnectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=rescute;Integrated Security=SSPI;";
-        public static string Schema => "rescute";
+        private const string DefaultConnectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=rescute;Integrated Security=SSPI;";
+        private static string Schema => "rescute";
 
         public rescuteContext(DbContextOptions<rescuteContext> options) : base(options)
         {            
-            ConnectionString = defaultConnectionString;
+            ConnectionString = DefaultConnectionString;
         }
         public rescuteContext()
         {
-            ConnectionString = defaultConnectionString;
+            ConnectionString = DefaultConnectionString;
         }
         public rescuteContext(string connectionString)
         {
@@ -32,11 +32,6 @@ namespace rescute.Infrastructure
         public string ConnectionString { get; set; }
 
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schema);

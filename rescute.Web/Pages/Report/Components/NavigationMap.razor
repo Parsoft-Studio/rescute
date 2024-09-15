@@ -1,0 +1,9 @@
+<iframe style="height: 100%; width:100%; border: none"
+        frameborder="0"
+        src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-VRxYXnkJVHI733EUB491AUxl164pwsU&origin=@Parent.Location&destination=@Parent.Destination&avoid=tolls|highways&language=fa"
+        allowfullscreen>
+</iframe>
+
+@code {
+    [Parameter] public required INavigationItem Parent { get; set; }
+}

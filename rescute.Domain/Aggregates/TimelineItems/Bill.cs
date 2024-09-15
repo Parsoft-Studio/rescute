@@ -37,6 +37,15 @@ namespace rescute.Domain.Aggregates.TimelineItems
             UpdateMedicalDocuments(medicalDocuments, includesLabResults, includesPrescription);
         }
 
+        public Bill(Id<TimelineItem> id, DateTime eventDate, Id<Samaritan> createdBy, Id<Animal> animalId, string description, long total, bool includesLabResults, bool includesPrescription, bool includesVetFee, IEnumerable<MedicalDocument> medicalDocuments, params Attachment[] documents)
+            : base(id, eventDate, createdBy, animalId, description, documents)
+        {
+            Total = total;
+
+            UpdateInclusions(includesLabResults, includesPrescription, includesVetFee);
+            UpdateMedicalDocuments(medicalDocuments, includesLabResults, includesPrescription);
+        }
+
         /// <summary>
         /// Checks the consistency of claims made by this <see cref="Bill"/>'s owner about whether the <see cref="Bill"/> contains the <see cref="MedicalDocument"/>s it claims to pay for.
         /// </summary>
@@ -65,6 +74,7 @@ namespace rescute.Domain.Aggregates.TimelineItems
             IncludesPrescription = includesPrescription;
             IncludesVetFee = includesVetFee;
         }
+
         /// <summary>
         /// Marks this <see cref="Bill"/> as one that other <see cref="Samaritan"/>s can contribute to.
         /// </summary>
@@ -73,15 +83,6 @@ namespace rescute.Domain.Aggregates.TimelineItems
         {
             contributionRequest = new ContribRequest(this, DateTime.Now);
             return ContributionRequest;
-        }
-
-        public Bill(Id<TimelineItem> id, DateTime eventDate, Id<Samaritan> createdBy, Id<Animal> animalId, string description, long total, bool includesLabResults, bool includesPrescription, bool includesVetFee, IEnumerable<MedicalDocument> medicalDocuments, params Attachment[] documents)
-            : base(id, eventDate, createdBy, animalId, description, documents)
-        {
-            Total = total;
-
-            UpdateInclusions(includesLabResults, includesPrescription, includesVetFee);
-            UpdateMedicalDocuments(medicalDocuments, includesLabResults, includesPrescription);
         }
 
         public void Contribute(Contribution contrib, bool includesLabResults, bool includesPrescription, bool includesVetFee)
