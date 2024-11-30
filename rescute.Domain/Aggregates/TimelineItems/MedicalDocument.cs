@@ -1,10 +1,7 @@
-﻿using rescute.Domain.Exceptions;
-using rescute.Domain.ValueObjects;
+﻿using rescute.Domain.ValueObjects;
 using rescute.Shared;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace rescute.Domain.Aggregates.TimelineItems
 {

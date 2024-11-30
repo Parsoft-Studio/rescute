@@ -1,5 +1,5 @@
 <div class="card">
-    <img src="@Image" alt="Card image cap">
+    <img src="@Image" alt="@Description">
     <div class="card-body">
         <div class="card-icons">
             <span>
@@ -8,13 +8,13 @@
             <span class="left"><i class="fa fa-fw fa-map-marker"></i>@Distance</span>
         </div>
         <p class="card-text">@Description</p>
-        <a class="btn btn-primary view-button" href="report.htm">مشاهده</a>
+        <a class="btn btn-primary view-button" href="/details">مشاهده</a>
     </div>
 </div>
 
 @code {
-    [Parameter] public string? Timestamp { get; set; }
-    [Parameter] public string? Distance { get; set; }
-    [Parameter] public string? Description { get; set; }
-    [Parameter] public string? Image { get; set; }
+    [Parameter] public required string Timestamp { get; set; }
+    [Parameter] public required string Distance { get; set; }
+    [Parameter] public required string Description { get; set; }
+    [Parameter] public required string Image { get; set; }
 }
