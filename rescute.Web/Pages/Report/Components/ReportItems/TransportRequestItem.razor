@@ -1,9 +1,9 @@
 @inherits ReportItemBase
 @implements INavigationItem
 <div class="card transport-request">
-    <ItemTopBar Parent="@this" />
+    <ItemTopBar Parent="@(this)"/>
     <div class="card-body">
-        <NavigationMap Parent="@this" />
+        <NavigationMap Parent="@(this)"/>
     </div>
     <div class="card-footer">
         <div class="footer-title">
@@ -12,13 +12,15 @@
             <p>@Description</p>
         </div>
         <div class="footer-toolbar dropup">
-            <a href="" class="btn btn-secondary btn-sm"><i class="fa fa-fw fa-comment"></i>&nbsp;<span>12 پیام</span></a>
-            <ItemMenu Parent="@this" />
+            <a href="" class="btn btn-secondary btn-sm"><i
+                    class="fa fa-fw fa-comment"></i>&nbsp;<span>12 پیام</span></a>
+            <ItemMenu Parent="@(this)"/>
         </div>
     </div>
 </div>
+
 @code {
-    
+
     protected override string ReportItemName => "transportRequest";
     public override string ReportItemCaption => "درخواست حمل و نقل";
     [Parameter] public required string Location { get; set; }

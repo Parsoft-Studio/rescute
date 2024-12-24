@@ -1,11 +1,11 @@
 @page "/details"
-@attribute [Authorize]
 @using Microsoft.AspNetCore.Components.Sections
-@using rescute.Web.Pages.Shared.Components
+@using rescute.Web.Pages.Report.Components
 @using rescute.Web.Pages.Report.Components.ReportItems
 @using rescute.Web.Pages.Report.ViewModel
+@using rescute.Web.Pages.Shared.Components
 @using rescute.Web.Pages.Shared.ViewModel
-@using rescute.Web.Pages.Report.Components
+@attribute [Authorize]
 <HeadContent>
     <link rel="stylesheet" href="css/rescute-report.css?v=1">
     <link rel="stylesheet" href="css/rescute-chat.css?v=1">
@@ -47,7 +47,7 @@ and binds it the active report item.
 
 @code {
     private StatusReportItem? statusReportItem1;
-    private readonly Profile profile = new Profile("img/profile.jpg", "احسان حسینخانی");
+    private readonly Profile profile = new("img/profile.jpg", "احسان حسینخانی");
 
     private const string Description = "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ،" +
                                        " و با استفاده از طراحان گرافیک است،" +
@@ -58,8 +58,8 @@ and binds it the active report item.
     {
         List<ReportItemSlide> slides =
         [
-            new ReportItemSlide("img/reports/1.jpg", ""),
-            new ReportItemSlide("img/reports/2.jpg", "")
+            new("img/reports/1.jpg", ""),
+            new("img/reports/2.jpg", "")
         ];
         return slides;
     }
@@ -68,9 +68,9 @@ and binds it the active report item.
     {
         List<ReportItemSlide> slides =
         [
-            new ReportItemSlide("img/reports/xray1.jpg", ""),
-            new ReportItemSlide("img/reports/xray2.jpg", ""),
-            new ReportItemSlide("img/reports/xray3.jpg", "")
+            new("img/reports/xray1.jpg", ""),
+            new("img/reports/xray2.jpg", ""),
+            new("img/reports/xray3.jpg", "")
         ];
         return slides;
     }
@@ -79,9 +79,9 @@ and binds it the active report item.
     {
         List<ReportItemSlide> slides =
         [
-            new ReportItemSlide("img/reports/samplebill.png", ""),
-            new ReportItemSlide("img/reports/samplebill.png", ""),
-            new ReportItemSlide("img/reports/samplebill.png", "")
+            new("img/reports/samplebill.png", ""),
+            new("img/reports/samplebill.png", ""),
+            new("img/reports/samplebill.png", "")
         ];
         return slides;
     }

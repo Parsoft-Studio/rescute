@@ -1,17 +1,17 @@
+@inherits ReportItemBase
+@implements ISliderItem
 @using rescute.Domain.Aggregates
 @using rescute.Domain.Aggregates.TimelineItems
 @using rescute.Shared
 @using rescute.Web.Pages.Report.ViewModel
-@inherits ReportItemBase
-@implements ISliderItem
 @implements ICoordinatedItem
 
 <div class="card status-report">
 
-    <ItemTopBar Parent="@this"/>
+    <ItemTopBar Parent="@(this)"/>
 
     <div class="card-body">
-        <Carousel Parent="@this"/>
+        <Carousel Parent="@(this)"/>
     </div>
     <div class="card-footer">
         <div class="footer-title">
@@ -27,8 +27,8 @@
             </p>
         </div>
         <div class="footer-toolbar dropup">
-            <ItemChat Parent="@this" ViewModel="@GetChatViewModel()"/>
-            <ItemMenu Parent="@this"/>
+            <ItemChat Parent="@(this)" ViewModel="@GetChatViewModel()"/>
+            <ItemMenu Parent="@(this)"/>
         </div>
     </div>
 </div>
@@ -43,9 +43,9 @@
 
     private ChatViewModel GetChatViewModel()
     {
-        ChatViewModel viewModel = new ChatViewModel(Id<TimelineItem>.Generate());
-        List<Comment> comments = new List<Comment>();
-        for (int i = 0; i < 5; i++)
+        var viewModel = new ChatViewModel(Id<TimelineItem>.Generate());
+        List<Comment> comments = new();
+        for (var i = 0; i < 5; i++)
         {
             comments.Add(new Comment(DateTime.Now, Id<Samaritan>.Generate(), "Comment " + i, Id<TimelineItem>.Generate()));
         }

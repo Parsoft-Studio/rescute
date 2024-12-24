@@ -2,9 +2,9 @@
 @using rescute.Web.Pages.Report.ViewModel
 @implements ISliderItem
 <div class="card medical-document">
-    <ItemTopBar Parent="@this" />
+    <ItemTopBar Parent="@(this)"/>
     <div class="card-body">
-        <Carousel Parent="@this"/>
+        <Carousel Parent="@(this)"/>
     </div>
     <div class="card-footer">
         <div class="footer-subtitle">
@@ -13,8 +13,9 @@
             </p>
         </div>
         <div class="footer-toolbar dropup">
-            <a href="" class="btn btn-secondary btn-sm"><i class="fa fa-fw fa-comment"></i>&nbsp;<span>12 پیام</span></a>
-            <ItemMenu Parent="@this"/>
+            <a href="" class="btn btn-secondary btn-sm"><i
+                    class="fa fa-fw fa-comment"></i>&nbsp;<span>12 پیام</span></a>
+            <ItemMenu Parent="@(this)"/>
         </div>
     </div>
 </div>

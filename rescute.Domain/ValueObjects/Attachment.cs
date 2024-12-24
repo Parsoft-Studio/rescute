@@ -1,53 +1,35 @@
-﻿using rescute.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
-namespace rescute.Domain.ValueObjects
+namespace rescute.Domain.ValueObjects;
+
+public record Attachment
 {
-    public class Attachment : ValueObject
+    public string FileName { get; }
+    public string Extension { get; }
+    public AttachmentType Type => GetAttachmentType();
+    public string Description { get; }
+    public DateTime CreationDate { get; }
+
+    public Attachment(string filename, string extension, DateTime creationDate, string description)
     {
-        public string FileName { get; private set; }
-        public string Extension { get; private set; }
-        public AttachmentType Type => GetAttachmentType();
-        public string Description { get; private set; }
-        public DateTime CreationDate { get; private set; }
-        public Attachment(string filename, string extension, DateTime creationDate, string description)
+        FileName = filename;
+        CreationDate = creationDate;
+        Description = description;
+        Extension = extension.TrimStart('.');
+    }
+
+    private Attachment()
+    {
+    }
+
+    private AttachmentType GetAttachmentType()
+    {
+        return Extension switch
         {
-            FileName = filename;
-            CreationDate = creationDate;
-            Description = description;
-            UpdateExtension(extension);
-        }
-
-        private void UpdateExtension(string extension)
-        {
-            while (extension.StartsWith("."))
-            {
-                extension = extension[1..];
-            }
-            Extension = extension.Trim();
-        }
-
-        private Attachment() { }
-
-
-        private AttachmentType GetAttachmentType()
-        {
-            switch (Extension)
-            {
-                case "jpg":
-                case "png":
-                    return AttachmentType.Image();
-                case "mp4":
-                case "mpg":
-                case "avi":
-                    return AttachmentType.Video();
-                case "pdf":
-                    return AttachmentType.Document();
-                default:
-                    return AttachmentType.Unknown();
-            }
-        }
+            "jpg" or "png" => AttachmentType.Image(),
+            "mp4" or "mpg" or "avi" => AttachmentType.Video(),
+            "pdf" => AttachmentType.Document(),
+            _ => AttachmentType.Unknown()
+        };
     }
 }

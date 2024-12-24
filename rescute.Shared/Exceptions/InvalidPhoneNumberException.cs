@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace rescute.Shared.Exceptions
+namespace rescute.Shared.Exceptions;
+
+public class InvalidPhoneNumberException : Exception
 {
-    class InvalidPhoneNumberException:Exception
-    {
-    }
 }

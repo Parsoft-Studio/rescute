@@ -1,36 +1,43 @@
-﻿using rescute.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace rescute.Domain.ValueObjects
+namespace rescute.Domain.ValueObjects;
+
+public record AnimalType
 {
-    public sealed class AnimalType : ValueObject
-    {
-        public static AnimalType Cat() { return new AnimalType("Cat"); }
-        public static AnimalType Dog() { return new AnimalType("Dog"); }
-        public static AnimalType Sparrow() { return new AnimalType("Sparrow"); }
-        public static AnimalType Pigeon() { return new AnimalType("Pigeon"); }
-        public static AnimalType Other() { return new AnimalType("Other"); }
-        public string Name { get; private set; }
-        private AnimalType(string name)
-        {
-            Name = name;
-        }
-        public override string ToString()
-        {
-            return Name;
-        }
-        private AnimalType() { }
+    public static AnimalType Cat() => new("Cat");
 
-        public static AnimalType GetByName(string animalTypeName)
-        {
-            if (animalTypeName.ToLower() == Cat().Name.ToLower()) return Cat();
-            if (animalTypeName.ToLower() == Dog().Name.ToLower()) return Dog();
-            if (animalTypeName.ToLower() == Sparrow().Name.ToLower()) return Sparrow();
-            if (animalTypeName.ToLower() == Pigeon().Name.ToLower()) return Pigeon();
-            if (animalTypeName.ToLower() == Other().Name.ToLower()) return Other();
-            return null;
-        }
+    public static AnimalType Dog() => new("Dog");
+
+    public static AnimalType Sparrow() => new("Sparrow");
+
+    public static AnimalType Pigeon() => new("Pigeon");
+
+    public static AnimalType Other() => new("Other");
+
+    public string Name { get; }
+
+    public AnimalType(string name)
+    {
+        Name = name;
+    }
+
+    private AnimalType()
+    {
+    }
+
+    public static AnimalType GetByName(string animalTypeName)
+    {
+        if (animalTypeName.Equals(Cat().Name)) return Cat();
+        if (animalTypeName.Equals(Dog().Name)) return Dog();
+        if (animalTypeName.Equals(Sparrow().Name)) return Sparrow();
+        if (animalTypeName.Equals(Pigeon().Name)) return Pigeon();
+        if (animalTypeName.Equals(Other().Name)) return Other();
+
+        throw new InvalidEnumArgumentException(nameof(animalTypeName));
+    }
+
+    public override string ToString()
+    {
+        return Name;
     }
 }

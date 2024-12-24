@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace rescute.Domain.Exceptions;
 
-namespace rescute.Domain.Exceptions
-{
-    class BillAcceptsNoContributionException : InvalidContributionException
-    {
-        public BillAcceptsNoContributionException() : base("The bill doesn't accept contributions.")
-        { }
-    }
-}
+internal class BillAcceptsNoContributionException()
+    : InvalidContributionException("The bill doesn't accept contributions.");

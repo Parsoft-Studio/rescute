@@ -1,19 +1,7 @@
-﻿using rescute.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using rescute.Domain.ValueObjects;
 
-namespace rescute.Domain.Exceptions
-{
-    public class MissingMedicalDocumentTypeException : Exception
-    {
-        public MissingMedicalDocumentTypeException(MedicalDocumentType missingType) : base($"The following medical document type expected but missing: {missingType}")
-        {
-            MissingType = missingType;
-        }
+namespace rescute.Domain.Exceptions;
 
-        public MedicalDocumentType MissingType { get; }
-    }
-}
+public class MissingMedicalDocumentTypeException(MedicalDocumentType missingType)
+    : Exception($"The following medical document type expected but missing: {missingType}");

@@ -14,12 +14,12 @@ public class ChatViewModel
         this.parentTimelineItem = parentTimelineItem;
     }
 
-    public IList<String> GetComments()
+    public IList<string> GetComments()
     {
         return comments.Select(comment => comment.CommentText).ToList();
     }
 
-    public void Post(String commentText, String username)
+    public void Post(string commentText, string username)
     {
     }
 

@@ -1,18 +1,15 @@
-﻿using rescute.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using rescute.Domain.Repositories;
 
-namespace rescute.Infrastructure
+namespace rescute.Infrastructure;
+
+public interface IUnitOfWork : IDisposable
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        IAnimalRepository Animals { get; }
-        ISamaritanRepository Samaritans { get; }
-        ITimelineItemRepository TimelineItems { get; }
-        
-        ICommentRepository Comments { get; }
-        Task Complete();
-    }
+    IAnimalRepository Animals { get; }
+    ISamaritanRepository Samaritans { get; }
+    ITimelineItemRepository TimelineItems { get; }
+
+    ICommentRepository Comments { get; }
+    Task Complete();
 }

@@ -46,11 +46,11 @@ a.card-profile {
     margin-left: 3px;
 }
 
-    a.card-profile img {
-        height: 35px;
-        width: 35px;
-        border-radius: 50%;
-    }
+a.card-profile img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
 
 
 .btn-primary {
@@ -61,18 +61,18 @@ a.card-profile {
     text-wrap: nowrap;
 }
 
-    .btn-primary:active, .btn-primary:hover {
-        background-color: #BB0000 !important;
-    }
+.btn-primary:active, .btn-primary:hover {
+    background-color: #BB0000 !important;
+}
 
 .btn-secondary {
     box-shadow: none !important;
 }
 
-    .btn-secondary:active, .btn-secondary:hover {
-        box-shadow: none !important;
-        outline: none;
-    }
+.btn-secondary:active, .btn-secondary:hover {
+    box-shadow: none !important;
+    outline: none;
+}
 
 .dropdown-menu {
     direction: rtl;
@@ -87,9 +87,9 @@ a.card-profile {
     color: white !important;
 }
 
-    .dropdown-item:active, .dropdown-item:hover {
-        background-color: #353535 !important;
-    }
+.dropdown-item:active, .dropdown-item:hover {
+    background-color: #353535 !important;
+}
 
 a, a:active, a:hover {
     text-decoration: none;
@@ -104,9 +104,9 @@ a, a:active, a:hover {
     background-color: #555555;
 }
 
-    .carousel-indicators li.active {
-        background-color: #9C0000;
-    }
+.carousel-indicators li.active {
+    background-color: #9C0000;
+}
 
 .carousel-control-next-icon, .carousel-control-prev-icon {
     background-image: none;
@@ -141,12 +141,11 @@ a, a:active, a:hover {
         overflow: hidden;
         text-overflow: clip;
         font-size: 1.2em;
-        padding-left: 20px;
         text-align: center;
         padding: 0;
     }
 
-        .btn-new .btn-new-text {
-            display: none;
-        }
+    .btn-new .btn-new-text {
+        display: none;
+    }
 }

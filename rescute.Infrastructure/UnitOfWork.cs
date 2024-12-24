@@ -1,48 +1,47 @@
-﻿using rescute.Domain.Repositories;
-using rescute.Infrastructure.Repositories;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using rescute.Domain.Repositories;
+using rescute.Infrastructure.Repositories;
 
-namespace rescute.Infrastructure
+namespace rescute.Infrastructure;
+
+public sealed class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    private readonly rescuteContext context;
+    
+    private readonly AnimalRepository animals;
+    private readonly CommentRepository comments;
+    private readonly SamaritanRepository samaritans;
+    private readonly TimelineItemRepository timelineItems;
+
+    public IAnimalRepository Animals => animals;
+    public ISamaritanRepository Samaritans => samaritans;
+    public ITimelineItemRepository TimelineItems => timelineItems;
+    public ICommentRepository Comments => comments;
+
+    public UnitOfWork(rescuteContext c)
     {
-        private readonly rescuteContext context;
+        if (c is null) throw new ArgumentNullException(nameof(c));
 
-        private readonly SamaritanRepository samaritans;
-        private readonly AnimalRepository animals;
-        private readonly TimelineItemRepository timelineItems;
-        private readonly CommentRepository comments;
+        context = c;
 
-        public UnitOfWork(rescuteContext c)
-        {
-            if (c is null) throw new ArgumentNullException("Context is required.");
+        samaritans = new SamaritanRepository(c);
+        animals = new AnimalRepository(c);
+        timelineItems = new TimelineItemRepository(c);
+        comments = new CommentRepository(c);
+    }
 
-            context = c;
+    private UnitOfWork()
+    {
+    }
 
-            this.samaritans = new SamaritanRepository(c);
-            this.animals = new AnimalRepository(c);
-            this.timelineItems = new TimelineItemRepository(c);
-            this.comments = new CommentRepository(c);
-        }
-        private UnitOfWork() { }
-        public IAnimalRepository Animals => animals;
+    public async Task Complete()
+    {
+        await context.SaveChangesAsync();
+    }
 
-
-        public ISamaritanRepository Samaritans => samaritans;
-
-        public ITimelineItemRepository TimelineItems => timelineItems;
-
-        public ICommentRepository Comments => comments;
-
-        public async Task Complete()
-        {
-            await context.SaveChangesAsync();
-        }
-
-        public void Dispose()
-        {
-            context.Dispose();
-        }
+    public void Dispose()
+    {
+        context.Dispose();
     }
 }
