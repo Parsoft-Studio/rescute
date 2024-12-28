@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-
 namespace rescute.Web.Pages.Shared.Model;
 
 public class Profile(string image, string displayName)

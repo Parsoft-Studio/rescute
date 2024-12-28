@@ -1,4 +1,3 @@
-using System.Security;
 using Microsoft.AspNetCore.Components;
 using rescute.Web.Pages.Shared.ViewModel;
 
@@ -10,7 +9,7 @@ public abstract class ReportItemBase : ComponentBase
     public string ComponentId => ReportItemName + "-" + guid;
 
     /// <summary>
-    /// Unique prefix of this report item, which will be used to create a unique component id.
+    ///     Unique prefix of this report item, which will be used to create a unique component id.
     /// </summary>
     protected abstract string ReportItemName { get; }
 
@@ -19,5 +18,4 @@ public abstract class ReportItemBase : ComponentBase
     [Parameter] public required string Timestamp { get; set; }
     [Parameter] public required string TimestampTitle { get; set; }
     [Parameter] public required string Description { get; set; }
-    
 }

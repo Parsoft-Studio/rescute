@@ -5,15 +5,16 @@
         <i class="fa fa-fw fa-bars"></i>
     </a>
     <a class="nav-item nav-profile" href="#">
-        <img src="img/profile.jpg" />
+        <img src="img/profile.jpg"/>
         <p>@userName</p>
     </a>
     <a class="nav-item" href="#"><i class="fa fa-fw fa-copy"></i> گزارش‌ها</a>
     <a class="nav-item" href="#"><i class="fa fa-fw fa-credit-card"></i> اعتبار و تراکنش‌ها</a>
     <a class="nav-item" href="#"><i class="fa fa-fw fa-heart"></i> درباره ما</a>
 </nav>
+
 @code {
-    private string? userName = String.Empty;
+    private string? userName = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {

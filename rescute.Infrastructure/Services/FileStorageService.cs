@@ -1,95 +1,87 @@
-﻿using rescute.Domain.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using rescute.Domain.ValueObjects;
 
-namespace rescute.Infrastructure.Services
+namespace rescute.Infrastructure.Services;
+
+/// <summary>
+///     The default implementation of <see cref="IFileStorageService" />.
+/// </summary>
+public class FileStorageService : IFileStorageService
+
 {
-    /// <summary>
-    /// The default implementation of <see cref="IFileStorageService"/>.
-    /// </summary>
-    public class FileStorageService : IFileStorageService
-
+    public FileStorageService(string storageRootDirectory, IEnumerable<string> validFileExtensions)
     {
-        public string StorageRootDirectory { get; private set; }
-        public string AttachmentsDirectory => Path.Combine(StorageRootDirectory, "attachments");
-        public IReadOnlyCollection<string> ValidFileExtensions { get; private set; }
+        if (validFileExtensions == null || !validFileExtensions.Any())
+            throw new ArgumentException("Valid file extensions should be provided.", nameof(validFileExtensions));
+
+        StorageRootDirectory = storageRootDirectory;
+        ValidFileExtensions = validFileExtensions.Select(ext => ext.ToLower()).ToList();
+    }
+
+    public string StorageRootDirectory { get; }
+    public string AttachmentsDirectory => Path.Combine(StorageRootDirectory, "attachments");
+    public IReadOnlyCollection<string> ValidFileExtensions { get; }
 
 
-        public FileStorageService(string storageRootDirectory, IEnumerable<string> validFileExtensions)
+    public async Task DeleteDirectoryForAttachment(string attachmentParentDirectoryName)
+    {
+        await Task.Run(() =>
         {
-            if (validFileExtensions == null || !validFileExtensions.Any()) throw new ArgumentException("Valid file extensions should be provided.",nameof(validFileExtensions));
+            var path = Path.Combine(AttachmentsDirectory, attachmentParentDirectoryName);
 
-            StorageRootDirectory = storageRootDirectory;
-            ValidFileExtensions = validFileExtensions.Select(ext => ext.ToLower()).ToList() as IReadOnlyCollection<string>;
-        }
+            if (Directory.Exists(path)) Directory.Delete(path, true);
+        });
+    }
 
-
-        public async Task DeleteDirectoryForAttachment(string attachmentParentDirectoryName)
+    public async Task DeleteAttachmentFile(string fileName)
+    {
+        await Task.Run(() =>
         {
-            await Task.Run(() =>
+            var path = Path.Combine(AttachmentsDirectory, fileName);
+            if (File.Exists(path)) File.Delete(path);
+        });
+    }
+
+
+    public async Task<Attachment> Store(Stream file, string fileName, string description,
+        string attachmentParentDirectoryName)
+    {
+        if (file == null) throw new ArgumentException("file cannot be null.", nameof(file));
+
+        var extension = Path.GetExtension(fileName).Substring(1);
+        if (!ValidFileExtensions.Contains(extension.ToLower()))
+            throw new InvalidOperationException("Invalid extension found in list of specified files.");
+
+        var attachmentPath = Path.Combine(AttachmentsDirectory, attachmentParentDirectoryName);
+
+        var result = await Task.Run(async () =>
+        {
+            if (!Directory.Exists(attachmentPath)) Directory.CreateDirectory(attachmentPath);
+
+            string randomeFileName;
+            do
             {
-                var path = Path.Combine(AttachmentsDirectory, attachmentParentDirectoryName);
+                randomeFileName = Path.GetRandomFileName() + Path.GetExtension(fileName);
+                fileName = Path.Combine(attachmentPath, randomeFileName);
+            } while (File.Exists(fileName));
 
-                if (Directory.Exists(path))
-                {
-                    Directory.Delete(path, true);
-                }
-            });
-        }
-        public async Task DeleteAttachmentFile(string fileName)
-        {
-            await Task.Run(() =>
+
+            using (var fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
             {
-                var path = Path.Combine(AttachmentsDirectory, fileName);
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
-            });
+                await file.CopyToAsync(fs);
+                await fs.FlushAsync();
+            }
 
-        }
-
-
-        public async Task<Attachment> Store(Stream file, string fileName, string description, string attachmentParentDirectoryName)
-        {
-                                    
-            if (file == null) throw new ArgumentException("file cannot be null.", nameof(file));
-
-            var extension = Path.GetExtension(fileName).Substring(1);
-            if (!ValidFileExtensions.Contains(extension.ToLower())) throw new InvalidOperationException("Invalid extension found in list of specified files.");
-
-            var attachmentPath = Path.Combine(AttachmentsDirectory, attachmentParentDirectoryName);
-
-            var result = await Task.Run(async () =>
-            {
-                if (!Directory.Exists(attachmentPath)) Directory.CreateDirectory(attachmentPath);
-
-                string randomeFileName;
-                do
-                {
-                    randomeFileName = Path.GetRandomFileName() + Path.GetExtension(fileName);
-                    fileName = Path.Combine(attachmentPath, randomeFileName);
-                } while (File.Exists(fileName));
-
-
-                using (var fs = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
-                {
-                    await file.CopyToAsync(fs);
-                    fs.Flush();
-                }
-                return new Attachment(filename: Path.Combine(attachmentParentDirectoryName, randomeFileName),
-                                      creationDate: DateTime.Now,
-                                      description: description,
-                                      extension: Path.GetExtension(randomeFileName)
-                                     );
-
-            });
-            return result;
-        }
-
+            return new Attachment(Path.Combine(attachmentParentDirectoryName, randomeFileName),
+                creationDate: DateTime.Now,
+                description: description,
+                extension: Path.GetExtension(randomeFileName)
+            );
+        });
+        return result;
     }
 }
-

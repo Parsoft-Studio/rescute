@@ -1,32 +1,25 @@
 ﻿using rescute.Shared.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace rescute.Shared
+namespace rescute.Shared;
+
+public record PhoneNumber
 {
-    public class PhoneNumber : ValueObject
+    public static readonly PhoneNumber Empty = new();
+    public bool IsMobile { get; private set; }
+    public string Value { get; }
+
+    private PhoneNumber()
     {
-        public static PhoneNumber Empty => new PhoneNumber();
-        public bool IsMobile { get; private set; }
-        public string Value { get; private set; }
+    }
 
-        public PhoneNumber(bool isMobile, string value)
-        {
-            if (isMobile)
-            {
-                if (isMobile && !(value.StartsWith("09") || value.StartsWith("+989"))) { throw new InvalidPhoneNumberException(); }
-                Value = value;
-                IsMobile = isMobile;
-            }
-        }
-        public override string ToString()
-        {
-            return Value;
-        }
-        private PhoneNumber()
-        {
+    public PhoneNumber(bool isMobile, string value)
+    {
+        Value = value;
+        IsMobile = isMobile;
+    }
 
-        }
+    public override string ToString()
+    {
+        return Value;
     }
 }

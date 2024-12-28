@@ -1,30 +1,25 @@
-﻿using rescute.Domain.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using rescute.Domain.ValueObjects;
 
-namespace rescute.Domain.Exceptions
+namespace rescute.Domain.Exceptions;
+
+public class InvalidAttachmentTypeException : Exception
 {
-    public class InvalidAttachmentTypeException : Exception
+    private readonly List<AttachmentType> types = new();
+
+    public InvalidAttachmentTypeException(params AttachmentType[] acceptableTypes)
     {
-        private List<AttachmentType> types = new List<AttachmentType>();
-        public InvalidAttachmentTypeException(params AttachmentType[] acceptableTypes)
+        types.AddRange(acceptableTypes);
+    }
+
+    public override string Message
+    {
+        get
         {
-            types.AddRange(acceptableTypes);
-        }
-        public override string Message
-        {
-            get
-            {
-                string typeString = string.Empty;
-                foreach (var t in types)
-                {
-                    typeString += t.ToString() + ", ";
-                }
-                typeString.TrimEnd(',', ' ');
-                return "Invalid attachment type. Acceptable types: " + typeString;
-            }
+            return "Invalid attachment type. Acceptable types: " +
+                   types.Aggregate("", (current, next) => current + ", " + next).TrimEnd(',');
         }
     }
 }

@@ -1,7 +1,7 @@
 @page "/index"
 @using Microsoft.AspNetCore.Components.Sections
-@using rescute.Web.Pages.Shared.Components
 @using rescute.Web.Pages.Reports.Components
+@using rescute.Web.Pages.Shared.Components
 
 @* @attribute [Authorize] *@
 
@@ -19,8 +19,10 @@
 
 <div class="container-fluid">
     <div class="d-flex flex-wrap reports">
-        <ReportCard Image="img/reports/1.jpg" Distance="۲ کیلومتر" Timestamp="۳۰ دقیقه پیش" Description="لازمه ببرمش دکتر"/>
-        <ReportCard Image="img/reports/2.jpg" Distance="600 متر" Timestamp="دیروز" Description="دست این بچه انگار شکسته، میخوام ببرمش دکتر ببینم چه خاکی باید به سرم بریزم که بدبخت شدیم خدا بخیر کنه"/>
+        <ReportCard Image="img/reports/1.jpg" Distance="۲ کیلومتر" Timestamp="۳۰ دقیقه پیش"
+                    Description="لازمه ببرمش دکتر"/>
+        <ReportCard Image="img/reports/2.jpg" Distance="600 متر" Timestamp="دیروز"
+                    Description="دست این بچه انگار شکسته، میخوام ببرمش دکتر ببینم چه خاکی باید به سرم بریزم که بدبخت شدیم خدا بخیر کنه"/>
     </div>
-    <NewReportButton />
+    <NewReportButton/>
 </div>

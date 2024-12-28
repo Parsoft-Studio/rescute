@@ -1,15 +1,17 @@
 <div id="@GetComponentId()" class="carousel slide" data-bs-interval="false">
     <div class="carousel-indicators">
-        @for (int slideIndex = 0; slideIndex < GetSlideCount() + (ShouldRenderMap() ? 1 : 0); slideIndex++)
+        @for (var slideIndex = 0; slideIndex < GetSlideCount() + (ShouldRenderMap() ? 1 : 0); slideIndex++)
         {
-            <button data-bs-target="#@GetComponentId()" data-bs-slide-to="@slideIndex" class=@ShouldBeActive(slideIndex)></button>
+            <button data-bs-target="#@GetComponentId()" data-bs-slide-to="@slideIndex"
+                    class=@ShouldBeActive(slideIndex)></button>
         }
     </div>
     <div class="carousel-inner">
-        @for (int slideIndex = 0; slideIndex < GetSlideCount(); slideIndex++)
+        @for (var slideIndex = 0; slideIndex < GetSlideCount(); slideIndex++)
         {
             <div class="carousel-item @ShouldBeActive(slideIndex)">
-                <img class="d-block w-100" src="@GetParentAsSlider().Slides[slideIndex].SlideImage" alt="@GetParentAsSlider().Slides[slideIndex].SlideTitle">
+                <img class="d-block w-100" src="@GetParentAsSlider().Slides[slideIndex].SlideImage"
+                     alt="@GetParentAsSlider().Slides[slideIndex].SlideTitle">
             </div>
         }
         @if (ShouldRenderMap())
@@ -43,14 +45,35 @@
     [Parameter] public required ReportItemBase Parent { get; set; }
 
     /// Determines whether the given slide should be initially marked as the "active" one.
-    private static string ShouldBeActive(int slideIndex) => slideIndex == 0 ? "active" : "";
+    private static string ShouldBeActive(int slideIndex)
+    {
+        return slideIndex == 0 ? "active" : "";
+    }
 
-    private string GetComponentId() => CreateComponentId(Parent.ComponentId);
-    private int GetSlideCount() => GetSlideCount(GetParentAsSlider());
-    private ISliderItem GetParentAsSlider() => (ISliderItem)Parent;
-    private ICoordinatedItem GetParentAsCoordinatedItem() => (ICoordinatedItem)Parent;
+    private string GetComponentId()
+    {
+        return CreateComponentId(Parent.ComponentId);
+    }
 
-    private bool ShouldRenderMap() => Parent is ICoordinatedItem;
+    private int GetSlideCount()
+    {
+        return GetSlideCount(GetParentAsSlider());
+    }
+
+    private ISliderItem GetParentAsSlider()
+    {
+        return (ISliderItem)Parent;
+    }
+
+    private ICoordinatedItem GetParentAsCoordinatedItem()
+    {
+        return (ICoordinatedItem)Parent;
+    }
+
+    private bool ShouldRenderMap()
+    {
+        return Parent is ICoordinatedItem;
+    }
 
     /// Creates a component id for a carousel based on the parent's control id
     public static string CreateComponentId(string parentControlId)
@@ -58,6 +81,9 @@
         return parentControlId + "-carousel";
     }
 
-    public static int GetSlideCount(ISliderItem parent) => parent.Slides.Count;
+    public static int GetSlideCount(ISliderItem parent)
+    {
+        return parent.Slides.Count;
+    }
 
 }

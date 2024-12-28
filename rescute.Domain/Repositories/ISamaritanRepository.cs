@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using rescute.Domain.Aggregates;
 
-namespace rescute.Domain.Repositories
+namespace rescute.Domain.Repositories;
+
+public interface ISamaritanRepository : IRepository<Samaritan>
 {
-    public interface ISamaritanRepository : IRepository<Aggregates.Samaritan>
-    {
-    }
 }

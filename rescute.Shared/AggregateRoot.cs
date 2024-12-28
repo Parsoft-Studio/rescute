@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace rescute.Shared;
 
-namespace rescute.Shared
+public abstract class AggregateRoot<T> : Entity<T> where T : Entity<T>
 {
-    public abstract class AggregateRoot<T> : Entity<T> where T : Entity<T>
-    {
-
-    }
 }

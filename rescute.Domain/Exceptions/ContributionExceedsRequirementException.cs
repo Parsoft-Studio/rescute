@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace rescute.Domain.Exceptions;
 
-namespace rescute.Domain.Exceptions
-{
-    public class ContributionExceedsRequirementException : InvalidContributionException
-    {
-        public ContributionExceedsRequirementException() : base("Contribution exceeds bill amount.")
-        { }
-    }
-}
+public class ContributionExceedsRequirementException()
+    : InvalidContributionException("Contribution exceeds bill amount.");
