@@ -4,7 +4,7 @@ using rescute.Domain.Repositories;
 
 namespace rescute.Infrastructure;
 
-public interface IUnitOfWork : IDisposable
+public interface IUnitOfWork : IAsyncDisposable
 {
     IAnimalRepository Animals { get; }
     ISamaritanRepository Samaritans { get; }

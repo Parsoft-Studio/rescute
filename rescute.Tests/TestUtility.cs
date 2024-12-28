@@ -13,6 +13,7 @@ internal class TestUtility
     {
         // utility class
     }
+
     public static Samaritan RandomTestSamaritan()
     {
         return new Samaritan(new Name("Test First"), new Name("Test Last"), new PhoneNumber(true, "0912121212"),
@@ -32,9 +33,11 @@ internal class TestUtility
         var description = "Test attachment";
         return new Attachment(filename, extension, creationDate, description);
     }
+
     public static DbContextOptions<rescuteContext> GetTestDatabaseOptions()
     {
-        return new DbContextOptionsBuilder<rescuteContext>().UseInMemoryDatabase("rescute").Options;
+        return new DbContextOptionsBuilder<rescuteContext>()
+            .UseInMemoryDatabase("rescute")
+            .Options;
     }
-
 }

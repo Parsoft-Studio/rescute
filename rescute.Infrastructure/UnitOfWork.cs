@@ -39,9 +39,10 @@ public sealed class UnitOfWork : IUnitOfWork
     {
         await context.SaveChangesAsync();
     }
-
-    public void Dispose()
+    
+    public async ValueTask DisposeAsync()
     {
-        context.Dispose();
+        await Complete();
+        if (context != null) await context.DisposeAsync();
     }
 }

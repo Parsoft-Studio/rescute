@@ -12,31 +12,33 @@ namespace rescute.Tests.DomainTests;
 
 public class TimelineItemTests
 {
-    private readonly Animal animal;
-    private readonly Attachment invalidAttachment;
-    private readonly Attachment jpgAttachment;
-    private readonly Attachment mp4Attachment;
-    private readonly Attachment pdfAttachment;
-    private readonly Samaritan samaritan;
+    private static readonly Attachment
+        JpgAttachment = new("file.jpg", "jpg", DateTime.UtcNow, "description");
 
-    public TimelineItemTests()
-    {
-        samaritan = TestUtility.RandomTestSamaritan();
-        animal = TestUtility.RandomTestAnimal(samaritan.Id);
-        pdfAttachment = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
-        jpgAttachment = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
-        mp4Attachment = new Attachment("filename", "mp4", DateTime.Now, string.Empty);
-        invalidAttachment = new Attachment("filename", "fle", DateTime.Now, string.Empty);
-    }
+    private static readonly Attachment
+        Mp4Attachment = new("file.mp4", "mp4", DateTime.UtcNow, "description");
+
+    private static readonly Attachment
+        PdfAttachment = new("file.pdf", "pdf", DateTime.UtcNow, "description");
+
+    private static readonly Attachment
+        MiscAttachment = new("filename", "fle", DateTime.UtcNow, "description");
+
+    private static readonly MapPoint DefaultMapPoint = new(0, 0);
+
+    private static readonly Samaritan DefaultSamaritan = TestUtility.RandomTestSamaritan();
+    private static readonly Animal DefaultAnimal = TestUtility.RandomTestAnimal(DefaultSamaritan.Id);
+    private const Decimal DefaultBillTotal = 5000;
+    private const string DefaultTransactionId = "TRANSACTION_ID";
+    private const string DefaultContributionDescription = "My contribution";
 
     [Fact]
     public void BillRequestsContributions()
     {
-        var billTotal = 5000;
-
-        var attachment = pdfAttachment;
-        var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "All the costs.", billTotal, false, false, true,
-            null, attachment);
+        var bill = new Bill(DateTime.Now, DefaultSamaritan.Id, DefaultAnimal.Id, "All the costs.", DefaultBillTotal,
+            false,
+            false, true,
+            null, PdfAttachment);
 
         var request = bill.RequestContribution();
         var internalRequest = bill.ContributionRequest;
@@ -47,55 +49,65 @@ public class TimelineItemTests
 
 
     [Fact]
-    public void BillDoesntAcceptExcessContribution()
+    public void BillDoesNotAcceptExcessContribution()
     {
-        const string transactionId = "TRANSACTION_ID";
-        const int billTotal = 5000;
-
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var contributor = TestUtility.RandomTestSamaritan();
         var attachment = new Attachment("test.pdf", "pdf", DateTime.Now, "Attachment description");
 
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-
-        var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "All the costs.", billTotal, false, false, true,
+        var bill = new Bill(DateTime.Now,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            "All the costs.",
+            DefaultBillTotal,
+            false,
+            false,
+            true,
             null, attachment);
         bill.RequestContribution();
 
-        var contrib = new Contribution(DateTime.Now, billTotal + 1, contributor.Id, transactionId, "My contribution.");
+        var contribution = new Contribution(DateTime.Now,
+            DefaultBillTotal + 1, // more than the bill amount
+            DefaultSamaritan.Id,
+            DefaultTransactionId,
+            DefaultContributionDescription);
 
-        var action = () => bill.Contribute(contrib, false, false, true);
+        var action = () => bill.Contribute(contribution, false, false, true);
 
         action.Should().Throw<ContributionExceedsRequirementException>();
     }
 
+
     [Fact]
     public void BillIsConsistentWithAttachedMedicalDocuments()
     {
-        var billAmount = 150000;
-        var contribution_comment = "Here, have this contribution.";
-        var contributionAmount = 100000;
+        const string documentDescription = "Document description";
+        const string billDescription = "I can't pay this on my own!";
+        var contributionAmount = DefaultBillTotal;
 
-        var contributor = TestUtility.RandomTestSamaritan();
-        var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID",
-            contribution_comment);
+        var contribution = new Contribution(DateTime.Now, contributionAmount, DefaultSamaritan.Id, DefaultTransactionId,
+            DefaultContributionDescription);
 
-        var medicalDocuments = new List<MedicalDocument>();
-        medicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.",
-            MedicalDocumentType.Prescription(), jpgAttachment));
-        medicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.",
-            MedicalDocumentType.LabResults(), jpgAttachment));
+        var medicalDocuments = new List<MedicalDocument>
+        {
+            new(DateTime.Now, DefaultSamaritan.Id, DefaultAnimal.Id,
+                documentDescription,
+                MedicalDocumentType.Prescription(),
+                JpgAttachment),
+            new(DateTime.Now, DefaultSamaritan.Id, DefaultAnimal.Id,
+                documentDescription,
+                MedicalDocumentType.LabResults(),
+                JpgAttachment)
+        };
 
         var bill = new Bill(DateTime.Now,
-            samaritan.Id,
-            animal.Id,
-            "I can't pay this on my own!",
-            billAmount,
-            true,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            billDescription,
+            DefaultBillTotal,
+            true,   // bill claims to pay for every kind of documents
             true,
             true,
             medicalDocuments,
-            pdfAttachment);
+            PdfAttachment);
 
         bill.RequestContribution();
 
@@ -104,7 +116,7 @@ public class TimelineItemTests
             bill.Contribute(contribution,
                 true,
                 true,
-                false);
+                false); //  contribution doesn't confirm bill's claim 
         };
         action.Should().Throw<InconsistentBillException>();
 
@@ -112,7 +124,7 @@ public class TimelineItemTests
         {
             bill.Contribute(contribution,
                 true,
-                false,
+                false,  //  contribution doesn't confirm bill's claim
                 true);
         };
         action.Should().Throw<InconsistentBillException>();
@@ -120,7 +132,7 @@ public class TimelineItemTests
         action = () =>
         {
             bill.Contribute(contribution,
-                false,
+                false,  //  contribution doesn't confirm bill's claim
                 true,
                 true);
         };
@@ -128,7 +140,7 @@ public class TimelineItemTests
 
         action = () =>
         {
-            bill.Contribute(contribution,
+            bill.Contribute(contribution,   //  contribution confirms bill's claim
                 true,
                 true,
                 true);
@@ -139,190 +151,123 @@ public class TimelineItemTests
     [Fact]
     public void ContributionIsAddedToBillWhenAccepted()
     {
-        const int billAmount = 150000;
-        const int contributionAmount = 100000;
-        const string contributionComment = "Here, have this contribution.";
-        var contributor = TestUtility.RandomTestSamaritan();
-        var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID",
-            contributionComment);
+        const decimal contributionAmount = DefaultBillTotal;
 
-        var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "I can't pay this on my own!", billAmount, false,
-            false, true, null, pdfAttachment);
+        var bill = new Bill(DateTime.Now,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            "I can't pay this on my own!",
+            DefaultBillTotal,
+            false,
+            false,
+            true,
+            null,
+            PdfAttachment);
+
+        var contribution = new Contribution(DateTime.Now,
+            contributionAmount,
+            DefaultSamaritan.Id,
+            DefaultTransactionId,
+            DefaultContributionDescription);
+
         bill.RequestContribution();
-        bill.Contribute(contribution, false, false, true);
 
-        bill.ContributionRequest.Contributions.Count.Should().Be(1);
-        var same = bill.ContributionRequest.Contributions.First();
-        same.ContributorId.Should().Be(contributor.Id);
-        same.Amount.Should().Be(contributionAmount);
+        bill.Contribute(contribution,
+            false,
+            false,
+            true);
+
+        bill.ContributionRequest
+            .Contributions
+            .Count.Should().Be(1);
+
+        bill.ContributionRequest
+            .Contributions
+            .First()
+            .Should().Be(contribution);
     }
 
+
     [Fact]
-    public void StatusReportOnlyAcceptsProperDocumentTypes()
+    public void StatusReportOnlyAcceptsValidAttachmentTypes()
     {
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
+        var statusReportValidAction = new Func<StatusReport>(() => new StatusReport(DateTime.Now,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            DefaultMapPoint,
+            string.Empty,
+            JpgAttachment,
+            Mp4Attachment));
 
-        var docImage = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
-        var docVid = new Attachment("filename", "mp4", DateTime.Now, string.Empty);
-        var docFile = new Attachment("filename", "fle", DateTime.Now, string.Empty);
-        var point = new MapPoint(0, 0);
+        statusReportValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
-        // StatusReport
-        var statusReportedValidAction = new Action(() =>
-        {
-            var statusReported = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, docImage,
-                docVid);
-        });
-
-        statusReportedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
-
-        var statusReportedInvalidAction = new Action(() =>
-        {
-            var statusReported = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, docImage,
-                docVid, docFile);
-        });
+        var statusReportedInvalidAction = new Func<StatusReport>(() => new StatusReport(DateTime.Now,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            DefaultMapPoint,
+            string.Empty,
+            JpgAttachment,
+            MiscAttachment, // invalid
+            Mp4Attachment
+        ));
 
         statusReportedInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
     }
 
     [Fact]
-    public void BillOnlyAcceptsProperDocumentTypes()
+    public void BillOnlyAcceptsValidAttachmentTypes()
     {
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-
-        var docImage = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
-        var docVid = new Attachment("filename", "mp4", DateTime.Now, string.Empty);
-        var docFile = new Attachment("filename", "fle", DateTime.Now, string.Empty);
-        var docPdf = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
-
-        var billAttachedValidAction = new Action(() =>
-        {
-            var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, string.Empty, 1000, false, false, false, null,
-                docPdf, docImage);
-        });
+        var billAttachedValidAction = new Func<Bill>(() => new Bill(DateTime.Now,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            string.Empty,
+            DefaultBillTotal,
+            false,
+            false,
+            false,
+            null,
+            PdfAttachment,
+            JpgAttachment));
 
         billAttachedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
-        var billAttachedInvalidAction = new Action(() =>
-        {
-            var billAttached = new Bill(DateTime.Now, samaritan.Id, animal.Id, string.Empty, 1000, false, false, false,
-                null, docImage, docFile, docVid);
-        });
+        var billAttachedInvalidAction = new Func<Bill>(() => new Bill(DateTime.Now,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            string.Empty,
+            DefaultBillTotal,
+            false,
+            false,
+            false,
+            null,
+            JpgAttachment,
+            MiscAttachment, // invalid
+            Mp4Attachment));
 
         billAttachedInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
     }
-
+    
     [Fact]
-    public void StatusReportDoesNotAcceptInvalidAttachments()
+    public void MedicalDocumentOnlyAcceptsValidAttachmentTypes()
     {
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-
-        var docImage = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
-        var docVid = new Attachment("filename", "mp4", DateTime.Now, string.Empty);
-        var docFile = new Attachment("filename", "fle", DateTime.Now, string.Empty);
-        var point = new MapPoint(0, 0);
-
-        var validStatusReport =
-            new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty, docImage, docVid);
-
-        var invalidStatusReport = new Action(() =>
-        {
-            var invalidDocImage = new Attachment("filename", "unknown", DateTime.Now, string.Empty);
-            var invalidStatusReport = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, point, string.Empty,
-                invalidDocImage, docVid);
-        });
-
-        invalidStatusReport.Should().Throw<InvalidAttachmentTypeException>();
-    }
-
-
-    [Fact]
-    public void BillOnlyAcceptsValidAttachments()
-    {
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-
-        var validAttachmentPdf = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
-        var validAttachmentJpg = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
-        var validAttachmentPng = new Attachment("filename", "png", DateTime.Now, string.Empty);
-
-        var invalidAttachment = new Attachment("filename", "fle", DateTime.Now, string.Empty);
-
-        var validMedicalDocuments = new List<MedicalDocument>();
-        validMedicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.",
-            MedicalDocumentType.Prescription(), validAttachmentJpg));
-        validMedicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.",
-            MedicalDocumentType.LabResults(), validAttachmentPng));
-
-        var action = () =>
-        {
-            var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "Bill description.", 1000, false, false, false,
-                validMedicalDocuments, validAttachmentPdf, invalidAttachment);
-        };
-
-        action.Should().Throw<InvalidAttachmentTypeException>();
-    }
-
-    [Fact]
-    public void BillDoesNotAcceptInvalidAttachments()
-    {
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-
-        var validAttachmentPdf = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
-        var validAttachmentJpg = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
-        var validAttachmentPng = new Attachment("filename", "png", DateTime.Now, string.Empty);
-
-        var invalidAttachment = new Attachment("filename", "fle", DateTime.Now, string.Empty);
-
-        var validMedicalDocuments = new List<MedicalDocument>();
-        validMedicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.",
-            MedicalDocumentType.Prescription(), validAttachmentJpg));
-        validMedicalDocuments.Add(new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description.",
-            MedicalDocumentType.LabResults(), validAttachmentPng));
-
-        var action = () =>
-        {
-            var bill = new Bill(DateTime.Now, samaritan.Id, animal.Id, "Bill description.", 1000, false, false, false,
-                validMedicalDocuments, validAttachmentPdf, invalidAttachment);
-        };
-
-        action.Should().Throw<InvalidAttachmentTypeException>();
-    }
-
-    [Fact]
-    public void MedicalDocumentOnlyAcceptsValidAttachments()
-    {
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-        var validPdfAttachment = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
-        var validImageAttachment = new Attachment("filename", "jpg", DateTime.Now, string.Empty);
-
-        var medicalDocumentValidAction = new Action(() =>
-        {
-            var medicalDoc = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description",
-                MedicalDocumentType.Prescription(), validPdfAttachment, validImageAttachment);
-        });
+        var medicalDocumentValidAction = new Func<MedicalDocument>(() => new MedicalDocument(DateTime.UtcNow,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            "Document description",
+            MedicalDocumentType.Prescription(),
+            PdfAttachment,
+            JpgAttachment));
 
         medicalDocumentValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
-    }
 
-    [Fact]
-    public void MedicalDocumentDoesNotAcceptInvalidAttachments()
-    {
-        var samaritan = TestUtility.RandomTestSamaritan();
-        var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-        var validPdfAttachment = new Attachment("filename", "pdf", DateTime.Now, string.Empty);
-        var invalidAttachment = new Attachment("filename", "txt", DateTime.Now, string.Empty);
-
-        var medicalDocumentInvalidAction = new Action(() =>
-        {
-            var medicalDoc = new MedicalDocument(DateTime.Now, samaritan.Id, animal.Id, "Document description",
-                MedicalDocumentType.Prescription(), validPdfAttachment, invalidAttachment);
-        });
+        var medicalDocumentInvalidAction = new Func<MedicalDocument>(() => new MedicalDocument(DateTime.UtcNow,
+            DefaultSamaritan.Id,
+            DefaultAnimal.Id,
+            "Document description",
+            MedicalDocumentType.Prescription(),
+            PdfAttachment,
+            MiscAttachment, // invalid
+            JpgAttachment));
 
         medicalDocumentInvalidAction.Should().Throw<InvalidAttachmentTypeException>();
     }
