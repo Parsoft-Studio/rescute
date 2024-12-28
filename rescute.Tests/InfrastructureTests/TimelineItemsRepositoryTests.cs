@@ -10,6 +10,8 @@ namespace rescute.Tests.InfrastructureTests;
 
 public class TimelineItemsRepositoryTests : RepositoryTestBase
 {
+    private static readonly DateTime DefaultDate = new(2000, 1, 1, 1, 1, 1, DateTimeKind.Utc);
+
     [Fact]
     public async Task TimelineItemsRepositoryAddsAndGetsEvent()
     {
@@ -18,9 +20,9 @@ public class TimelineItemsRepositoryTests : RepositoryTestBase
         var animal = TestUtility.RandomTestAnimal(samaritan.Id);
         animal.UpdateBirthCertificateId("birth_cert_id");
 
-        var tEvent = new StatusReport(DateTime.Now, samaritan.Id, animal.Id, new MapPoint(10, 20),
+        var tEvent = new StatusReport(DefaultDate, samaritan.Id, animal.Id, new MapPoint(10, 20),
             "This is the cat's status.",
-            new Attachment("filename.jpg", "jpg", DateTime.Now, "Picture of the cat"));
+            new Attachment("filename.jpg", "jpg", DefaultDate, "Picture of the cat"));
 
         unitOfWork.Animals.Add(animal);
         unitOfWork.Samaritans.Add(samaritan);
@@ -48,10 +50,10 @@ public class TimelineItemsRepositoryTests : RepositoryTestBase
         var samaritan = TestUtility.RandomTestSamaritan();
         var contributor = TestUtility.RandomTestSamaritan();
         var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-        var contribution = new Contribution(DateTime.Now, contributionAmount, contributor.Id, "TRANSACTION_ID",
+        var contribution = new Contribution(DefaultDate, contributionAmount, contributor.Id, "TRANSACTION_ID",
             contributionComment);
 
-        var bill = new Bill(DateTime.Now,
+        var bill = new Bill(DefaultDate,
             samaritan.Id,
             animal.Id,
             "I can't pay this on my own!",
@@ -60,7 +62,7 @@ public class TimelineItemsRepositoryTests : RepositoryTestBase
             includesPrescription,
             includesVetFee,
             null,
-            new Attachment("filename", "pdf", DateTime.Now, string.Empty)
+            new Attachment("filename", "pdf", DefaultDate, string.Empty)
         );
 
         bill.RequestContribution();

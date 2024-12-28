@@ -1,3 +1,4 @@
+using rescute.Shared;
 using rescute.Web;
 using rescute.Web.Extensions;
 
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddOidcAuthentication(builder.Configuration);
+builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
