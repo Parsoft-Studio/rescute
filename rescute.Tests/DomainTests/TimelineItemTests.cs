@@ -12,6 +12,8 @@ namespace rescute.Tests.DomainTests;
 
 public class TimelineItemTests
 {
+    private static readonly DateTime DefaultDate = new(2000, 1, 1, 1, 1, 1, DateTimeKind.Utc);
+
     private static readonly Attachment
         JpgAttachment = new("file.jpg", "jpg", DateTime.UtcNow, "description");
 
@@ -35,7 +37,7 @@ public class TimelineItemTests
     [Fact]
     public void BillRequestsContributions()
     {
-        var bill = new Bill(DateTime.Now, DefaultSamaritan.Id, DefaultAnimal.Id, "All the costs.", DefaultBillTotal,
+        var bill = new Bill(DefaultDate, DefaultSamaritan.Id, DefaultAnimal.Id, "All the costs.", DefaultBillTotal,
             false,
             false, true,
             null, PdfAttachment);
@@ -51,9 +53,9 @@ public class TimelineItemTests
     [Fact]
     public void BillDoesNotAcceptExcessContribution()
     {
-        var attachment = new Attachment("test.pdf", "pdf", DateTime.Now, "Attachment description");
+        var attachment = new Attachment("test.pdf", "pdf", DefaultDate, "Attachment description");
 
-        var bill = new Bill(DateTime.Now,
+        var bill = new Bill(DefaultDate,
             DefaultSamaritan.Id,
             DefaultAnimal.Id,
             "All the costs.",
@@ -64,7 +66,7 @@ public class TimelineItemTests
             null, attachment);
         bill.RequestContribution();
 
-        var contribution = new Contribution(DateTime.Now,
+        var contribution = new Contribution(DefaultDate,
             DefaultBillTotal + 1, // more than the bill amount
             DefaultSamaritan.Id,
             DefaultTransactionId,
@@ -83,22 +85,22 @@ public class TimelineItemTests
         const string billDescription = "I can't pay this on my own!";
         var contributionAmount = DefaultBillTotal;
 
-        var contribution = new Contribution(DateTime.Now, contributionAmount, DefaultSamaritan.Id, DefaultTransactionId,
+        var contribution = new Contribution(DefaultDate, contributionAmount, DefaultSamaritan.Id, DefaultTransactionId,
             DefaultContributionDescription);
 
         var medicalDocuments = new List<MedicalDocument>
         {
-            new(DateTime.Now, DefaultSamaritan.Id, DefaultAnimal.Id,
+            new(DefaultDate, DefaultSamaritan.Id, DefaultAnimal.Id,
                 documentDescription,
                 MedicalDocumentType.Prescription(),
                 JpgAttachment),
-            new(DateTime.Now, DefaultSamaritan.Id, DefaultAnimal.Id,
+            new(DefaultDate, DefaultSamaritan.Id, DefaultAnimal.Id,
                 documentDescription,
                 MedicalDocumentType.LabResults(),
                 JpgAttachment)
         };
 
-        var bill = new Bill(DateTime.Now,
+        var bill = new Bill(DefaultDate,
             DefaultSamaritan.Id,
             DefaultAnimal.Id,
             billDescription,
@@ -153,7 +155,7 @@ public class TimelineItemTests
     {
         const decimal contributionAmount = DefaultBillTotal;
 
-        var bill = new Bill(DateTime.Now,
+        var bill = new Bill(DefaultDate,
             DefaultSamaritan.Id,
             DefaultAnimal.Id,
             "I can't pay this on my own!",
@@ -164,7 +166,7 @@ public class TimelineItemTests
             null,
             PdfAttachment);
 
-        var contribution = new Contribution(DateTime.Now,
+        var contribution = new Contribution(DefaultDate,
             contributionAmount,
             DefaultSamaritan.Id,
             DefaultTransactionId,
@@ -191,7 +193,7 @@ public class TimelineItemTests
     [Fact]
     public void StatusReportOnlyAcceptsValidAttachmentTypes()
     {
-        var statusReportValidAction = new Func<StatusReport>(() => new StatusReport(DateTime.Now,
+        var statusReportValidAction = new Func<StatusReport>(() => new StatusReport(DefaultDate,
             DefaultSamaritan.Id,
             DefaultAnimal.Id,
             DefaultMapPoint,
@@ -201,7 +203,7 @@ public class TimelineItemTests
 
         statusReportValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
-        var statusReportedInvalidAction = new Func<StatusReport>(() => new StatusReport(DateTime.Now,
+        var statusReportedInvalidAction = new Func<StatusReport>(() => new StatusReport(DefaultDate,
             DefaultSamaritan.Id,
             DefaultAnimal.Id,
             DefaultMapPoint,
@@ -217,7 +219,7 @@ public class TimelineItemTests
     [Fact]
     public void BillOnlyAcceptsValidAttachmentTypes()
     {
-        var billAttachedValidAction = new Func<Bill>(() => new Bill(DateTime.Now,
+        var billAttachedValidAction = new Func<Bill>(() => new Bill(DefaultDate,
             DefaultSamaritan.Id,
             DefaultAnimal.Id,
             string.Empty,
@@ -231,7 +233,7 @@ public class TimelineItemTests
 
         billAttachedValidAction.Should().NotThrow<InvalidAttachmentTypeException>();
 
-        var billAttachedInvalidAction = new Func<Bill>(() => new Bill(DateTime.Now,
+        var billAttachedInvalidAction = new Func<Bill>(() => new Bill(DefaultDate,
             DefaultSamaritan.Id,
             DefaultAnimal.Id,
             string.Empty,

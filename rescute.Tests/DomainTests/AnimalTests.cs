@@ -10,6 +10,8 @@ namespace rescute.Tests.DomainTests;
 
 public class AnimalTests
 {
+    private static readonly DateTime DefaultDate = new(2000, 1, 1, 1, 1, 1, DateTimeKind.Utc);
+
     [Fact]
     public void TwoAnimalsAreNotTheSame()
     {
@@ -25,20 +27,19 @@ public class AnimalTests
     {
         // Arrange
         var samaritan = TestUtility.RandomTestSamaritan();
-        var registrationDate = DateTime.Now;
         var introducedBy = samaritan.Id;
         var description = "Test description";
         var animalType = AnimalType.Dog();
 
         // Act
-        var animal = new Animal(registrationDate, introducedBy, description, animalType);
+        var animal = new Animal(DefaultDate, introducedBy, description, animalType);
 
         // Assert
         animal.Type.Should().Be(animalType);
     }
 
     [Fact]
-    public void AcceptableAttachmentTypes_ReturnsExpectedTypes()
+    public void AcceptableAttachmentTypesReturnsExpectedTypes()
     {
         var animal = TestUtility.RandomTestAnimal(TestUtility.RandomTestSamaritan().Id);
 
@@ -49,24 +50,25 @@ public class AnimalTests
     }
 
     [Fact]
-    public void AddAttachments_ShouldAddAttachmentsToList()
+    public void AddAttachmentsAddsAttachmentsToList()
     {
         // Arrange
         var samaritan = TestUtility.RandomTestSamaritan();
         var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-        var attachment1 = new Attachment("image1.jpg", "jpg", DateTime.Now, "Test image 1");
-        var attachment2 = new Attachment("image2.jpg", "jpg", DateTime.Now, "Test image 2");
+        var attachment1 = new Attachment("image1.jpg", "jpg", DefaultDate, "Test image 1");
+        var attachment2 = new Attachment("image2.jpg", "jpg", DefaultDate, "Test image 2");
 
         // Act
         animal.AddAttachments(attachment1, attachment2);
 
         // Assert
+        animal.Attachments.Count.Should().Be(2);
         animal.Attachments.Should().Contain(attachment1);
         animal.Attachments.Should().Contain(attachment2);
     }
 
     [Fact]
-    public void RemoveAttachment_RemovesAttachmentFromList()
+    public void RemoveAttachmentRemovesAttachmentFromList()
     {
         // Arrange
         var samaritan = TestUtility.RandomTestSamaritan();
@@ -83,7 +85,7 @@ public class AnimalTests
     }
 
     [Fact]
-    public void ClearAttachments_ClearsAttachmentsList()
+    public void ClearAttachmentsClearsAttachmentsList()
     {
         var samaritan = TestUtility.RandomTestSamaritan();
         var animal = TestUtility.RandomTestAnimal(samaritan.Id);
@@ -97,12 +99,12 @@ public class AnimalTests
     }
 
     [Fact]
-    public void UpdateRegistrationDate_UpdatesRegistrationDatePropertyCorrectly()
+    public void UpdateRegistrationDateUpdatesRegistrationDatePropertyCorrectly()
     {
         // Arrange
         var samaritan = TestUtility.RandomTestSamaritan();
         var animal = TestUtility.RandomTestAnimal(samaritan.Id);
-        var newRegDate = DateTime.Now.AddDays(-7);
+        var newRegDate = DefaultDate.AddDays(-7);
 
         // Act
         animal.UpdateRegistrationDate(newRegDate);
@@ -112,7 +114,7 @@ public class AnimalTests
     }
 
     [Fact]
-    public void UpdateDescription_UpdatesDescriptionPropertyCorrectly()
+    public void UpdateDescriptionUpdatesDescriptionPropertyCorrectly()
     {
         // Arrange
         var samaritan = TestUtility.RandomTestSamaritan();
@@ -127,7 +129,7 @@ public class AnimalTests
     }
 
     [Fact]
-    public void UpdateAnimalType_ShouldUpdateTypeProperty()
+    public void UpdateAnimalTypeShouldUpdateTypeProperty()
     {
         // Arrange
         var samaritan = TestUtility.RandomTestSamaritan();
@@ -142,7 +144,7 @@ public class AnimalTests
     }
 
     [Fact]
-    public void UpdateIntroductionSamaritan_UpdatesIntroducedByPropertyCorrectly()
+    public void UpdateIntroductionSamaritanUpdatesIntroducedByPropertyCorrectly()
     {
         // Arrange
         var samaritan = TestUtility.RandomTestSamaritan();
