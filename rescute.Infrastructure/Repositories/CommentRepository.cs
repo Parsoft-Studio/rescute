@@ -5,7 +5,7 @@ namespace rescute.Infrastructure.Repositories;
 
 public class CommentRepository : Repository<Comment>, ICommentRepository
 {
-    public CommentRepository(rescuteContext c) : base(c)
+    public CommentRepository(rescuteContext context) : base(context)
     {
     }
 }

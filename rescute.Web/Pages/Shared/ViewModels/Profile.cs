@@ -1,4 +1,4 @@
-namespace rescute.Web.Pages.Shared.ViewModel;
+namespace rescute.Web.Pages.Shared.ViewModels;
 
 public class Profile(string image, string displayName)
 {

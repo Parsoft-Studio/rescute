@@ -1,6 +1,4 @@
-﻿using rescute.Shared.Exceptions;
-
-namespace rescute.Shared;
+﻿namespace rescute.Domain.ValueObjects;
 
 public record PhoneNumber
 {

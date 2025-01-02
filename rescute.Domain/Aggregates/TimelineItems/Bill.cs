@@ -43,10 +43,10 @@ public class Bill : TimelineItemWithAttachments
     }
 
     public decimal Total { get; private set; }
-    public IReadOnlyCollection<Id<TimelineItem>> MedicalDocumentIds => medicalDocumentIds.AsReadOnly();
+    public IReadOnlyList<Id<TimelineItem>> MedicalDocumentIds => medicalDocumentIds.AsReadOnly();
 
 
-    public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes =>
+    public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes =>
         [AttachmentType.Image(), AttachmentType.Document()];
 
     /// <summary>
@@ -135,7 +135,7 @@ public class Bill : TimelineItemWithAttachments
     public interface IContributionRequest
     {
         public Bill Bill { get; }
-        IReadOnlyCollection<Contribution> Contributions { get; }
+        IReadOnlyList<Contribution> Contributions { get; }
         decimal ContributionsTotal { get; }
         DateTime? RequestCompletionDate { get; }
         DateTime RequestDate { get; }
@@ -165,7 +165,7 @@ public class Bill : TimelineItemWithAttachments
             ? 0
             : contributions.Select(c => c.Amount).Aggregate((total, next) => total + next);
 
-        public IReadOnlyCollection<Contribution> Contributions => contributions.AsReadOnly();
+        public IReadOnlyList<Contribution> Contributions => contributions.AsReadOnly();
 
         public Bill Bill { get; }
 

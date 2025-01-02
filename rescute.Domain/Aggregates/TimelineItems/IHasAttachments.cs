@@ -8,8 +8,8 @@ namespace rescute.Domain.Aggregates.TimelineItems;
 /// </summary>
 public interface IHasAttachments
 {
-    IReadOnlyCollection<Attachment> Attachments { get; }
-    IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes { get; }
+    IReadOnlyList<Attachment> Attachments { get; }
+    IReadOnlyList<AttachmentType> AcceptableAttachmentTypes { get; }
     void AddAttachments(params Attachment[] attachments);
     void ClearAttachments();
     void RemoveAttachment(Attachment attachment);

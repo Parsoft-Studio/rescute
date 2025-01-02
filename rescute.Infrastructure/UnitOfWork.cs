@@ -19,16 +19,16 @@ public sealed class UnitOfWork : IUnitOfWork
     public ITimelineItemRepository TimelineItems => timelineItems;
     public ICommentRepository Comments => comments;
 
-    public UnitOfWork(rescuteContext c)
+    public UnitOfWork(rescuteContext context)
     {
-        if (c is null) throw new ArgumentNullException(nameof(c));
+        if (context is null) throw new ArgumentNullException(nameof(context));
 
-        context = c;
+        this.context = context;
 
-        samaritans = new SamaritanRepository(c);
-        animals = new AnimalRepository(c);
-        timelineItems = new TimelineItemRepository(c);
-        comments = new CommentRepository(c);
+        samaritans = new SamaritanRepository(context);
+        animals = new AnimalRepository(context);
+        timelineItems = new TimelineItemRepository(context);
+        comments = new CommentRepository(context);
     }
 
     private UnitOfWork()

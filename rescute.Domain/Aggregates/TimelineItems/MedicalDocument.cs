@@ -17,6 +17,6 @@ public class MedicalDocument : TimelineItemWithAttachments
 
     public MedicalDocumentType Type { get; private set; }
 
-    public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes =>
+    public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes =>
         [AttachmentType.Image(), AttachmentType.Document()];
 }

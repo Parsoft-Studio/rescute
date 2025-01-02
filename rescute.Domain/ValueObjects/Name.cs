@@ -1,6 +1,6 @@
-﻿using rescute.Shared.Exceptions;
+﻿using rescute.Domain.Exceptions;
 
-namespace rescute.Shared;
+namespace rescute.Domain.ValueObjects;
 
 public record Name
 {

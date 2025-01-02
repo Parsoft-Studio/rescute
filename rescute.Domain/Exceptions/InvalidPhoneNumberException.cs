@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace rescute.Shared.Exceptions;
+namespace rescute.Domain.Exceptions;
 
 public class InvalidPhoneNumberException : Exception
 {

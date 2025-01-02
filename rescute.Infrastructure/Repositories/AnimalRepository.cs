@@ -5,7 +5,7 @@ namespace rescute.Infrastructure.Repositories;
 
 public class AnimalRepository : Repository<Animal>, IAnimalRepository
 {
-    public AnimalRepository(rescuteContext c) : base(c)
+    public AnimalRepository(rescuteContext context) : base(context)
     {
     }
 }

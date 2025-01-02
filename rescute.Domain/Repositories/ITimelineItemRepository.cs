@@ -8,7 +8,5 @@ namespace rescute.Domain.Repositories;
 
 public interface ITimelineItemRepository : IRepository<TimelineItem>
 {
-    Task<IReadOnlyCollection<T>> GetAsync<T>(Expression<Func<T, bool>> predicate);
-    Task<IReadOnlyCollection<T>> GetAsync<T>(Expression<Func<T, bool>> predicate, int pageSize, int pageIndex);
-    Task<IReadOnlyCollection<T>> GetAllAsync<T>();
+    Task<IReadOnlyList<StatusReport>> GetStatusReports(int pageSize, int pageIndex);
 }

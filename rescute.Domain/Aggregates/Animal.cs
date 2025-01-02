@@ -30,11 +30,11 @@ public class Animal : AggregateRoot<Animal>, IHasAttachments
         UpdateAnimalType(type);
     }
 
-    public IReadOnlyCollection<Attachment> Attachments =>
+    public IReadOnlyList<Attachment> Attachments =>
         attachments.OrderByDescending(a => a.CreationDate).ToList().AsReadOnly();
 
 
-    public IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => [AttachmentType.Image()];
+    public IReadOnlyList<AttachmentType> AcceptableAttachmentTypes => [AttachmentType.Image()];
 
     public void AddAttachments(params Attachment[] attachments)
     {

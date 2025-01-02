@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using rescute.Domain.Aggregates;
 using rescute.Domain.Aggregates.TimelineItems;
+using rescute.Domain.ValueObjects;
 using rescute.Shared;
 
 namespace rescute.Infrastructure;

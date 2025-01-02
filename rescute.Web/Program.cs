@@ -1,4 +1,3 @@
-using rescute.Shared;
 using rescute.Web;
 using rescute.Web.Extensions;
 
@@ -7,8 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddOidcAuthentication(builder.Configuration);
-builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+builder.Services
+    .AddOidcAuthentication(builder.Configuration)
+    .RegisterApplicationServices(builder.Environment.IsDevelopment());
 
 var app = builder.Build();
 

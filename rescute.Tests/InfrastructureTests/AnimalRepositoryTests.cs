@@ -32,7 +32,7 @@ public class AnimalRepositoryTests : RepositoryTestBase
 
         await using (var unitOfWork = GetUnitOfWork())
         {
-            var stored = await unitOfWork.Animals.GetAsync(a => true);
+            var stored = await unitOfWork.Animals.GetAllAsync();
 
             stored.Should().NotBeNull();
             animals.TrueForAll(a => stored.Contains(a)).Should().Be(true);
