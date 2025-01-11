@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using rescute.Domain.Aggregates;
 using rescute.Domain.Aggregates.TimelineItems;
+using rescute.Domain.ValueObjects;
 using rescute.Shared;
 
 namespace rescute.Infrastructure;
@@ -12,20 +13,21 @@ namespace rescute.Infrastructure;
 public class rescuteContext(DbContextOptions<rescuteContext> options) : DbContext(options)
 {
     private const string Schema = "rescute";
-    public DbSet<Animal> Animals { get; }
-    public DbSet<Samaritan> Samaritans { get; }
+    public DbSet<Animal> Animals { get; set; }
+    public DbSet<Samaritan> Samaritans { get; set; }
 
-    public DbSet<TimelineItem> TimelineItems { get; }
-    public DbSet<Comment> Comments { get; }
+    public DbSet<TimelineItem> TimelineItems { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
-    public string ConnectionString { get; }
+    public string ConnectionString { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema(Schema);
         modelBuilder.Ignore<Id<TimelineItem>>();
-
+        modelBuilder.Owned<Attachment>();
+        
         // Samaritan
         modelBuilder.Entity<Samaritan>(b => b.HasKey(samaritan => samaritan.Id).IsClustered(false));
         modelBuilder.Entity<Samaritan>(b =>
@@ -69,7 +71,7 @@ public class rescuteContext(DbContextOptions<rescuteContext> options) : DbContex
         modelBuilder.Entity<TimelineItemWithAttachments>(b =>
             b.Ignore(tEventWithAttachments => tEventWithAttachments.AcceptableAttachmentTypes));
         modelBuilder.Entity<TimelineItemWithAttachments>(b =>
-            b.OwnsMany(tEventWithAttachment => tEventWithAttachment.Attachments, re =>
+            b.OwnsMany(eventWithAttachment => eventWithAttachment.Attachments, re =>
             {
                 re.Ignore(attachment => attachment.Type);
                 re.ToTable("TimelineItemAttachments");

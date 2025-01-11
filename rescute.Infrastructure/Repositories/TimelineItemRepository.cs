@@ -9,29 +9,23 @@ using rescute.Domain.Repositories;
 
 namespace rescute.Infrastructure.Repositories;
 
-public class TimelineItemRepository : Repository<TimelineItem>, ITimelineItemRepository
+internal class TimelineItemRepository : Repository<TimelineItem>, ITimelineItemRepository
 {
     private readonly rescuteContext context;
 
-    public TimelineItemRepository(rescuteContext c) : base(c)
+    public TimelineItemRepository(rescuteContext context) : base(context)
     {
-        context = c;
+        this.context = context;
     }
 
-    public async Task<IReadOnlyCollection<T>> GetAllAsync<T>()
+    public async Task<IReadOnlyList<T>> GetAllAsync<T>()
     {
         return await context.TimelineItems.OfType<T>().ToArrayAsync();
     }
-
-    public async Task<IReadOnlyCollection<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
+    
+    public async Task<IReadOnlyList<StatusReport>> GetStatusReports(int pageSize, int pageIndex)
     {
-        return await context.TimelineItems.OfType<T>().Where(predicate).ToArrayAsync();
-    }
-
-    public async Task<IReadOnlyCollection<T>> GetAsync<T>(Expression<Func<T, bool>> predicate, int pageSize,
-        int pageIndex)
-    {
-        return await context.TimelineItems.OfType<T>().Where(predicate).Skip(pageIndex * pageSize).Take(pageSize)
+        return await context.TimelineItems.OfType<StatusReport>().Skip(pageIndex * pageSize).Take(pageSize)
             .ToArrayAsync();
     }
 }

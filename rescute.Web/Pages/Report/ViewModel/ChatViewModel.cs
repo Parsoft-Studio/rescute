@@ -1,5 +1,6 @@
 using rescute.Domain.Aggregates;
 using rescute.Domain.Aggregates.TimelineItems;
+using rescute.Domain.ValueObjects;
 using rescute.Shared;
 
 namespace rescute.Web.Pages.Report.ViewModel;

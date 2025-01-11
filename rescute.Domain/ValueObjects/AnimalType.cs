@@ -14,7 +14,7 @@ public record AnimalType
 
     public static AnimalType Other() => new("Other");
 
-    public string Name { get; }
+    public string Name { get; private set; }
 
     public AnimalType(string name)
     {

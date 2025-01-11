@@ -2,6 +2,9 @@ using System;
 
 namespace rescute.Shared;
 
+/// <summary>
+/// An abstraction over date and time related functions. 
+/// </summary>
 public interface IDateTimeProvider
 {
     /// <summary>

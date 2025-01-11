@@ -4,10 +4,12 @@ namespace rescute.Domain.ValueObjects;
 
 public record AttachmentType
 {
-    public static  AttachmentType Image() => new("Image");
-    public static  AttachmentType Video() => new("Video");
-    public static  AttachmentType Document() => new("Document");
-    public static  AttachmentType Unknown() => new("Unknown");
+    public static AttachmentType Image() => new("Image");
+    public static AttachmentType Video() => new("Video");
+    public static AttachmentType Document() => new("Document");
+    public static AttachmentType Unknown() => new("Unknown");
+
+    public string Type { get; private set; }
 
     private AttachmentType(string type)
     {
@@ -18,7 +20,6 @@ public record AttachmentType
     {
     }
 
-    private string Type { get; }
 
     public override string ToString()
     {

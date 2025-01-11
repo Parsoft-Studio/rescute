@@ -23,4 +23,7 @@
         <ProjectReference Include="..\rescute.Domain\rescute.Domain.csproj"/>
         <ProjectReference Include="..\rescute.Infrastructure\rescute.Infrastructure.csproj"/>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="ApplicationTests\" />
+    </ItemGroup>
 </Project>

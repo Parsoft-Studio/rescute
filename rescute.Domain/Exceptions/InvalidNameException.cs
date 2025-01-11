@@ -1,5 +1,5 @@
 ﻿using System;
 
-namespace rescute.Shared.Exceptions;
+namespace rescute.Domain.Exceptions;
 
 public abstract class InvalidNameException(string message) : Exception(message);

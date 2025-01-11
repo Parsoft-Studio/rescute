@@ -1,4 +1,6 @@
-﻿namespace rescute.Shared;
+﻿using rescute.Domain.ValueObjects;
+
+namespace rescute.Domain;
 
 public abstract class Entity<T> where T : Entity<T>
 {

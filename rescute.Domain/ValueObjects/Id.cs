@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace rescute.Shared;
+namespace rescute.Domain.ValueObjects;
 
 public record Id<T> where T : Entity<T>
 {

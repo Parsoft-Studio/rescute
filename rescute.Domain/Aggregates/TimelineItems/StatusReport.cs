@@ -18,7 +18,7 @@ public class StatusReport : TimelineItemWithAttachments, ICoordinated
     {
     }
 
-    public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes =>
+    public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes =>
         [AttachmentType.Image(), AttachmentType.Video()];
 
     public MapPoint EventLocation { get; }
