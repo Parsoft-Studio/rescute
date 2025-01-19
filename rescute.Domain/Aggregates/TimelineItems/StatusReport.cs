@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Domain.Aggregates.TimelineItems;
 
@@ -18,8 +17,8 @@ public class StatusReport : TimelineItemWithAttachments, ICoordinated
     {
     }
 
-    public override IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes =>
+    public override IReadOnlyList<AttachmentType> AcceptableAttachmentTypes =>
         [AttachmentType.Image(), AttachmentType.Video()];
 
-    public MapPoint EventLocation { get; }
+    public MapPoint EventLocation { get; private set; }
 }

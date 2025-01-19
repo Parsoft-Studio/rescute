@@ -4,19 +4,20 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using rescute.Domain;
 using rescute.Domain.Repositories;
-using rescute.Shared;
+using rescute.Domain.ValueObjects;
 
 namespace rescute.Infrastructure.Repositories;
 
-public abstract class Repository<T> : IRepository<T> where T : AggregateRoot<T>
+internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot<T>
 
 {
     private readonly DbContext context;
 
-    protected Repository(DbContext c)
+    protected Repository(DbContext context)
     {
-        context = c;
+        this.context = context;
     }
 
     public void Add(T item)
@@ -29,17 +30,17 @@ public abstract class Repository<T> : IRepository<T> where T : AggregateRoot<T>
         return await context.Set<T>().SingleOrDefaultAsync(item => item.Id == id);
     }
 
-    public async Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate, int pageSize, int pageIndex)
+    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate, int pageSize, int pageIndex)
     {
         return await context.Set<T>().Where(predicate).Skip(pageIndex * pageSize).Take(pageSize).ToArrayAsync();
     }
 
-    public async Task<IReadOnlyCollection<T>> GetAsync(Expression<Func<T, bool>> predicate)
+    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
     {
         return await context.Set<T>().Where(predicate).ToArrayAsync();
     }
 
-    public async Task<IReadOnlyCollection<T>> GetAllAsync()
+    public async Task<IReadOnlyList<T>> GetAllAsync()
     {
         return await context.Set<T>().ToArrayAsync();
     }

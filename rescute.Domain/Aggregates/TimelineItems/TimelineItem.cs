@@ -1,5 +1,5 @@
 ﻿using System;
-using rescute.Shared;
+using rescute.Domain.ValueObjects;
 
 namespace rescute.Domain.Aggregates.TimelineItems;
 

@@ -1,0 +1,54 @@
+@page "/reports"
+@using Microsoft.AspNetCore.Components.Sections
+@using rescute.Web.Pages.Reports.Components
+@using rescute.Web.Pages.Reports.ViewModels
+@using rescute.Web.Pages.Shared.Components
+@inject ReportsViewModel ReportsViewModel;
+@rendermode InteractiveServer
+
+@* @attribute [Authorize] *@
+
+<HeadContent>
+    <link rel="stylesheet" href="css/rescute-reports.css?v=1">
+    <title>rescute</title>
+</HeadContent>
+
+<SectionContent SectionName="TopBarItems">
+    <Checkbox Text="گزارش‌های من"/>
+    <Checkbox Text="مشارکت‌های من"/>
+    <Checkbox Text="شامل درخواست حمل و نقل"/>
+    <Checkbox Text="شامل درخواست کمک مالی"/>
+</SectionContent>
+
+<div class="container-fluid">
+    @if (ReportsViewModel.IsInitialized())
+    {
+        <div class="d-flex flex-wrap reports">
+
+            @foreach (var report in ReportsViewModel.Reports)
+            {
+                <ReportCard Image=@report.Image Distance=@report.Distance Timestamp=@report.Time
+                            Description=@report.Description/>
+            }
+            <LoadMore LoadMoreClicked="@ReportsViewModel.LoadNextPage" @rendermode="InteractiveServer"/>
+        </div>
+    }
+    <NewReportButton/>
+</div>
+
+}
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        ReportsViewModel.PageIndex = 0;
+        await ReportsViewModel.Initialize();
+    }
+
+    private void Clicked()
+    {
+        var a = 2;
+    }
+
+}

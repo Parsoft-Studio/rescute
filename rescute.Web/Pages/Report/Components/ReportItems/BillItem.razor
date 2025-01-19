@@ -1,10 +1,10 @@
 @inherits ReportItemBase
-@using rescute.Web.Pages.Report.ViewModel
+@using rescute.Web.Pages.Report.ViewModels
 @implements ISliderItem
 <div class="card bill">
     <ItemTopBar Parent="@(this)"/>
     <div class="card-body">
-        <Carousel Parent="@(this)"/>
+        <ItemCarousel Parent="@(this)"/>
     </div>
     <div class="card-footer">
         <div class="footer-title">

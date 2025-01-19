@@ -4,11 +4,11 @@ namespace rescute.Domain.ValueObjects;
 
 public record Attachment
 {
-    public string FileName { get; }
-    public string Extension { get; }
+    public string FileName { get; private set; }
+    public string Extension { get; private set; }
     public AttachmentType Type => GetAttachmentType();
-    public string Description { get; }
-    public DateTime CreationDate { get; }
+    public string Description { get; private set; }
+    public DateTime CreationDate { get; private set; }
 
     public Attachment(string filename, string extension, DateTime creationDate, string description)
     {

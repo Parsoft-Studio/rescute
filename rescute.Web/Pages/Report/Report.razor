@@ -1,0 +1,89 @@
+@page "/report"
+@using Microsoft.AspNetCore.Components.Sections
+@using rescute.Web.Pages.Report.Components
+@using rescute.Web.Pages.Report.Components.ReportItems
+@using rescute.Web.Pages.Report.ViewModels
+@using rescute.Web.Pages.Shared.Components
+@using rescute.Web.Pages.Shared.ViewModels
+@attribute [Authorize]
+<HeadContent>
+    <link rel="stylesheet" href="css/rescute-report.css?v=1">
+    <link rel="stylesheet" href="css/rescute-chat.css?v=1">
+    <link href="lib/viewerjs/viewer.min.css" rel="stylesheet">
+    <script src="lib/viewerjs/viewer.min.js"></script>
+    <script src="js/rescute-report.js?v=1"></script>
+</HeadContent>
+<SectionContent SectionName="TopBarItems">
+    <Checkbox Text="گزارش وضعیت"/>
+    <Checkbox Text="درخواست حمل و نقل"/>
+    <Checkbox Text="مدارک پزشکی"/>
+    <Checkbox Text="صورت‌حساب"/>
+</SectionContent>
+
+<div class="container-fluid">
+    <div class="d-flex events" id="events">
+        <StatusReportItem Profile="@profile" Description="@Description" Distance="600 متر" Location="Azadi+Tower"
+                          Slides="@CreateStatusReportSlides()" Timestamp="۱۲ مرداد ۱۴۰۴، ۱۲:۳۵" AnimalType="گربه"
+                          TimestampTitle="پریروز" @ref="statusReportItem1"/>
+        <TransportRequestItem Profile="@profile" Distance="دو کیلومتر" Location="Azadi+Tower" Destination="Ariashahr"
+                              Timestamp="۱۲ مرداد ۱۴۰۴، ۱۲:۳۷" TimestampTitle="پریروز" Description="@Description"/>
+
+        <MedicalDocumentItem Profile="@profile" Description="@Description"
+                             Slides="@CreateMedicalSlides()" Timestamp="۱۳ مرداد ۱۴۰۴، ۱۲:۳۵"
+                             TimestampTitle="دیروز"/>
+
+        <BillItem Profile="@profile" Description="@Description"
+                  Slides="@CreateBillSlides()" Timestamp="۱۵ مرداد ۱۴۰۴، ۱۷:۰۴"
+                  TimestampTitle="امروز"/>
+
+    </div>
+</div>
+
+@* TODO: Idea is to have a single chat item that renders conditionally.
+Clicking on chat button in each item sets the "active report item" variable which causes this ItemChat to render
+and binds it the active report item.
+*@
+<ItemChat Parent="statusReportItem1"/>
+
+@code {
+    private StatusReportItem? statusReportItem1;
+    private readonly Profile profile = new("img/profile.jpg", "احسان حسینخانی");
+
+    private const string Description = "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ،" +
+                                       " و با استفاده از طراحان گرافیک است،" +
+                                       " چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.";
+
+
+    private static IList<ReportItemSlide> CreateStatusReportSlides()
+    {
+        List<ReportItemSlide> slides =
+        [
+            new("img/reports/1.jpg", ""),
+            new("img/reports/2.jpg", "")
+        ];
+        return slides;
+    }
+
+    private static IList<ReportItemSlide> CreateMedicalSlides()
+    {
+        List<ReportItemSlide> slides =
+        [
+            new("img/reports/xray1.jpg", ""),
+            new("img/reports/xray2.jpg", ""),
+            new("img/reports/xray3.jpg", "")
+        ];
+        return slides;
+    }
+
+    private static IList<ReportItemSlide> CreateBillSlides()
+    {
+        List<ReportItemSlide> slides =
+        [
+            new("img/reports/samplebill.png", ""),
+            new("img/reports/samplebill.png", ""),
+            new("img/reports/samplebill.png", "")
+        ];
+        return slides;
+    }
+
+}

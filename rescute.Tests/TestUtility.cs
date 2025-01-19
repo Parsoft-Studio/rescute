@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using rescute.Domain.Aggregates;
 using rescute.Domain.ValueObjects;
 using rescute.Infrastructure;
-using rescute.Shared;
 
 namespace rescute.Tests;
 

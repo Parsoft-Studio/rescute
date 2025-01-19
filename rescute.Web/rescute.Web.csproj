@@ -7,64 +7,6 @@
     <ItemGroup>
         <Folder Include="wwwroot\lib\"/>
     </ItemGroup>
-    <ItemGroup>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.rtl.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.rtl.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.rtl.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.rtl.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.rtl.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.rtl.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.rtl.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-reboot.rtl.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.rtl.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.rtl.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.rtl.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap-utilities.rtl.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.rtl.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.rtl.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.rtl.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\css\bootstrap.rtl.min.css.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.bundle.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.bundle.js.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.bundle.min.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.bundle.min.js.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.esm.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.esm.js.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.esm.min.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.esm.min.js.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.js.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.min.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\js\bootstrap.min.js.map"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.common.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.esm.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.js"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.min.css"/>
-        <_ContentIncludedByDefault Remove="wwwroot\lib\viewerjs\viewer.min.js"/>
-        <_ContentIncludedByDefault Remove="Shared\MainLayout.razor"/>
-        <_ContentIncludedByDefault Remove="Shared\NavMenu.razor"/>
-        <_ContentIncludedByDefault Remove="Pages\Report\Components\StatusReportItem.razor"/>
-        <_ContentIncludedByDefault Remove="Pages\Report\Components\TransportRequestItem.razor"/>
-        <_ContentIncludedByDefault Remove="Pages\Report\Components\StatusReportItem.razor"/>
-        <_ContentIncludedByDefault Remove="Pages\Report\Components\TransportRequestItem.razor"/>
-    </ItemGroup>
     <Target Name="RestoreNPMPackages" BeforeTargets="CopyNPMPackages;Build">
         <Exec Command="npm install"/>
     </Target>
@@ -83,21 +25,18 @@
         <Copy SourceFiles="@(FontAwesomeFonts)" DestinationFolder="wwwroot\lib\font-awesome\fonts\%(RecursiveDir)"/>
     </Target>
     <ItemGroup>
-        <Content Remove="wwwroot\css\open-iconic\README.md"/>
-        <Content Remove="wwwroot\css\site.css"/>
-        <Content Remove="Pages\Shared\MainLayout.razor"/>
-        <Content Remove="Pages\Reports.razor"/>
-    </ItemGroup>
-    <ItemGroup>
+        <PackageReference Include="Blazor.Bootstrap" Version="3.2.0"/>
+        <PackageReference Include="bogus" Version="35.6.1"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.7"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.2"/>
     </ItemGroup>
     <ItemGroup>
-        <AdditionalFiles Include="Pages\Reports\Index.razor"/>
         <AdditionalFiles Include="Pages\Shared\Layout\AppSideBar.razor"/>
         <AdditionalFiles Include="Pages\Shared\Layout\MainLayout.razor"/>
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\rescute.Application\rescute.Application.csproj"/>
         <ProjectReference Include="..\rescute.Domain\rescute.Domain.csproj"/>
-        <ProjectReference Include="..\rescute.Shared\rescute.Shared.csproj"/>
+        <ProjectReference Include="..\rescute.Infrastructure\rescute.Infrastructure.csproj"/>
     </ItemGroup>
 </Project>

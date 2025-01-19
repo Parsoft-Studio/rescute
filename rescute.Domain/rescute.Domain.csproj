@@ -3,9 +3,6 @@
         <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\rescute.Shared\rescute.Shared.csproj"/>
-    </ItemGroup>
-    <ItemGroup>
         <Folder Include="Entities\"/>
     </ItemGroup>
     <ItemGroup>

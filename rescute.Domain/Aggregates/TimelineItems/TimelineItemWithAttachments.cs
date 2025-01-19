@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using rescute.Domain.Exceptions;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Domain.Aggregates.TimelineItems;
 
@@ -31,8 +30,8 @@ public abstract class TimelineItemWithAttachments : TimelineItem, IHasAttachment
     {
     }
 
-    public IReadOnlyCollection<Attachment> Attachments => attachments.AsReadOnly();
-    public abstract IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes { get; }
+    public IReadOnlyList<Attachment> Attachments => attachments.AsReadOnly();
+    public abstract IReadOnlyList<AttachmentType> AcceptableAttachmentTypes { get; }
 
     public void AddAttachments(params Attachment[] attachments)
     {

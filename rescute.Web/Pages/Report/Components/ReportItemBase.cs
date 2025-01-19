@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using rescute.Web.Pages.Shared.ViewModel;
+using rescute.Web.Pages.Shared.ViewModels;
 
 namespace rescute.Web.Pages.Report.Components;
 

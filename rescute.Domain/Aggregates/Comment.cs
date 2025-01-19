@@ -1,6 +1,6 @@
 ﻿using System;
 using rescute.Domain.Aggregates.TimelineItems;
-using rescute.Shared;
+using rescute.Domain.ValueObjects;
 
 namespace rescute.Domain.Aggregates;
 

@@ -4,7 +4,6 @@ using System.Linq;
 using rescute.Domain.Aggregates.TimelineItems;
 using rescute.Domain.Exceptions;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Domain.Aggregates;
 
@@ -30,11 +29,11 @@ public class Animal : AggregateRoot<Animal>, IHasAttachments
         UpdateAnimalType(type);
     }
 
-    public IReadOnlyCollection<Attachment> Attachments =>
+    public IReadOnlyList<Attachment> Attachments =>
         attachments.OrderByDescending(a => a.CreationDate).ToList().AsReadOnly();
 
 
-    public IReadOnlyCollection<AttachmentType> AcceptableAttachmentTypes => [AttachmentType.Image()];
+    public IReadOnlyList<AttachmentType> AcceptableAttachmentTypes => [AttachmentType.Image()];
 
     public void AddAttachments(params Attachment[] attachments)
     {

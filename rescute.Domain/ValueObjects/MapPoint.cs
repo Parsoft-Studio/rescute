@@ -1,13 +1,12 @@
 ﻿using System;
-using rescute.Shared;
 
 namespace rescute.Domain.ValueObjects;
 
 public record MapPoint
 {
-    public static MapPoint Empty => new(double.NaN, double.NaN);
-    public double Latitude { get; }
-    public double Longitude { get; }
+    public static MapPoint Empty() => new(double.NaN, double.NaN);
+    public double Latitude { get; private set; }
+    public double Longitude { get; private set; }
 
     public MapPoint(double latitude, double longitude)
     {
@@ -23,6 +22,12 @@ public record MapPoint
 
     public static bool IsEmpty(MapPoint point)
     {
-        return point.Equals(Empty);
+        return point.Equals(Empty());
     }
+
+    public Distance GetDistanceTo(MapPoint otherPoint)
+    {
+        return new Distance(this, otherPoint);
+    }
+
 }
