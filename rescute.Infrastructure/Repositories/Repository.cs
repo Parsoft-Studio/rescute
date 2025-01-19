@@ -4,10 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using rescute.Domain.Aggregates;
+using rescute.Domain;
 using rescute.Domain.Repositories;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Infrastructure.Repositories;
 

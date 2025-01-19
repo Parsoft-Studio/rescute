@@ -1,22 +1,28 @@
+using rescute.Domain;
+
 namespace rescute.Web.Pages.Shared.ViewModels;
 
 /// <summary>
-/// Implemented by any view model that maps to a domain object
+///     Implemented by any view model that maps to a domain object
 /// </summary>
 /// <typeparam name="TViewModel">Type of the mapped view model</typeparam>
 /// <typeparam name="TDomainObject">Type of the domain object the view model is mapped to</typeparam>
-public  interface IDomainObjectViewModel<out TViewModel, in TDomainObject>
+public interface IDomainObjectViewModel<out TViewModel, in TDomainObject>
 {
     /// <summary>
-    /// Creates the view model from the provided domain object
+    ///     Creates the view model from the provided domain object
     /// </summary>
     /// <param name="domainObject">The domain object to create the view model from</param>
+    /// <param name="timeProvider">The <see cref="IDateTimeProvider" /> used to calculate event times, etc.</param>
     /// <returns>A view model created from the domain object</returns>
-    static abstract TViewModel Of(TDomainObject domainObject);
+    static abstract TViewModel Of(TDomainObject domainObject, IDateTimeProvider timeProvider);
+
     /// <summary>
-    /// Creates a list of view models from the provided list of domain objects
+    ///     Creates a list of view models from the provided list of domain objects
     /// </summary>
     /// <param name="domainObjects">The list of domain objects from which the list of view models is created</param>
+    /// <param name="timeProvider">The <see cref="IDateTimeProvider" /> used to calculate event times, etc.</param>
     /// <returns>List of view models created from the domain objects</returns>
-    static abstract IReadOnlyList<TViewModel> Of(IReadOnlyList<TDomainObject> domainObjects);
+    static abstract IReadOnlyList<TViewModel> Of(IReadOnlyList<TDomainObject> domainObjects,
+        IDateTimeProvider timeProvider);
 }

@@ -1,6 +1,7 @@
 using System;
+using rescute.Domain;
 
-namespace rescute.Shared;
+namespace rescute.Infrastructure;
 
 public class DateTimeProvider : IDateTimeProvider
 {

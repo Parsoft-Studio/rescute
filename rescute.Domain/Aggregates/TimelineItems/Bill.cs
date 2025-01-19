@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using rescute.Domain.Exceptions;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Domain.Aggregates.TimelineItems;
 

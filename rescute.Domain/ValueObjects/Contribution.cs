@@ -1,6 +1,5 @@
 ﻿using System;
 using rescute.Domain.Aggregates;
-using rescute.Shared;
 
 namespace rescute.Domain.ValueObjects;
 

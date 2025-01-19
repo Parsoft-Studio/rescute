@@ -5,40 +5,38 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="FakeData\" />
-        <Folder Include="wwwroot\lib\" />
+        <Folder Include="wwwroot\lib\"/>
     </ItemGroup>
     <Target Name="RestoreNPMPackages" BeforeTargets="CopyNPMPackages;Build">
-        <Exec Command="npm install" />
+        <Exec Command="npm install"/>
     </Target>
     <!-- copy the restored packages to wwwroot -->
     <Target Name="CopyNPMPackages" BeforeTargets="Build">
         <ItemGroup>
-            <Bootstrap Include="node_modules\bootstrap\dist\**\*.*" />
-            <ViewerJS Include="node_modules\viewerjs\dist\**\*.*" />
-            <FontAwesomeCSS Include="node_modules\font-awesome\css\font-awesome.min.css" />
-            <FontAwesomeFonts Include="node_modules\font-awesome\fonts\*.*" />
+            <Bootstrap Include="node_modules\bootstrap\dist\**\*.*"/>
+            <ViewerJS Include="node_modules\viewerjs\dist\**\*.*"/>
+            <FontAwesomeCSS Include="node_modules\font-awesome\css\font-awesome.min.css"/>
+            <FontAwesomeFonts Include="node_modules\font-awesome\fonts\*.*"/>
         </ItemGroup>
 
-        <Copy SourceFiles="@(Bootstrap)" DestinationFolder="wwwroot\lib\bootstrap\%(RecursiveDir)" />
-        <Copy SourceFiles="@(ViewerJS)" DestinationFolder="wwwroot\lib\viewerjs\%(RecursiveDir)" />
-        <Copy SourceFiles="@(FontAwesomeCSS)" DestinationFolder="wwwroot\lib\font-awesome\css\%(RecursiveDir)" />
-        <Copy SourceFiles="@(FontAwesomeFonts)" DestinationFolder="wwwroot\lib\font-awesome\fonts\%(RecursiveDir)" />
+        <Copy SourceFiles="@(Bootstrap)" DestinationFolder="wwwroot\lib\bootstrap\%(RecursiveDir)"/>
+        <Copy SourceFiles="@(ViewerJS)" DestinationFolder="wwwroot\lib\viewerjs\%(RecursiveDir)"/>
+        <Copy SourceFiles="@(FontAwesomeCSS)" DestinationFolder="wwwroot\lib\font-awesome\css\%(RecursiveDir)"/>
+        <Copy SourceFiles="@(FontAwesomeFonts)" DestinationFolder="wwwroot\lib\font-awesome\fonts\%(RecursiveDir)"/>
     </Target>
     <ItemGroup>
-        <PackageReference Include="bogus" Version="35.6.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.7" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.2" />
+        <PackageReference Include="Blazor.Bootstrap" Version="3.2.0"/>
+        <PackageReference Include="bogus" Version="35.6.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.7"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.2"/>
     </ItemGroup>
     <ItemGroup>
-        <AdditionalFiles Include="Pages\Reports\Index.razor" />
-        <AdditionalFiles Include="Pages\Shared\Layout\AppSideBar.razor" />
-        <AdditionalFiles Include="Pages\Shared\Layout\MainLayout.razor" />
+        <AdditionalFiles Include="Pages\Shared\Layout\AppSideBar.razor"/>
+        <AdditionalFiles Include="Pages\Shared\Layout\MainLayout.razor"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\rescute.Application\rescute.Application.csproj" />
-        <ProjectReference Include="..\rescute.Domain\rescute.Domain.csproj" />
-        <ProjectReference Include="..\rescute.Infrastructure\rescute.Infrastructure.csproj" />
-        <ProjectReference Include="..\rescute.Shared\rescute.Shared.csproj" />
+        <ProjectReference Include="..\rescute.Application\rescute.Application.csproj"/>
+        <ProjectReference Include="..\rescute.Domain\rescute.Domain.csproj"/>
+        <ProjectReference Include="..\rescute.Infrastructure\rescute.Infrastructure.csproj"/>
     </ItemGroup>
 </Project>

@@ -1,7 +1,10 @@
 @page "/reports"
-@page "/index"
+@using Microsoft.AspNetCore.Components.Sections
+@using rescute.Web.Pages.Reports.Components
 @using rescute.Web.Pages.Reports.ViewModels
+@using rescute.Web.Pages.Shared.Components
 @inject ReportsViewModel ReportsViewModel;
+@rendermode InteractiveServer
 
 @* @attribute [Authorize] *@
 
@@ -24,9 +27,10 @@
 
             @foreach (var report in ReportsViewModel.Reports)
             {
-                <ReportCard Image=@report.Image Distance=@report.Distance Timestamp="۳۰ دقیقه پیش"
+                <ReportCard Image=@report.Image Distance=@report.Distance Timestamp=@report.Time
                             Description=@report.Description/>
             }
+            <LoadMore LoadMoreClicked="@ReportsViewModel.LoadNextPage" @rendermode="InteractiveServer"/>
         </div>
     }
     <NewReportButton/>
@@ -34,12 +38,17 @@
 
 }
 
-@code
+@code {
 
-{
     protected override async Task OnInitializedAsync()
     {
         ReportsViewModel.PageIndex = 0;
         await ReportsViewModel.Initialize();
     }
+
+    private void Clicked()
+    {
+        var a = 2;
+    }
+
 }

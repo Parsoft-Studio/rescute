@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using rescute.Domain.Aggregates;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Domain.Repositories;
 

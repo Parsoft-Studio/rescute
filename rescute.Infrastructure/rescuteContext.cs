@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using rescute.Domain.Aggregates;
 using rescute.Domain.Aggregates.TimelineItems;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Infrastructure;
 
@@ -27,6 +26,7 @@ public class rescuteContext(DbContextOptions<rescuteContext> options) : DbContex
         modelBuilder.HasDefaultSchema(Schema);
         modelBuilder.Ignore<Id<TimelineItem>>();
         modelBuilder.Owned<Attachment>();
+        modelBuilder.Owned<MapPoint>();
         
         // Samaritan
         modelBuilder.Entity<Samaritan>(b => b.HasKey(samaritan => samaritan.Id).IsClustered(false));

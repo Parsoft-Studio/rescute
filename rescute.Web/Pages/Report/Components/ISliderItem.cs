@@ -1,4 +1,4 @@
-using rescute.Web.Pages.Report.ViewModel;
+using rescute.Web.Pages.Report.ViewModels;
 
 namespace rescute.Web.Pages.Report.Components;
 

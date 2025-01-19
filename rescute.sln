@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rescute.Infrastructure", "r
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rescute.Web", "rescute.Web\rescute.Web.csproj", "{8102BD70-35CE-4BDC-BE8E-27DE89A3306C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rescute.Shared", "rescute.Shared\rescute.Shared.csproj", "{26427863-5D04-4D55-AFFA-5DB1F72ACED6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rescute.Application", "rescute.Application\rescute.Application.csproj", "{5EF9CCAB-0F04-4B60-9BC6-8A0FF77BCA16}"
 EndProject
 Global
@@ -37,10 +35,6 @@ Global
 		{8102BD70-35CE-4BDC-BE8E-27DE89A3306C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8102BD70-35CE-4BDC-BE8E-27DE89A3306C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8102BD70-35CE-4BDC-BE8E-27DE89A3306C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26427863-5D04-4D55-AFFA-5DB1F72ACED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26427863-5D04-4D55-AFFA-5DB1F72ACED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26427863-5D04-4D55-AFFA-5DB1F72ACED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26427863-5D04-4D55-AFFA-5DB1F72ACED6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5EF9CCAB-0F04-4B60-9BC6-8A0FF77BCA16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EF9CCAB-0F04-4B60-9BC6-8A0FF77BCA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EF9CCAB-0F04-4B60-9BC6-8A0FF77BCA16}.Release|Any CPU.ActiveCfg = Release|Any CPU

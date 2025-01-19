@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using rescute.Shared;
 
 namespace rescute.Domain.ValueObjects;
 

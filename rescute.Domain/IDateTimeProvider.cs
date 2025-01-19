@@ -1,6 +1,6 @@
 using System;
 
-namespace rescute.Shared;
+namespace rescute.Domain;
 
 /// <summary>
 /// An abstraction over date and time related functions. 

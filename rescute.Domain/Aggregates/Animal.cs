@@ -4,7 +4,6 @@ using System.Linq;
 using rescute.Domain.Aggregates.TimelineItems;
 using rescute.Domain.Exceptions;
 using rescute.Domain.ValueObjects;
-using rescute.Shared;
 
 namespace rescute.Domain.Aggregates;
 

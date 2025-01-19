@@ -1,4 +1,4 @@
-namespace rescute.Web.Pages.Report.ViewModel;
+namespace rescute.Web.Pages.Report.ViewModels;
 
 public class ReportItemSlide(string slideImage, string slideTitle)
 {

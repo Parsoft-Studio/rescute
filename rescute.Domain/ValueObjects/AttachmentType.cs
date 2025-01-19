@@ -1,6 +1,4 @@
-﻿using rescute.Shared;
-
-namespace rescute.Domain.ValueObjects;
+﻿namespace rescute.Domain.ValueObjects;
 
 public record AttachmentType
 {

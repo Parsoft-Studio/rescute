@@ -1,0 +1,11 @@
+<div class="w-100 d-flex align-items-center text-center">
+    <hr class="flex-grow-1 text-muted"/>
+    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small" @onclick="LoadMoreClicked" Outline="true">موارد
+        بیشتر
+    </Button>
+    <hr class="flex-grow-1 text-muted"/>
+</div>
+
+@code {
+    [Parameter] public EventCallback LoadMoreClicked { get; set; }
+}

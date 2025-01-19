@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using rescute.Application;
 using rescute.Application.Reports;
+using rescute.Domain;
 using rescute.Domain.Repositories;
 using rescute.Infrastructure;
 using rescute.Infrastructure.Repositories;
-using rescute.Shared;
 using rescute.Web.Configuration;
 using rescute.Web.Pages.Reports.ViewModels;
 
@@ -15,7 +15,7 @@ namespace rescute.Web.Extensions;
 public static class ApplicationServicesExtensions
 {
     /// <summary>
-    /// Registers any rescute specific services in the dependency injection container.
+    ///     Registers any rescute specific services in the dependency injection container.
     /// </summary>
     public static IServiceCollection RegisterApplicationServices(this IServiceCollection services,
         IConfiguration configuration,
@@ -36,7 +36,12 @@ public static class ApplicationServicesExtensions
         services.AddTransient<rescuteContext>();
 
         services.AddSingleton<DbContextOptions<rescuteContext>>(_ =>
-            new DbContextOptionsBuilder<rescuteContext>().UseInMemoryDatabase("rescute").Options
+            new DbContextOptionsBuilder<rescuteContext>()
+                .UseInMemoryDatabase("rescute")
+                // .EnableDetailedErrors()
+                // .EnableSensitiveDataLogging()
+                // .LogTo(Console.WriteLine)
+                .Options
         );
 
         // application
@@ -47,10 +52,8 @@ public static class ApplicationServicesExtensions
         services.AddScoped<ReportsViewModel>();
 
         if (isDevelopmentEnvironment) // second registration takes precedence
-        {
             services.AddTransient<rescuteContext>(provider =>
                 new rescuteContext(provider.GetRequiredService<DbContextOptions<rescuteContext>>()).WithFakeData());
-        }
 
         return services;
     }
