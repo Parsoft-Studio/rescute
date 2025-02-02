@@ -5,7 +5,7 @@
         <i class="fa fa-fw fa-bars"></i>
     </a>
     <a class="nav-item nav-profile" href="#">
-        <img src="img/profile.jpg"/>
+        <img src="img/profile.jpg" alt="@userName"/>
         <p>@userName</p>
     </a>
     <a class="nav-item" href="#"><i class="fa fa-fw fa-copy"></i> گزارش‌ها</a>
@@ -14,7 +14,7 @@
 </nav>
 
 @code {
-    private string? userName = string.Empty;
+    private string? userName;
 
     protected override async Task OnInitializedAsync()
     {

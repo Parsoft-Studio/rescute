@@ -1,15 +1,22 @@
 /* Main navigation menu */
 nav.main-nav {
     position: fixed;
-    right: -10px;
+    left: -10px;
+    right: unset;
     display: block;
     white-space: nowrap;
-    width: 0px;
+    width: 0;
     transition: width 0.3s;
     height: 100vh;
     padding: 0;
     z-index: 1;
-    box-shadow: -4px 0px 10px 3px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 0 10px 3px rgba(0, 0, 0, 0.4);
+}
+
+html[dir="rtl"] nav.main-nav {
+    right: -10px;
+    left: unset;
+    box-shadow: -4px 0 10px 3px rgba(0, 0, 0, 0.4);
 }
 
 nav.main-nav:hover {
@@ -31,6 +38,11 @@ nav.main-nav .nav-item {
     overflow: hidden;
     color: #fff;
     text-decoration: none;
+    padding-left: 15px;
+}
+
+html[dir="rtl"] nav.main-nav .nav-item {
+    padding-left: unset;
     padding-right: 15px;
 }
 
@@ -62,8 +74,13 @@ nav.main-nav a.nav-profile img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin-right: 90px;
+    margin-left: 90px;
     display: block;
+}
+
+html[dir="rtl"] nav.main-nav a.nav-profile img {
+    margin-right: 90px;
+    margin-left: unset;
 }
 
 nav.main-nav a.nav-profile p {
@@ -77,11 +94,14 @@ nav.main-nav a.nav-profile p {
 nav.top-bar {
     width: 100vw;
     height: 60px;
-    padding: 5px;
-    padding-right: 60px;
+    padding: 0;
     display: flex;
     justify-content: flex-start;
     position: fixed;
+}
+
+html[dir="rtl"] nav.top-bar {
+    padding: 0;
 }
 
 nav.top-bar .container-fluid {
@@ -90,11 +110,13 @@ nav.top-bar .container-fluid {
     align-items: center;
     width: 100%;
     padding: 0;
-    padding-left: 15px;
-    margin-left: 30px;
     overflow: auto;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+}
+
+html[dir="rtl"] nav.top-bar .container-fluid {
+    padding: 0;
 }
 
 nav.top-bar .container-fluid::-webkit-scrollbar {
@@ -106,8 +128,13 @@ nav.top-bar a.navbar-brand div {
     overflow: hidden;
     direction: ltr;
     position: fixed;
-    left: 0;
+    right: 0;
     box-shadow: 4px -4px 10px 8px rgba(156, 0, 0, 1);
+}
+
+html[dir="rtl"] nav.top-bar a.navbar-brand div {
+    left: 0;
+    right: unset;
 }
 
 nav.top-bar a.navbar-brand div img {
@@ -145,10 +172,32 @@ button.nav-pill.active {
     nav.top-bar a.navbar-brand div {
         width: 50px;
     }
+
+    html[dir="rtl"] nav.top-bar a.navbar-brand div {
+        width: 45px;
+    }
+
+    nav.top-bar .container-fluid {
+        margin-right: 35px;
+        margin-left: 55px;
+    }
+
+    html[dir="rtl"] nav.top-bar .container-fluid {
+        margin-right: 55px;
+        margin-left: 40px;
+    }
+
 }
 
 @media (min-width: 768px) {
     nav.top-bar .container-fluid {
-        margin-left: 135px;
+        margin-right: 140px;
+        margin-left: 55px;
     }
+
+    html[dir="rtl"] nav.top-bar .container-fluid {
+        margin-left: 140px;
+        margin-right: 55px;
+    }
+
 }

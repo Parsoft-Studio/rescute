@@ -1,6 +1,7 @@
 ﻿@using rescute.Web.Pages.Shared.Layout
+@using System.Globalization
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@GetLanguageName()" dir="@GetDirection()" style="text-align: @GetTextAlignment()">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no">
@@ -9,8 +10,8 @@
     <link rel="icon" type="image/png" href="favicon.png"/>
     <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/rescute.css?v=1">
-    <link rel="stylesheet" href="css/rescute-nav.css?v=1">
+    <link rel="stylesheet" href="css/rescute.css?v=1.1">
+    <link rel="stylesheet" href="css/rescute-nav.css?v=1.1">
     <script src="lib/bootstrap/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/rescute-nav.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
@@ -28,3 +29,12 @@
 <script src="_framework/blazor.web.js"></script>
 </body>
 </html>
+@code
+{
+    // private String GetDirection() => "rtl"; 
+    // private String GetTextAlignment() => "right"; 
+    private String GetDirection() =>  CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    private String GetTextAlignment() => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? "right" : "left";
+    
+    private String GetLanguageName() => CultureInfo.CurrentCulture.Name;
+}
