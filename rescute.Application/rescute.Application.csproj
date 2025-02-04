@@ -11,4 +11,8 @@
       <ProjectReference Include="..\rescute.Infrastructure\rescute.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.1" />
+    </ItemGroup>
+
 </Project>

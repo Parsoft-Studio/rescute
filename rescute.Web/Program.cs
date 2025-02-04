@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Options;
 using rescute.Web;
 using rescute.Web.Extensions;
+using rescute.Web.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +15,11 @@ builder.Services
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
+
+app.UseMiddleware<LocalizationMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -27,14 +32,15 @@ else
 {
     AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
     {
-        Console.WriteLine($"Unhandled exception: {e.ExceptionObject}");
+        Console.WriteLine($@"Unhandled exception: {e.ExceptionObject}");
     };
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
-
+app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

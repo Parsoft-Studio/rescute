@@ -1,5 +1,4 @@
 ﻿@using rescute.Web.Pages.Shared.Layout
-@using System.Globalization
 <!DOCTYPE html>
 <html lang="@GetLanguageName()" dir="@GetDirection()" style="text-align: @GetTextAlignment()">
 
@@ -29,12 +28,10 @@
 <script src="_framework/blazor.web.js"></script>
 </body>
 </html>
+
 @code
 {
-    // private String GetDirection() => "rtl"; 
-    // private String GetTextAlignment() => "right"; 
-    private String GetDirection() =>  CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    private String GetDirection() => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
     private String GetTextAlignment() => CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? "right" : "left";
-    
     private String GetLanguageName() => CultureInfo.CurrentCulture.Name;
 }

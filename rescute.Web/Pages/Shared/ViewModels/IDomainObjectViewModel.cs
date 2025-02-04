@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Localization;
 using rescute.Domain;
+using rescute.Web.Localization;
 
 namespace rescute.Web.Pages.Shared.ViewModels;
 
@@ -14,15 +16,18 @@ public interface IDomainObjectViewModel<out TViewModel, in TDomainObject>
     /// </summary>
     /// <param name="domainObject">The domain object to create the view model from</param>
     /// <param name="timeProvider">The <see cref="IDateTimeProvider" /> used to calculate event times, etc.</param>
+    /// <param name="localizer">An instance of <see cref="IStringLocalizer{T}"/> used to localize text contained in the view model</param>
     /// <returns>A view model created from the domain object</returns>
-    static abstract TViewModel Of(TDomainObject domainObject, IDateTimeProvider timeProvider);
+    static abstract TViewModel Of(TDomainObject domainObject, IDateTimeProvider timeProvider,
+        IStringLocalizer<LocalizationResources> localizer);
 
     /// <summary>
     ///     Creates a list of view models from the provided list of domain objects
     /// </summary>
     /// <param name="domainObjects">The list of domain objects from which the list of view models is created</param>
     /// <param name="timeProvider">The <see cref="IDateTimeProvider" /> used to calculate event times, etc.</param>
+    /// <param name="localizer">An instance of <see cref="IStringLocalizer{T}"/> used to localize text contained in the view model</param>
     /// <returns>List of view models created from the domain objects</returns>
     static abstract IReadOnlyList<TViewModel> Of(IReadOnlyList<TDomainObject> domainObjects,
-        IDateTimeProvider timeProvider);
+        IDateTimeProvider timeProvider, IStringLocalizer<LocalizationResources> localizer);
 }

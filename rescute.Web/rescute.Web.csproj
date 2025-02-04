@@ -29,6 +29,7 @@
         <PackageReference Include="bogus" Version="35.6.1"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.7"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.1"/>
     </ItemGroup>
     <ItemGroup>
         <AdditionalFiles Include="Pages\Shared\Layout\AppSideBar.razor"/>
@@ -38,5 +39,11 @@
         <ProjectReference Include="..\rescute.Application\rescute.Application.csproj"/>
         <ProjectReference Include="..\rescute.Domain\rescute.Domain.csproj"/>
         <ProjectReference Include="..\rescute.Infrastructure\rescute.Infrastructure.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Localization\LocalizationResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 </Project>

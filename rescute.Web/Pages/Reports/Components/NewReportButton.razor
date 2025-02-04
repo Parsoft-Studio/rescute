@@ -1,5 +1,7 @@
+@inject IStringLocalizer<LocalizationResources> Localizer
+
 <button class="btn btn-primary btn-new" title="گزارش جدید">
-    <i class="fa fa-fw fa-plus"></i><span class="btn-new-text">گزارش جدید</span>
+    <i class="fa fa-fw fa-plus"></i><span class="btn-new-text">@Localizer[LocalizationResources.NewReport]</span>
 </button>
 
 @code {

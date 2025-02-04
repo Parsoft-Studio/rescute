@@ -8,6 +8,7 @@ using rescute.Domain.Repositories;
 using rescute.Infrastructure;
 using rescute.Infrastructure.Repositories;
 using rescute.Web.Configuration;
+using rescute.Web.Localization;
 using rescute.Web.Pages.Reports.ViewModels;
 
 namespace rescute.Web.Extensions;
@@ -44,13 +45,17 @@ public static class ApplicationServicesExtensions
                 .Options
         );
 
-        // application
+        // Application
         services.AddSingleton<IApplicationConfiguration, ApplicationConfiguration>();
         services.AddScoped<IReportsService, ReportsService>();
 
         // UI
         services.AddScoped<ReportsViewModel>();
 
+        // Localization
+        LocalizationMiddleware.AddLocalization(services, configuration);
+        
+        
         if (isDevelopmentEnvironment) // second registration takes precedence
             services.AddTransient<rescuteContext>(provider =>
                 new rescuteContext(provider.GetRequiredService<DbContextOptions<rescuteContext>>()).WithFakeData());
@@ -58,7 +63,7 @@ public static class ApplicationServicesExtensions
         return services;
     }
 
-    private static IServiceCollection AddOidcAuthentication(this IServiceCollection services,
+    private static void AddOidcAuthentication(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddAuthentication(options =>
@@ -80,7 +85,6 @@ public static class ApplicationServicesExtensions
                 options.Scope.Add("profile");
                 options.Scope.Add("email");
             });
-
-        return services;
     }
+
 }

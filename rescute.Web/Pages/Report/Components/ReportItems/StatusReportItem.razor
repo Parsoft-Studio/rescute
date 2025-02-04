@@ -5,7 +5,7 @@
 @using rescute.Domain.ValueObjects
 @using rescute.Web.Pages.Report.ViewModels
 @implements ICoordinatedItem
-
+@inject IStringLocalizer<LocalizationResources> Localizer
 <div class="card status-report">
 
     <ItemTopBar Parent="@(this)"/>
@@ -36,7 +36,7 @@
 
 @code {
     protected override string ReportItemName => "statusReport";
-    public override string ReportItemCaption => "گزارش وضعیت";
+    public override string ReportItemCaption => Localizer[LocalizationResources.StatusReport];
     [Parameter] public required IList<ReportItemSlide> Slides { get; set; }
     [Parameter] public required string AnimalType { get; set; }
     [Parameter] public required string Distance { get; set; }

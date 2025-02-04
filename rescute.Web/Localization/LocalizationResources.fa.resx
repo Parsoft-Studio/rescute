@@ -1,0 +1,92 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="MyReports" xml:space="preserve">
+        <value>گزارش‌های من</value>
+    </data>
+    <data name="DayAgo" xml:space="preserve">
+        <value>روز پیش</value>
+    </data>
+    <data name="DaysAgo" xml:space="preserve">
+        <value>روز پیش</value>
+    </data>
+    <data name="HourAgo" xml:space="preserve">
+        <value>ساعت پیش</value>
+    </data>
+    <data name="HoursAgo" xml:space="preserve">
+        <value>ساعت پیش</value>
+    </data>
+    <data name="Kilometer" xml:space="preserve">
+        <value>کیلومتر</value>
+    </data>
+    <data name="Kilometers" xml:space="preserve">
+        <value>کیلومتر</value>
+    </data>
+    <data name="Meter" xml:space="preserve">
+        <value>متر</value>
+    </data>
+    <data name="Meters" xml:space="preserve">
+        <value>متر</value>
+    </data>
+    <data name="MinuteAgo" xml:space="preserve">
+        <value>دقیقه پیش</value>
+    </data>
+    <data name="MinutesAgo" xml:space="preserve">
+        <value>دقیقه پیش</value>
+    </data>
+    <data name="ShowMore" xml:space="preserve">
+        <value>موارد بیشتر</value>
+    </data>
+    <data name="MyContributions" xml:space="preserve">
+        <value>مشارکت‌های من</value>
+    </data>
+    <data name="HasFundraiser" xml:space="preserve">
+        <value>شامل درخواست کمک مالی</value>
+    </data>
+    <data name="HasTransportRequest" xml:space="preserve">
+        <value>شامل درخواست حمل و نقل</value>
+    </data>
+    <data name="AboutUs" xml:space="preserve">
+        <value>درباره ما</value>
+    </data>
+    <data name="CreditAndTransactions" xml:space="preserve">
+        <value>اعتبار و تراکنش‌ها</value>
+    </data>
+    <data name="NewReport" xml:space="preserve">
+        <value>گزارش جدید</value>
+    </data>
+    <data name="Reports" xml:space="preserve">
+        <value>گزارش‌ها</value>
+    </data>
+    <data name="ViewReport" xml:space="preserve">
+        <value>مشاهده</value>
+    </data>
+    <data name="Bill" xml:space="preserve">
+        <value>صورت‌حساب مخارج</value>
+    </data>
+    <data name="MedicalDocuments" xml:space="preserve">
+        <value>اسناد پزشکی</value>
+    </data>
+    <data name="StatusReport" xml:space="preserve">
+        <value>گزارش وضعیت</value>
+    </data>
+    <data name="TransportRequest" xml:space="preserve">
+        <value>درخواست حمل و نقل</value>
+    </data>
+    <data name="FundraiserRequest" xml:space="preserve">
+        <value>درخواست کمک مالی</value>
+    </data>
+    <data name="Language" xml:space="preserve">
+        <value>زبان</value>
+    </data>
+</root>

@@ -1,4 +1,8 @@
+@using rescute.Application
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IStringLocalizer<LocalizationResources> Localizer
+@inject IApplicationConfiguration Config
+@inject NavigationManager Navigation
 
 <nav id="mainNav" class="main-nav bg-nav">
     <a class="nav-toggle nav-item">
@@ -8,9 +12,10 @@
         <img src="img/profile.jpg" alt="@userName"/>
         <p>@userName</p>
     </a>
-    <a class="nav-item" href="#"><i class="fa fa-fw fa-copy"></i> گزارش‌ها</a>
-    <a class="nav-item" href="#"><i class="fa fa-fw fa-credit-card"></i> اعتبار و تراکنش‌ها</a>
-    <a class="nav-item" href="#"><i class="fa fa-fw fa-heart"></i> درباره ما</a>
+    <a class="nav-item" href="#"><i class="fa fa-fw fa-copy"></i> @Localizer[LocalizationResources.Reports]</a>
+    <a class="nav-item" href="#"><i
+            class="fa fa-fw fa-credit-card"></i> @Localizer[LocalizationResources.CreditAndTransactions]</a>
+    <a class="nav-item" href="#"><i class="fa fa-fw fa-heart"></i> @Localizer[LocalizationResources.AboutUs]</a>
 </nav>
 
 @code {
