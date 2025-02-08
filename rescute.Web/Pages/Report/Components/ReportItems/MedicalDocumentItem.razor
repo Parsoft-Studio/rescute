@@ -1,6 +1,7 @@
 @inherits ReportItemBase
 @using rescute.Web.Pages.Report.ViewModels
 @implements ISliderItem
+@inject IStringLocalizer<LocalizationResources> Localizer
 <div class="card medical-document">
     <ItemTopBar Parent="@(this)"/>
     <div class="card-body">
@@ -22,6 +23,6 @@
 
 @code {
     protected override string ReportItemName => "medicalDocuments";
-    public override string ReportItemCaption => "مدارک پزشکی";
+    public override string ReportItemCaption => Localizer[LocalizationResources.MedicalDocuments];
     [Parameter] public required IList<ReportItemSlide> Slides { get; set; }
 }

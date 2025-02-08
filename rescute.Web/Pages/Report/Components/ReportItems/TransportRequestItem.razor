@@ -1,5 +1,6 @@
 @inherits ReportItemBase
 @implements INavigationItem
+@inject IStringLocalizer<LocalizationResources> Localizer
 <div class="card transport-request">
     <ItemTopBar Parent="@(this)"/>
     <div class="card-body">
@@ -22,7 +23,8 @@
 @code {
 
     protected override string ReportItemName => "transportRequest";
-    public override string ReportItemCaption => "درخواست حمل و نقل";
+
+    public override string ReportItemCaption => Localizer[LocalizationResources.TransportRequest];
     [Parameter] public required string Location { get; set; }
     [Parameter] public required string Distance { get; set; }
     [Parameter] public required string Destination { get; set; }

@@ -1,23 +1,23 @@
 @page "/report"
-@using Microsoft.AspNetCore.Components.Sections
 @using rescute.Web.Pages.Report.Components
 @using rescute.Web.Pages.Report.Components.ReportItems
 @using rescute.Web.Pages.Report.ViewModels
 @using rescute.Web.Pages.Shared.Components
 @using rescute.Web.Pages.Shared.ViewModels
-@attribute [Authorize]
+@inject IStringLocalizer<LocalizationResources> Localizer
+@* @attribute [Authorize] *@
 <HeadContent>
-    <link rel="stylesheet" href="css/rescute-report.css?v=1">
+    <link rel="stylesheet" href="css/rescute-report.css?v=2">
     <link rel="stylesheet" href="css/rescute-chat.css?v=1">
     <link href="lib/viewerjs/viewer.min.css" rel="stylesheet">
     <script src="lib/viewerjs/viewer.min.js"></script>
     <script src="js/rescute-report.js?v=1"></script>
 </HeadContent>
 <SectionContent SectionName="TopBarItems">
-    <Checkbox Text="گزارش وضعیت"/>
-    <Checkbox Text="درخواست حمل و نقل"/>
-    <Checkbox Text="مدارک پزشکی"/>
-    <Checkbox Text="صورت‌حساب"/>
+    <Checkbox Text="@Localizer[LocalizationResources.StatusReport]"/>
+    <Checkbox Text="@Localizer[LocalizationResources.TransportRequest]"/>
+    <Checkbox Text="@Localizer[LocalizationResources.MedicalDocuments]"/>
+    <Checkbox Text="@Localizer[LocalizationResources.Bill]"/>
 </SectionContent>
 
 <div class="container-fluid">

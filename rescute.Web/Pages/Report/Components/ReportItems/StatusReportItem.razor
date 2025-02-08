@@ -5,7 +5,7 @@
 @using rescute.Domain.ValueObjects
 @using rescute.Web.Pages.Report.ViewModels
 @implements ICoordinatedItem
-
+@inject IStringLocalizer<LocalizationResources> Localizer
 <div class="card status-report">
 
     <ItemTopBar Parent="@(this)"/>
@@ -15,12 +15,12 @@
     </div>
     <div class="card-footer">
         <div class="footer-title">
-            <span><i class="fa fa fa-paw"></i>&nbsp;@AnimalType</span>
-            <a class="btn btn-primary btn-sm left" href="#"
+            <a class="btn btn-primary btn-sm" href="#"
                data-bs-target="#@ItemCarousel.CreateComponentId(ComponentId)"
                data-bs-slide-to="@ItemCarousel.GetSlideCount(this)">
                 <span><i class="fa fa fa-map-marker"></i>&nbsp;@Distance</span>
             </a>
+            <span><i class="fa fa fa-paw"></i>&nbsp;@AnimalType</span>
         </div>
         <div class="footer-subtitle">
             <p>
@@ -36,7 +36,7 @@
 
 @code {
     protected override string ReportItemName => "statusReport";
-    public override string ReportItemCaption => "گزارش وضعیت";
+    public override string ReportItemCaption => Localizer[LocalizationResources.StatusReport];
     [Parameter] public required IList<ReportItemSlide> Slides { get; set; }
     [Parameter] public required string AnimalType { get; set; }
     [Parameter] public required string Distance { get; set; }

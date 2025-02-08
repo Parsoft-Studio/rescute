@@ -1,13 +1,13 @@
 .events {
     position: fixed;
     top: 60px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     overflow-y: scroll;
     align-content: start;
-    padding-bottom: 55px !important;
-    flex-wrap: wrap !important;
+    padding-bottom: 55px;
+    flex-wrap: wrap;
 }
 
 /* Bill */
@@ -30,6 +30,7 @@
 }
 
 /* Transport Request */
+
 .events .card.transport-request {
     border: 1px solid darkgreen;
 }
@@ -99,8 +100,13 @@
     direction: ltr;
 }
 
-.events .card .left {
-    margin-right: auto;
+.events .card .card-header img {
+    margin-right: 5px;
+}
+
+html[dir="rtl"] .events .card .card-header img {
+    margin-left: 5px;
+    margin-right: unset;
 }
 
 .events .card .card-header {
@@ -110,10 +116,15 @@
     border-radius: 0;
     padding: 8px;
     align-items: center;
+    justify-content: space-between;
+}
+
+html[dir="rtl"] .events .card .card-header {
+    flex-direction: row;
 }
 
 .events .card .card-body {
-    padding: 0px;
+    padding: 0;
     height: 400px;
 }
 
@@ -143,6 +154,8 @@
     align-content: start;
     align-items: center;
     margin-bottom: 15px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 .events .card .card-footer .footer-title .bill-total {
@@ -170,8 +183,7 @@
     }
 
     .events .card {
-        margin: 0px;
-        margin-bottom: 20px;
+        margin: 0px 0px 20px;
         width: 90vw !important;
         height: auto !important;
         text-decoration: none;

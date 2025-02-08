@@ -1,10 +1,15 @@
+using Microsoft.Extensions.Localization;
 using rescute.Application.Reports;
 using rescute.Domain;
+using rescute.Web.Localization;
 using rescute.Web.Pages.Shared.ViewModels;
 
 namespace rescute.Web.Pages.Reports.ViewModels;
 
-internal class ReportsViewModel(IReportsService reportsService, IDateTimeProvider timeProvider) : IViewModel
+internal class ReportsViewModel(
+    IReportsService reportsService,
+    IDateTimeProvider timeProvider,
+    IStringLocalizer<LocalizationResources> localizer) : IViewModel
 {
     private bool isInitialized;
     public int PageIndex { get; set; }
@@ -12,8 +17,8 @@ internal class ReportsViewModel(IReportsService reportsService, IDateTimeProvide
 
     public async Task Initialize()
     {
-        isInitialized = false;
-        Reports = ReportViewModel.Of(await reportsService.GetReports(new GetReportsQuery(PageIndex)), timeProvider);
+        Reports = ReportViewModel.Of(await reportsService.GetReports(new GetReportsQuery(PageIndex)), timeProvider,
+            localizer);
         isInitialized = true;
     }
 
@@ -28,7 +33,7 @@ internal class ReportsViewModel(IReportsService reportsService, IDateTimeProvide
         List<ReportViewModel> result = new();
         result.AddRange(Reports);
         result.AddRange(ReportViewModel.Of(await reportsService.GetReports(new GetReportsQuery(PageIndex)),
-            timeProvider));
+            timeProvider, localizer));
         Reports = result;
     }
 }

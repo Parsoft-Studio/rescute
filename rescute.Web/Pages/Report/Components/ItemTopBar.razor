@@ -1,14 +1,14 @@
 <div class="card-header">
-        <span>
-            <a class="card-profile" href="#">
-                <img src="@Parent.Profile.Image" alt="@Parent.Profile.DisplayName" data-bs-toggle="tooltip"
-                     data-placement="bottom" title="@Parent.Profile.DisplayName"/>
-            </a>@Parent.ReportItemCaption
-        </span>
-    <span class="time-stamp left" data-bs-toggle="tooltip" data-placement="bottom"
+    <span class="left">
+        <a class="card-profile" href="#">
+            <img src="@Parent.Profile.Image" alt="@Parent.Profile.DisplayName" data-bs-toggle="tooltip"
+                 data-placement="bottom" title="@Parent.Profile.DisplayName"/>
+        </a>@Parent.ReportItemCaption
+    </span>
+    <span class="time-stamp" data-bs-toggle="tooltip" data-placement="bottom"
           title="@Parent.Timestamp">
             @Parent.TimestampTitle
-        </span>
+    </span>
 </div>
 
 @code {
