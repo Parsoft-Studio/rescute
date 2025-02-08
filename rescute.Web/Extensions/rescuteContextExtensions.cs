@@ -32,7 +32,7 @@ public static class rescuteContextExtensions
 
     private static void FillTimelineItems(rescuteContext context)
     {
-        var reportsFaker = new Faker<StatusReport>("fa")
+        var reportsFaker = new Faker<StatusReport>("en_US")
             .CustomInstantiator(f =>
                 new StatusReport(f.Date.Recent(2),
                     Id<Samaritan>.Generate(),
