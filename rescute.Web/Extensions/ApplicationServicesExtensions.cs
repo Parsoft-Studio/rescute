@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using rescute.Application;
 using rescute.Application.Reports;
+using rescute.Application.Samaritans;
 using rescute.Domain;
 using rescute.Domain.Repositories;
 using rescute.Infrastructure;
 using rescute.Infrastructure.Repositories;
+using rescute.Web.Authentication;
 using rescute.Web.Configuration;
 using rescute.Web.Localization;
 using rescute.Web.Pages.Reports.ViewModels;
@@ -22,7 +24,8 @@ public static class ApplicationServicesExtensions
         IConfiguration configuration,
         bool isDevelopmentEnvironment)
     {
-        services.AddOidcAuthentication(configuration);
+        // Authentication
+        services.AddAuthentication(configuration);
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
@@ -48,14 +51,15 @@ public static class ApplicationServicesExtensions
         // Application
         services.AddSingleton<IApplicationConfiguration, ApplicationConfiguration>();
         services.AddScoped<IReportsService, ReportsService>();
+        services.AddScoped<ISamaritansService, SamaritansService>();
 
         // UI
         services.AddScoped<ReportsViewModel>();
 
         // Localization
         LocalizationMiddleware.AddLocalization(services, configuration);
-        
-        
+
+
         if (isDevelopmentEnvironment) // second registration takes precedence
             services.AddTransient<rescuteContext>(provider =>
                 new rescuteContext(provider.GetRequiredService<DbContextOptions<rescuteContext>>()).WithFakeData());
@@ -63,9 +67,10 @@ public static class ApplicationServicesExtensions
         return services;
     }
 
-    private static void AddOidcAuthentication(this IServiceCollection services,
+    private static void AddAuthentication(this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -86,5 +91,4 @@ public static class ApplicationServicesExtensions
                 options.Scope.Add("email");
             });
     }
-
 }
