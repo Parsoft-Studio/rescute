@@ -1,5 +1,4 @@
 using rescute.Domain.Repositories;
-using rescute.Infrastructure;
 
 namespace rescute.Application;
 

@@ -1,5 +1,4 @@
 @page "/reports"
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using rescute.Web.Pages.Reports.Components
 @using rescute.Web.Pages.Reports.ViewModels
 @using rescute.Web.Pages.Shared.Components
@@ -15,10 +14,11 @@
 </HeadContent>
 
 <SectionContent SectionName="TopBarItems">
-    <Checkbox Text=@Localizer[LocalizationResources.MyReports]/>
-    <Checkbox Text=@Localizer[LocalizationResources.MyContributions]/>
-    <Checkbox Text=@Localizer[LocalizationResources.HasTransportRequest]/>
-    <Checkbox Text=@Localizer[LocalizationResources.HasFundraiser]/>
+    <Checkbox Checked="@ViewModel.UsersReports" Text=@Localizer[LocalizationResources.MyReports]/>
+    <Checkbox Checked="@ViewModel.UsersContributions" Text=@Localizer[LocalizationResources.MyContributions]/>
+    <Checkbox Checked="@ViewModel.HasTransportRequest" CheckedChanged="@(value => ViewModel.HasTransportRequest = value)"
+              Text=@Localizer[LocalizationResources.HasTransportRequest]/>
+    <Checkbox Checked="@ViewModel.HasFundraiserRequest" Text=@Localizer[LocalizationResources.HasFundraiser]/>
 </SectionContent>
 
 <div class="container-fluid">
@@ -37,12 +37,12 @@
     <NewReportButton/>
 </div>
 
-}
 
 @code {
+
     protected override async Task OnInitializedAsync()
     {
-        ViewModel.PageIndex = 0;
-        await ViewModel.Initialize();
+        await ViewModel.Refresh();
     }
+   
 }

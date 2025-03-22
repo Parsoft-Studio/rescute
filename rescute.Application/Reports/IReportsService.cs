@@ -1,8 +1,9 @@
+using rescute.Domain.Aggregates;
 using rescute.Domain.Aggregates.TimelineItems;
 
 namespace rescute.Application.Reports;
 
 public interface IReportsService
 {
-    Task<IReadOnlyList<StatusReport>> GetReports(GetReportsQuery request);
+    Task<IReadOnlyList<StatusReport>> GetReportsAsync(GetReportsQuery query);
 }
