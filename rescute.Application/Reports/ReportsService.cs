@@ -15,4 +15,9 @@ public class ReportsService(Func<IUnitOfWork> unitOfWorkFactory, IApplicationCon
             GetConfiguration().ReportsPageSize,
             query.PageIndex);
     }
+
+    public int GetPageSize()
+    {
+        return GetConfiguration().ReportsPageSize;
+    }
 }

@@ -82,6 +82,15 @@
     justify-content: space-between;
 }
 
+/* No Reports Message */
+.reports .no-reports-message {
+    width: 100%;
+    text-align: center;
+    color: #6c757d; /* Bootstrap's text-muted color */
+    margin-top: 50px;
+    font-size: 1.2rem;
+}
+
 /* Media */
 @media (max-width: 768px) {
     .reports {

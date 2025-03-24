@@ -54,6 +54,9 @@
     <data name="ShowMore" xml:space="preserve">
         <value>Show more</value>
     </data>
+    <data name="NoMoreReports" xml:space="preserve">
+        <value>No more items</value>
+    </data>
     <data name="MyContributions" xml:space="preserve">
         <value>My Contributions</value>
     </data>
@@ -95,5 +98,8 @@
     </data>
     <data name="Language" xml:space="preserve">
         <value>Language</value>
+    </data>
+    <data name="NoReportsFound" xml:space="preserve">
+        <value>No reports found</value>
     </data>
 </root>
