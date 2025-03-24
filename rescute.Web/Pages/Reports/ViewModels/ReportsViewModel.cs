@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Localization;
 using rescute.Application.Reports;
 using rescute.Domain;
+using rescute.Domain.Aggregates.TimelineItems;
 using rescute.Domain.Repositories;
 using rescute.Web.Authentication;
 using rescute.Web.Localization;
@@ -12,15 +13,19 @@ internal class ReportsViewModel(
     IReportsService reportsService,
     IDateTimeProvider timeProvider,
     ICurrentUserService currentUserService,
-    IStringLocalizer<LocalizationResources> localizer) : IViewModel
+    IStringLocalizer<LocalizationResources> localizer) : IViewModel<StatusReportViewModel, StatusReport>
 {
-    private bool isInitialized;
-    private bool usersReports;
-    private bool usersContributions;
-    private bool hasTransportRequest;
     private bool hasFundraiserRequest;
+    private bool hasTransportRequest;
+    private bool isInitialized;
+    private bool usersContributions;
+    private bool usersReports;
     private Task? refreshTask;
     public int PageIndex { get; set; }
+    public bool HasMoreItems { get; private set; } = true;
+
+
+    public IReadOnlyList<StatusReportViewModel> Items { get; private set; }
 
     public bool UsersReports
     {
@@ -66,8 +71,6 @@ internal class ReportsViewModel(
         }
     }
 
-    public IReadOnlyList<ReportViewModel> Reports { get; private set; } = new List<ReportViewModel>();
-
     public async Task Refresh()
     {
         // If there's already a refresh in progress, wait for it to complete
@@ -78,27 +81,32 @@ internal class ReportsViewModel(
         }
 
         PageIndex = 0;
-        Reports = ReportViewModel.Of(await reportsService.GetReportsAsync(GetReportsQueryWithFilters()),
-            timeProvider,
-            localizer);
+        var fetchedReports = await reportsService.GetReportsAsync(GetReportsQueryWithFilters());
+        Items = StatusReportViewModel.Of(fetchedReports, timeProvider, localizer);
+        HasMoreItems = fetchedReports.Count == reportsService.GetPageSize();
         isInitialized = true;
+    }
+
+    public bool IsInitialized()
+    {
+        return isInitialized;
     }
 
     public async Task LoadNextPage()
     {
         // If there's a refresh in progress, wait for it to complete
-        if (refreshTask != null && !refreshTask.IsCompleted)
-        {
-            await refreshTask;
-        }
+        if (refreshTask != null && !refreshTask.IsCompleted) await refreshTask;
 
         PageIndex += 1;
-        List<ReportViewModel> result = new();
-        result.AddRange(Reports);
-        result.AddRange(ReportViewModel.Of(
-            await reportsService.GetReportsAsync(GetReportsQueryWithFilters()), timeProvider,
-            localizer));
-        Reports = result;
+        List<StatusReportViewModel> result = new();
+        result.AddRange(Items);
+
+        var newReports = await reportsService.GetReportsAsync(GetReportsQueryWithFilters());
+        result.AddRange(StatusReportViewModel.Of(newReports, timeProvider, localizer));
+        Items = result;
+
+        // If fewer items are returned than the page size, there are no more items
+        HasMoreItems = newReports.Count == reportsService.GetPageSize();
     }
 
     private GetReportsQuery GetReportsQueryWithFilters()
@@ -106,10 +114,5 @@ internal class ReportsViewModel(
         return new GetReportsQuery(PageIndex,
             ITimelineItemRepository.StatusReportFilter.CreateFilter(UsersReports, UsersContributions,
                 HasTransportRequest, HasFundraiserRequest, currentUserService.GetCurrentUser()));
-    }
-
-    public bool IsInitialized()
-    {
-        return isInitialized;
     }
 }

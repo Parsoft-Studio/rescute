@@ -44,15 +44,24 @@ public static class rescuteContextExtensions
 
     private static void FillTimelineItems(rescuteContext context)
     {
+        // Get the ID of the first Samaritan (which is returned by GetOneSamaritan)
+        var firstSamaritanId = context.Samaritans.First().Id;
+        var allSamaritanIds = context.Samaritans.AsQueryable().Select(samaritan => samaritan.Id).ToArray();
+        
         var reportsFaker = new Faker<StatusReport>("en_US")
             .CustomInstantiator(f =>
-                new StatusReport(f.Date.Recent(2),
-                    f.PickRandom(context.Samaritans.AsQueryable().Select(samaritan => samaritan.Id).ToArray()),
+            {
+                // 20% chance to use the first Samaritan (logged-in user)
+                var samaritanId = f.Random.Bool(0.2f) ? firstSamaritanId : f.PickRandom(allSamaritanIds);
+                
+                return new StatusReport(f.Date.Recent(2),
+                    samaritanId,
                     Id<Animal>.Generate(),
                     new MapPoint(HelsinkiLocation.Latitude + f.Random.Double(-0.2, 0.2),
                         HelsinkiLocation.Longitude + f.Random.Double(-0.2, 0.2)),
                     f.Lorem.Paragraph(2),
-                    new Attachment(f.Random.ListItem(Images), "jpg", f.Date.Recent(), f.Lorem.Sentence())));
+                    new Attachment(f.Random.ListItem(Images), "jpg", f.Date.Recent(), f.Lorem.Sentence()));
+            });
 
         context.TimelineItems.AddRange(reportsFaker.Generate(100));
 

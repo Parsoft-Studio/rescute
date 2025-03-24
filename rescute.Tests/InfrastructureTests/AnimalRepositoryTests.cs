@@ -15,7 +15,7 @@ public class AnimalRepositoryTests : RepositoryTestBase
         var animals = new List<Animal>();
         var samaritan = TestUtility.RandomTestSamaritan();
 
-        await using (var unitOfWork = GetUnitOfWork())
+        await using (var unitOfWork = GetUnitOfWork(useDefaultDatabase: true))
         {
             for (var i = 1; i <= 10; i++)
             {
@@ -30,7 +30,7 @@ public class AnimalRepositoryTests : RepositoryTestBase
 
         // Assert
 
-        await using (var unitOfWork = GetUnitOfWork())
+        await using (var unitOfWork = GetUnitOfWork(useDefaultDatabase: true))
         {
             var stored = await unitOfWork.Animals.GetAllAsync();
 

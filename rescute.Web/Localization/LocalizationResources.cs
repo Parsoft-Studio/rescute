@@ -18,6 +18,7 @@ public class LocalizationResources
     public const string HasTransportRequest = "HasTransportRequest";
     public const string HasFundraiser = "HasFundraiser";
     public const string ShowMore = "ShowMore";
+    public const string NoMoreReports = "NoMoreReports";
     public const string NewReport = "NewReport";
     public const string ViewReport = "ViewReport";
     public const string Reports = "Reports";
@@ -29,7 +30,7 @@ public class LocalizationResources
     public const string Bill = "Bill";
     public const string FundraiserRequest = "FundraiserRequest";
     public const string Language = "Language";
-
+    public const string NoReportsFound = "NoReportsFound";
 
     protected LocalizationResources()
     {

@@ -1,12 +1,21 @@
+@rendermode InteractiveServer
 @inject IStringLocalizer<LocalizationResources> Localizer
 <div class="w-100 d-flex align-items-center text-center">
     <hr class="flex-grow-1 text-muted"/>
-    <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small" @onclick="LoadMoreClicked" Outline="true">
-        @Localizer[LocalizationResources.ShowMore]
-    </Button>
+    @if (HasMoreItems)
+    {
+        <Button Color="ButtonColor.Secondary" Size="ButtonSize.Small" @onclick="LoadMoreClicked" Outline="true">
+            @Localizer[LocalizationResources.ShowMore]
+        </Button>
+    }
+    else
+    {
+        <span class="text-muted px-3">@Localizer[LocalizationResources.NoMoreReports]</span>
+    }
     <hr class="flex-grow-1 text-muted"/>
 </div>
 
 @code {
     [Parameter] public EventCallback LoadMoreClicked { get; set; }
+    [Parameter] public bool HasMoreItems { get; set; } = true;
 }

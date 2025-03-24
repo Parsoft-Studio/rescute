@@ -13,30 +13,37 @@
     <title>rescute</title>
 </HeadContent>
 
-<SectionContent SectionName="TopBarItems">
-    <Checkbox Checked="@ViewModel.UsersReports" Text=@Localizer[LocalizationResources.MyReports]/>
-    <Checkbox Checked="@ViewModel.UsersContributions" Text=@Localizer[LocalizationResources.MyContributions]/>
-    <Checkbox Checked="@ViewModel.HasTransportRequest" CheckedChanged="@(value => ViewModel.HasTransportRequest = value)"
-              Text=@Localizer[LocalizationResources.HasTransportRequest]/>
-    <Checkbox Checked="@ViewModel.HasFundraiserRequest" Text=@Localizer[LocalizationResources.HasFundraiser]/>
-</SectionContent>
-
 <div class="container-fluid">
     @if (ViewModel.IsInitialized())
     {
         <div class="d-flex flex-wrap reports">
-
-            @foreach (var report in ViewModel.Reports)
+            @if (ViewModel.Items.Any())
             {
-                <ReportCard Image=@report.Image Distance=@report.Distance Timestamp=@report.Time
-                            Description=@report.Description/>
+                @foreach (var report in ViewModel.Items)
+                {
+                    <ReportCard Image=@report.Image Distance=@report.Distance Timestamp=@report.Time
+                                Description=@report.Description/>
+                }
+
+                <LoadMore LoadMoreClicked="@ViewModel.LoadNextPage" HasMoreItems="@ViewModel.HasMoreItems"/> 
+                
             }
-            <LoadMore LoadMoreClicked="@ViewModel.LoadNextPage" @rendermode="InteractiveServer"/>
+            else
+            {
+                <div class="no-reports-message">
+                    @Localizer[LocalizationResources.NoReportsFound]
+                </div>
+            }
         </div>
     }
     <NewReportButton/>
 </div>
-
+<SectionContent SectionName="TopBarItems">
+    <Checkbox @bind-Checked="@ViewModel.UsersReports" Text="@Localizer[LocalizationResources.MyReports]"/>
+    <Checkbox @bind-Checked="ViewModel.UsersContributions" Text="@Localizer[LocalizationResources.MyContributions]"/>
+    <Checkbox @bind-Checked="ViewModel.HasTransportRequest" Text="@Localizer[LocalizationResources.HasTransportRequest]"/>
+    <Checkbox @bind-Checked="@ViewModel.HasFundraiserRequest" Text="@Localizer[LocalizationResources.HasFundraiser]"/>
+</SectionContent>
 
 @code {
 
@@ -44,5 +51,5 @@
     {
         await ViewModel.Refresh();
     }
-   
+
 }
